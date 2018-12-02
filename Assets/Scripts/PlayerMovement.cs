@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour {
 	private Rigidbody2D body;
 
 	void Init() {
-		speed_x = 10f;
-		speed_y = 10f;
+		speed_x = 2f;
+		speed_y = 5f;
 		jump_time = 1f;
 		move_velocity = Vector2.right * speed_x;
 		jump_velocity = Vector2.up * speed_y;
@@ -37,8 +37,6 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void Jump() {
-		//while (body.velocity != jump_velocity) {
-			body.velocity = Vector2.Lerp (body.velocity, jump_velocity, jump_time);
-		//}
+		body.velocity += Vector2.Lerp (body.velocity, jump_velocity, jump_time);
 	}
 }
