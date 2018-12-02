@@ -5,12 +5,9 @@ using UnityEngine;
 public class OppositeMovement : MonoBehaviour {
 
 	private float speed;
-	private Vector2 opposite_velocity;
 	private Rigidbody2D body;
 
 	void Init() {
-		speed = 5f;
-		opposite_velocity = Vector3.left * speed;
 		body = GetComponent<Rigidbody2D> ();
 	}
 
@@ -19,6 +16,11 @@ public class OppositeMovement : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		body.velocity = opposite_velocity;
+		body.velocity = GetSpeed();
+	}
+
+	Vector2 GetSpeed() {
+		speed = GameManager.instance.game_speed;
+		return Vector2.left * speed;
 	}
 }

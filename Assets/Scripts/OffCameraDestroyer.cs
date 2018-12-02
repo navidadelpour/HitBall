@@ -12,13 +12,11 @@ public class OffCameraDestroyer : MonoBehaviour {
 		renderer = GetComponent<Renderer> ();
 	}
 
-	// Use this for initialization
 	void Start () {
 		Init ();
 		StartCoroutine (check());
 	}
 	
-	// Update is called once per frame
 	void Update () {
 	
 	}

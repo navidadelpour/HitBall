@@ -13,14 +13,13 @@ public class SpawnManager : MonoBehaviour {
 		instance = this;
 	}
 
-	// Use this for initialization
 	void Start () {
 		Init ();
 		CreateGround ();
 	}
 	
-	// Update is called once per frame
 	void Update () {
+		
 	}
 
 	public void CreateGround() {

@@ -4,28 +4,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-	private float speed_x;
-	private float speed_y;
+	private float speed;
 	private Vector2 jump_velocity;
-	private Vector2 move_velocity;
 	private float jump_time;
 	private Rigidbody2D body;
 
 	void Init() {
-		speed_x = 2f;
-		speed_y = 5f;
+		speed = 10f;
 		jump_time = 1f;
-		move_velocity = Vector2.right * speed_x;
-		jump_velocity = Vector2.up * speed_y;
+		jump_velocity = Vector2.up * speed;
 		body = GetComponent<Rigidbody2D> ();
 	}
 
-	// Use this for initialization
 	void Start () {
 		Init ();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
