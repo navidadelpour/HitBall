@@ -35,6 +35,15 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject.tag == "Obstacle") {
+			if (GameManager.instance.has_shield)
+				return;
+			else
+				GameManager.instance.game_over = true;
+		}
+	}
+
 	void Jump() {
 		body.velocity = Vector2.Lerp (
 			Vector2.up * SpeedManager.instance.player_speed,

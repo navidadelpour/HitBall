@@ -41,7 +41,7 @@ public class SpawnManager : MonoBehaviour {
 	public void CreateObstacle() {
 		GameObject obstacle_created = Instantiate(
 			obstacles[Random.Range(0, obstacles.Length)],
-			Vector2.right * 10f + Vector2.up * Random.Range(-4, 4),
+			Vector2.right * 10f + Vector2.up * Random.Range(-3f, 0f),
 			Quaternion.identity,
 			GameObject.Find("Obstacles").transform
 		);

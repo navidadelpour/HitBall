@@ -15,11 +15,7 @@ public class InputManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetMouseButton (0)) {
-			SpeedManager.instance.ShouldIncreaseSpeed (true);
-		} else {
-			SpeedManager.instance.ShouldIncreaseSpeed (false);
-		}
-
+		SpeedManager.instance.ShouldIncreaseSpeed (Input.GetMouseButton (0));
+		GameManager.instance.has_shield = Input.GetMouseButton(1);
 	}
 }
