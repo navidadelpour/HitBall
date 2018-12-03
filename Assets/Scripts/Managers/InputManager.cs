@@ -16,9 +16,9 @@ public class InputManager : MonoBehaviour {
 	
 	void Update () {
 		if (Input.GetMouseButton (0)) {
-			GameManager.instance.ShouldIncreaseSpeed (true);
+			SpeedManager.instance.ShouldIncreaseSpeed (true);
 		} else {
-			GameManager.instance.ShouldIncreaseSpeed (false);
+			SpeedManager.instance.ShouldIncreaseSpeed (false);
 		}
 
 	}

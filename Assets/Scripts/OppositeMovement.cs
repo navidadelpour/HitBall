@@ -20,7 +20,7 @@ public class OppositeMovement : MonoBehaviour {
 	}
 
 	Vector2 GetSpeed() {
-		speed = GameManager.instance.game_speed;
+		speed = SpeedManager.instance.game_speed;
 		return Vector2.left * speed;
 	}
 }

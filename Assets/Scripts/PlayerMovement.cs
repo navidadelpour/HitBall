@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-	private float speed;
-	private Vector2 jump_velocity;
 	private float jump_time;
 	private Rigidbody2D body;
 	private bool jumping;
 
 	void Init() {
-		speed = 10f;
-		jump_velocity = Vector2.up * speed;
 		body = GetComponent<Rigidbody2D> ();
 	}
 
@@ -40,11 +36,17 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void Jump() {
-		body.velocity = Vector2.Lerp (jump_velocity, Vector2.zero, (Time.time - jump_time) * speed / 8f);
+		body.velocity = Vector2.Lerp (
+			Vector2.up * SpeedManager.instance.player_speed,
+			Vector2.zero,
+			(Time.time - jump_time) * SpeedManager.instance.player_speed / 8f);
 	}
 
 	void Fall() {
-		body.velocity = Vector2.Lerp (Vector2.zero, -jump_velocity, (Time.time - jump_time) * speed / 8f);
+		body.velocity = Vector2.Lerp (
+			Vector2.zero,
+			Vector2.down * SpeedManager.instance.player_speed,
+			(Time.time - jump_time) * SpeedManager.instance.player_speed / 8f);
 	}
 
 }
