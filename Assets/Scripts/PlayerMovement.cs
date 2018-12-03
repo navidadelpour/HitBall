@@ -8,10 +8,10 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector2 jump_velocity;
 	private float jump_time;
 	private Rigidbody2D body;
+	private bool jumping;
 
 	void Init() {
 		speed = 10f;
-		jump_time = 1f;
 		jump_velocity = Vector2.up * speed;
 		body = GetComponent<Rigidbody2D> ();
 	}
@@ -20,17 +20,31 @@ public class PlayerMovement : MonoBehaviour {
 		Init ();
 	}
 	
-	void Update () {
-		
+	void FixedUpdate () {
+		if (jumping)
+			Jump ();
+		else
+			Fall ();
+
+		if (body.velocity.y == 0) {
+			jump_time = Time.time;
+			jumping = false;
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Ground") {
-			Jump ();
+			jump_time = Time.time;
+			jumping = true;
 		}
 	}
 
 	void Jump() {
-		body.velocity += Vector2.Lerp (body.velocity, jump_velocity, jump_time);
+		body.velocity = Vector2.Lerp (jump_velocity, Vector2.zero, (Time.time - jump_time) * speed / 8f);
 	}
+
+	void Fall() {
+		body.velocity = Vector2.Lerp (Vector2.zero, -jump_velocity, (Time.time - jump_time) * speed / 8f);
+	}
+
 }
