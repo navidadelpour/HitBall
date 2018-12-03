@@ -19,12 +19,12 @@ public class InputManager : MonoBehaviour {
 	void Update () {
 		
 		if (Input.anyKey) {
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			if(Physics.Raycast(ray, out hit)) {
-				if (hit.collider.gameObject.layer == 5) {
+			RaycastHit2D hit = Physics2D.Raycast((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+			if(hit.collider != null) {
+				Debug.Log (hit.collider.gameObject);
+				if (hit.collider.gameObject.layer == 5)
 					can_act = false;
-				} else
+				else
 					can_act = true;
 			}
 		}
