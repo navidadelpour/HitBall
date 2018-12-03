@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class OffCameraDestroyer : MonoBehaviour {
 
-	private Renderer renderer;
+	private Renderer object_renderer;
 	private float delay;
 
 	void Init() {
 		delay = .5f;
-		renderer = GetComponent<Renderer> ();
+		object_renderer = GetComponent<Renderer> ();
 	}
 
 	void Start () {
@@ -23,7 +23,7 @@ public class OffCameraDestroyer : MonoBehaviour {
 
 	IEnumerator check() {
 		yield return new WaitForSeconds (delay);
-		if (!renderer.isVisible) {
+		if (!object_renderer.isVisible) {
 			this.name = "DestroyedObject";
 			Destroy (this.gameObject);
 			switch (this.tag) {
