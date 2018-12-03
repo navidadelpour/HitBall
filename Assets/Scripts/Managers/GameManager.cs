@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	public bool game_over;
 	public bool paused;
 	public int score;
+	public int coins;
 
 	void Init() {
 		instance = this;

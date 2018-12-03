@@ -22,7 +22,6 @@ public class InputManager : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit)) {
-				Debug.Log (hit.collider.name);
 				if (hit.collider.gameObject.layer == 5) {
 					can_act = false;
 				} else

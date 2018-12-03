@@ -41,6 +41,9 @@ public class PlayerMovement : MonoBehaviour {
 				return;
 			else
 				GameManager.instance.game_over = true;
+		} else if (other.gameObject.tag == "Coin") {
+			Destroy (other.gameObject);
+			GameManager.instance.coins++;
 		}
 	}
 
