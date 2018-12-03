@@ -11,6 +11,7 @@ public class WallMovement : MonoBehaviour {
 	}
 	
 	void Update () {
-		GetComponent<Renderer> ().material.mainTextureOffset += Vector2.left * ((int) SpeedManager.instance.game_speed) / 1000;
+		if(!GameManager.instance.paused)
+			GetComponent<Renderer> ().material.mainTextureOffset += Vector2.left * ((int) SpeedManager.instance.game_speed) / 1000;
 	}
 }

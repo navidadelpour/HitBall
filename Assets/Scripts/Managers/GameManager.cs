@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	public bool has_shield;
 	public bool game_over;
+	public bool paused;
 	public int score;
 
 	void Init() {
