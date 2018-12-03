@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+	public static PlayerMovement instance;
 	private float jump_time;
 	private Rigidbody2D body;
 	private bool jumping;
 
 	void Init() {
+		instance = this;
 		body = GetComponent<Rigidbody2D> ();
 	}
 
@@ -23,31 +25,15 @@ public class PlayerMovement : MonoBehaviour {
 			Fall ();
 
 		if (body.velocity.y == 0) {
-			jump_time = Time.time;
-			jumping = false;
+			Fall ();
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D other) {
-		if (other.gameObject.tag == "Ground") {
+	public void Jump() {
+		if (!jumping) {
 			jump_time = Time.time;
 			jumping = true;
 		}
-	}
-
-	void OnTriggerEnter2D(Collider2D other) {
-		if (other.gameObject.tag == "Obstacle") {
-			if (GameManager.instance.has_shield)
-				return;
-			else
-				GameManager.instance.game_over = true;
-		} else if (other.gameObject.tag == "Coin") {
-			Destroy (other.gameObject);
-			GameManager.instance.coins++;
-		}
-	}
-
-	void Jump() {
 		body.velocity = Vector2.Lerp (
 			Vector2.up * SpeedManager.instance.player_speed,
 			Vector2.zero,
@@ -55,6 +41,10 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void Fall() {
+		if (jumping) {
+			jump_time = Time.time;
+			jumping = false;
+		}
 		body.velocity = Vector2.Lerp (
 			Vector2.zero,
 			Vector2.down * SpeedManager.instance.player_speed,
