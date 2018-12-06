@@ -14,10 +14,17 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject coins;
 	private GameObject obstacles;
 
+	private GameObject last_item;
+	private Vector3 on_ground_position;
+
+	private int hole_chance = 30;
+	private int obstacle_chance = 30;
+	private int coin_chance = 30;
+
+
 	private float obstacle_delay_time = 2f;
-	private int ground_limit = 7;
-	private int hole_chance = 3;
-	private bool can_spawn_hole = false;
+	private int ground_limit = 10;
+	private bool is_safe = true;
 	private int holes_in_row = 0;
 	private int max_holes_in_row = 2;
 
@@ -40,58 +47,68 @@ public class SpawnManager : MonoBehaviour {
 		Init ();
 		for(int i = 0; i < ground_limit; i++)
 			CreateGround ();
-		can_spawn_hole = true;
-		Invoke ("CreateObstacle", 1f);
-		Invoke ("CreateCoin", 3f);
+		on_ground_position = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.localScale.x;
+		is_safe = false;
 	}
 	
-	void Update () {
-		
-	}
-
 	public void CreateGround() {
-		GameObject last_item = grounds.transform.GetChild(grounds.transform.childCount - 1).gameObject;
-		GameObject item_created = Instantiate(
-			ground_prefab,
-			last_item.transform.position + Vector3.right * last_item.GetComponent<BoxCollider2D>().size.x * last_item.transform.localScale.x,
-			Quaternion.identity,
+		last_item = grounds.transform.GetChild (grounds.transform.childCount - 1).gameObject;
+		GameObject item_created = Instantiate (
+	        ground_prefab,
+	        last_item.transform.position + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.localScale.x,
+	        Quaternion.identity,
 			grounds.transform
 		);
 		item_created.name = "Ground";
 		item_created.tag = "Ground";
 
-		if (can_spawn_hole && Random.Range (0, 10) < hole_chance && holes_in_row < max_holes_in_row) {
-			item_created.GetComponent<BoxCollider2D> ().isTrigger = true;
-			item_created.GetComponent<Renderer> ().enabled = false;
-			item_created.name = "Hole";
-			item_created.tag = "Hole";
-			holes_in_row++;
-		} else
-			holes_in_row = 0;
+
+		if (!is_safe){
+			if (HasChance (hole_chance) && holes_in_row < max_holes_in_row) {
+				item_created.GetComponent<BoxCollider2D> ().isTrigger = true;
+				item_created.GetComponent<BoxCollider2D> ().offset = new Vector3(0, -0.5f);
+				item_created.GetComponent<Renderer> ().enabled = false;
+				item_created.name = "Hole";
+				item_created.tag = "Hole";
+				holes_in_row++;
+			} else {
+				holes_in_row = 0;
+				if (HasChance (obstacle_chance))
+					CreateObstacle ();
+				else if (HasChance (coin_chance))
+					CreateCoin ();
+			}
+		}
 	}
 
 	public void CreateObstacle() {
 		GameObject obstacle_created = Instantiate(
 			obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length - 1)],
-			Vector2.right * 10f + Vector2.up * -3,
+			last_item.transform.position + on_ground_position,
 			Quaternion.identity,
 			obstacles.transform
 		);
 		obstacle_created.tag = "Obstacle";
-		Invoke ("CreateObstacle", Random.Range (1f, 1f));
 	}
 
 	public void CreateCoin() {
+		GameObject coins_group = new GameObject ();
+		coins_group.name = "CoinGroup";
+		coins_group.transform.parent = coins.transform;
 		for (int i = 0; i < Random.Range (3, 5); i++) {
 			GameObject coin_created = Instantiate (
              	coin_prefab,
-				Vector2.right * 10f + Vector2.up * i + Vector2.down * 3f,
+				last_item.transform.position + Vector3.up * i + on_ground_position,
 				Quaternion.identity,
 				coins.transform
           	);
 			coin_created.tag = "Coin";
+			coin_created.name = "Coin";
+			coin_created.transform.parent = coins_group.transform;
 		}
-		Invoke ("CreateCoin", Random.Range (1f, 3f));
 	}
 
+	public bool HasChance(int chance) {
+		return Random.Range (0, 100) < hole_chance;
+	}
 }

@@ -17,15 +17,18 @@ public class GameManager : MonoBehaviour {
 
 	void Start () {
 		Init ();
-		InvokeRepeating ("ResetGame", 2f, 2f);
+		InvokeRepeating ("ResetGame", 3f, 3f);
 	}
 	
 	void Update () {
-		GameObject.Find ("Player").GetComponent<SpriteRenderer> ().color = new Color(255, 255, 255, game_over ? 0 : 1);
+		GameObject.Find ("Player").GetComponent<SpriteRenderer> ().color = new Color(255, 255, 255, game_over && (int) (Time.time * 10) % 2 == 0 ? 0 : 1);
 	}
 
 	void ResetGame() {
-		game_over = false;
+		if (game_over) {
+			game_over = false;
+			GameObject.Find ("Player").transform.position = Vector3.right * -5f;
+		}
 	}
 
 }

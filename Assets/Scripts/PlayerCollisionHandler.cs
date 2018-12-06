@@ -25,20 +25,20 @@ public class PlayerCollisionHandler : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		switch (other.tag) {
+		switch (other.gameObject.tag) {
 
-			case "Obstacle":
-				GameManager.instance.game_over = !GameManager.instance.has_shield;
-				break;
+		case "Obstacle":
+			GameManager.instance.game_over = !GameManager.instance.has_shield;
+			break;
 
-			case "Coin":
-				Destroy (other.gameObject);
-				GameManager.instance.coins++;
-				break;
+		case "Coin":
+			Destroy (other.gameObject);
+			GameManager.instance.coins++;
+			break;
 
-			case "Hole":
-				GameManager.instance.game_over = true;
-				break;
+		case "Hole":
+			GameManager.instance.game_over = true;
+			break;
 		}
 	}
 }
