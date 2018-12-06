@@ -6,9 +6,9 @@ public class SpawnManager : MonoBehaviour {
 
 	public static SpawnManager instance;
 
-	public GameObject ground;
-	public GameObject coin;
-	public GameObject[] obstacles_prefabs;
+	private GameObject ground;
+	private GameObject coin;
+	private GameObject[] obstacles_prefabs;
 
 	private GameObject grounds;
 	private GameObject coins;
@@ -18,6 +18,9 @@ public class SpawnManager : MonoBehaviour {
 
 	void Init() {
 		instance = this;
+		ground = Resources.Load <GameObject>("prefabs/Ground");
+		coin = Resources.Load <GameObject>("prefabs/Coin");
+		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
 		obstacle_delay_time = 2f;
 		grounds = GameObject.Find ("Grounds");
 		coins = new GameObject ();
@@ -57,7 +60,7 @@ public class SpawnManager : MonoBehaviour {
 			obstacles.transform
 		);
 		obstacle_created.tag = "Obstacle";
-		Invoke ("CreateObstacle", Random.Range (2, 5));
+		Invoke ("CreateObstacle", Random.Range (2f, 5f));
 	}
 
 	public void CreateCoin() {
@@ -70,7 +73,7 @@ public class SpawnManager : MonoBehaviour {
           	);
 			coin_created.tag = "Coin";
 		}
-		Invoke ("CreateCoin", Random.Range (1, 3));
+		Invoke ("CreateCoin", Random.Range (1f, 3f));
 	}
 
 }
