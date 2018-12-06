@@ -42,6 +42,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 		case "Coil":
 			GameManager.instance.has_coil = true;
+			GameManager.instance.should_remove_coil = false;
 			break;
 		}
 	}
