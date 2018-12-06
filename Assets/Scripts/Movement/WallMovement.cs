@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class WallMovement : MonoBehaviour {
 
-	private Vector2 texture_offset;
-
-	void Start () {
-		
-	}
-	
 	void Update () {
 		if(!GameManager.instance.paused)
-			GetComponent<Renderer> ().material.mainTextureOffset += Vector2.left * ((int) SpeedManager.instance.game_speed) / 1000;
+			GetComponent<Renderer> ().material.mainTextureOffset +=
+				Vector2.left * ((int) SpeedManager.instance.game_speed) / 1000;
 	}
 }

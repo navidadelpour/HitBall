@@ -14,6 +14,9 @@ public class SpeedManager : MonoBehaviour {
 	private float speed_decrease_amount;
 
 	public float player_speed;
+	public float player_max_speed;
+	public float player_min_speed;
+	public float player_speed_increase_amount;
 
 	void Init() {
 		instance = this;
@@ -24,7 +27,10 @@ public class SpeedManager : MonoBehaviour {
 		speed_decrease_amount = .2f;
 		game_speed = min_speed;
 
-		player_speed = 10f;
+		player_max_speed = 12f;
+		player_min_speed = 8f;
+		player_speed_increase_amount = .2f;
+		player_speed = player_max_speed;
 	}
 
 	void Start () {
@@ -41,13 +47,19 @@ public class SpeedManager : MonoBehaviour {
 		if (should_increase) {
 			if (game_speed < max_speed)
 				game_speed += speed_increase_amount;
+			if(player_speed > player_min_speed)	
+				player_speed -= speed_increase_amount;
 		} else {
 			if (game_speed > min_speed)
 				game_speed -= speed_decrease_amount;
 			else
 				game_speed += speed_increase_amount;
+			
+			if (player_speed < player_max_speed)
+				player_speed += speed_decrease_amount;
+			else
+				player_speed -= speed_increase_amount;
 		}
 	}
-
 
 }

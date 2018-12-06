@@ -23,13 +23,14 @@ public class OffCameraDestroyer : MonoBehaviour {
 
 	IEnumerator check() {
 		yield return new WaitForSeconds (delay);
-		if (!object_renderer.isVisible) {
+		if (!object_renderer.isVisible && transform.position.x < 0) {
 			this.name = "DestroyedObject";
 			Destroy (this.gameObject);
 			switch (this.tag) {
-			case "Ground":
-				SpawnManager.instance.CreateGround();
-				break;
+				case "Ground":
+				case "Hole":
+					SpawnManager.instance.CreateGround();
+					break;
 			}
 		}
 		StartCoroutine (check ());
