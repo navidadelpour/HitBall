@@ -24,8 +24,7 @@ public class SpawnManager : MonoBehaviour {
 
 	private GameObject[] obstacles_prefabs;
 	private GameObject obstacles;
-	private int obstacle_chance = 30;
-	private float obstacle_delay_time = 2f;
+	private int obstacle_chance = 90;
 
 	private GameObject last_item;
 	private Vector3 on_ground_position;
@@ -80,13 +79,13 @@ public class SpawnManager : MonoBehaviour {
 				item_created.tag = "Hole";
 				holes_in_row++;
 			} else {
-				holes_in_row = 0;
-				if (HasChance (obstacle_chance))
+				if (HasChance (obstacle_chance) && holes_in_row == 0)
 					CreateObstacle ();
 				else if (HasChance (coin_chance))
 					CreateCoin ();
 				else if (HasChance (coil_chance))
 					CreateCoil ();
+				holes_in_row = 0;
 			}
 		}
 	}
@@ -128,6 +127,6 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	public bool HasChance(int chance) {
-		return Random.Range (0, 100) < hole_chance;
+		return Random.Range (0, 100) < chance;
 	}
 }
