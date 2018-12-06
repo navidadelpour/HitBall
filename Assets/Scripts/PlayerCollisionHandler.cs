@@ -39,6 +39,10 @@ public class PlayerCollisionHandler : MonoBehaviour {
 		case "Hole":
 			GameManager.instance.game_over = true;
 			break;
+
+		case "Coil":
+			GameManager.instance.has_coil = true;
+			break;
 		}
 	}
 }

@@ -7,37 +7,45 @@ public class SpawnManager : MonoBehaviour {
 	public static SpawnManager instance;
 
 	private GameObject coin_prefab;
-	private GameObject ground_prefab;
-	private GameObject[] obstacles_prefabs;
-
-	private GameObject grounds;
 	private GameObject coins;
+	private int coin_chance = 30;
+
+	private GameObject coil_prefab;
+	private GameObject coils;
+	private int coil_chance = 30;
+
+	private GameObject ground_prefab;
+	private GameObject grounds;
+	private int ground_limit = 10;
+
+	private int hole_chance = 30;
+	private int holes_in_row = 0;
+	private int max_holes_in_row = 2;
+
+	private GameObject[] obstacles_prefabs;
 	private GameObject obstacles;
+	private int obstacle_chance = 30;
+	private float obstacle_delay_time = 2f;
 
 	private GameObject last_item;
 	private Vector3 on_ground_position;
 
-	private int hole_chance = 30;
-	private int obstacle_chance = 30;
-	private int coin_chance = 30;
-
-
-	private float obstacle_delay_time = 2f;
-	private int ground_limit = 10;
 	private bool is_safe = true;
-	private int holes_in_row = 0;
-	private int max_holes_in_row = 2;
 
 	void Init() {
 		instance = this;
 		ground_prefab = Resources.Load <GameObject>("prefabs/Ground");
 		coin_prefab = Resources.Load <GameObject>("prefabs/Coin");
+		coil_prefab = Resources.Load <GameObject>("prefabs/Coil");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
 
 		grounds = GameObject.Find ("Grounds");
 
 		coins = new GameObject ();
 		coins.name = "Coins";
+
+		coils = new GameObject ();
+		coils.name = "Coils";
 
 		obstacles = new GameObject ();
 		obstacles.name = "Obstacles";
@@ -77,6 +85,8 @@ public class SpawnManager : MonoBehaviour {
 					CreateObstacle ();
 				else if (HasChance (coin_chance))
 					CreateCoin ();
+				else if (HasChance (coil_chance))
+					CreateCoil ();
 			}
 		}
 	}
@@ -103,9 +113,18 @@ public class SpawnManager : MonoBehaviour {
 				coins.transform
           	);
 			coin_created.tag = "Coin";
-			coin_created.name = "Coin";
 			coin_created.transform.parent = coins_group.transform;
 		}
+	}
+
+	public void CreateCoil() {
+		GameObject coil_created = Instantiate(
+			coil_prefab,
+			last_item.transform.position + on_ground_position,
+			Quaternion.identity,
+			coils.transform
+		);
+		coil_created.tag = "Coil";
 	}
 
 	public bool HasChance(int chance) {
