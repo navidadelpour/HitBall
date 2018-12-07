@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour {
 
-	public static InputManager instance;
+	public static InputManager self;
 
 	private GameObject canvas;
 	GraphicRaycaster graphic_raycaster;
@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour {
 	private bool should_act;
 
 	void Init() {
-		instance = this;
+		self = this;
 		canvas = GameObject.Find ("Canvas");
 		graphic_raycaster = canvas.GetComponent<GraphicRaycaster>();
 		event_systems = canvas.GetComponent<EventSystem>();
@@ -45,8 +45,8 @@ public class InputManager : MonoBehaviour {
 	}
 
 	void game_act() {
-		SpeedManager.instance.ShouldIncreaseSpeed (Input.GetMouseButton (0));
-		GameManager.instance.has_shield = Input.GetMouseButton (1);
+		SpeedManager.self.ShouldIncreaseSpeed (Input.GetMouseButton (0));
+		GameManager.self.has_shield = Input.GetMouseButton (1);
 	}
 
 }

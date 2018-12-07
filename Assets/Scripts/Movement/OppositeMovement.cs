@@ -16,11 +16,7 @@ public class OppositeMovement : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		body.velocity = GetSpeed();
+		body.velocity = Vector2.left * SpeedManager.self.game_speed;
 	}
 
-	Vector2 GetSpeed() {
-		speed = SpeedManager.instance.game_speed;
-		return Vector2.left * speed;
-	}
 }

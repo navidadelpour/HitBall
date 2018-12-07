@@ -21,8 +21,8 @@ public class OffCameraDestroyer : MonoBehaviour {
 			switch (this.tag) {
 			case "Ground":
 			case "Hole":
-				GameManager.instance.IncreamentScore ();
-				SpawnManager.instance.CreateGround();
+				GameManager.self.IncreamentScore ();
+				SpawnManager.self.CreateGround();
 				break;
 			}
 		}

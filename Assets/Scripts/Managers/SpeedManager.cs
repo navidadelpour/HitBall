@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpeedManager : MonoBehaviour {
 
-	public static SpeedManager instance;
+	public static SpeedManager self;
 
 	public float game_speed;
 	public float max_speed;
@@ -19,7 +19,7 @@ public class SpeedManager : MonoBehaviour {
 	public float player_speed_increase_amount;
 
 	void Awake() {
-		instance = this;
+		self = this;
 	}
 
 	void Init() {

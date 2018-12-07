@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour {
 
-	public static UiManager instance;
+	public static UiManager self;
 
 	public Text score_text;
 	public Text coins_text;
 
 	void Awake() {
-		instance = this;
+		self = this;
 	}
 
 	void Init() {
@@ -30,19 +30,19 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void PauseButtonHandler() {
-		if(GameManager.instance.paused)
+		if(GameManager.self.paused)
 			Time.timeScale = 1;
 		else
 			Time.timeScale = 0;
-		GameManager.instance.paused = !GameManager.instance.paused;
+		GameManager.self.paused = !GameManager.self.paused;
 	}
 
 	public void SetScore() {
-		score_text.text = GameManager.instance.score + "";
+		score_text.text = GameManager.self.score + "";
 	}
 
 	public void SetCoins() {
-		coins_text.text = GameManager.instance.coins + "";
+		coins_text.text = GameManager.self.coins + "";
 	}
 
 }

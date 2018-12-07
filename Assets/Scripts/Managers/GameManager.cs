@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	public static GameManager instance;
+	public static GameManager self;
 	public bool has_shield;
 	public bool has_coil;
 	public bool should_remove_coil;
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 	public int coins;
 
 	void Awake() {
-		instance = this;
+		self = this;
 	}
 
 	void Init() {
@@ -45,12 +45,12 @@ public class GameManager : MonoBehaviour {
 
 	public void IncreamentScore() {
 		score++;
-		UiManager.instance.SetScore ();
+		UiManager.self.SetScore ();
 	}
 
 	public void IncreamentCoins() {
 		coins++;
-		UiManager.instance.SetCoins ();
+		UiManager.self.SetCoins ();
 	}
 
 

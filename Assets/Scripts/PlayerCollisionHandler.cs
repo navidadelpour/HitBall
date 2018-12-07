@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerCollisionHandler : MonoBehaviour {
 
-	public static PlayerCollisionHandler instance;
+	public static PlayerCollisionHandler self;
 
 	void Awake() {
-		instance = this;
+		self = this;
 	}
 
 	void Init() {
@@ -24,7 +24,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Ground") {
-			PlayerMovement.instance.Jump ();
+			PlayerMovement.self.Jump ();
 		}
 	}
 
@@ -32,21 +32,21 @@ public class PlayerCollisionHandler : MonoBehaviour {
 		switch (other.gameObject.tag) {
 
 		case "Obstacle":
-			GameManager.instance.game_over = !GameManager.instance.has_shield;
+			GameManager.self.game_over = !GameManager.self.has_shield;
 			break;
 
 		case "Coin":
 			Destroy (other.gameObject);
-			GameManager.instance.IncreamentCoins();
+			GameManager.self.IncreamentCoins();
 			break;
 
 		case "Hole":
-			GameManager.instance.game_over = true;
+			GameManager.self.game_over = true;
 			break;
 
 		case "Coil":
-			GameManager.instance.has_coil = true;
-			GameManager.instance.should_remove_coil = false;
+			GameManager.self.has_coil = true;
+			GameManager.self.should_remove_coil = false;
 			break;
 		}
 	}

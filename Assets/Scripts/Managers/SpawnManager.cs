@@ -4,32 +4,34 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour {
 
-	public static SpawnManager instance;
+	public static SpawnManager self;
 
 	private GameObject coin_prefab;
-	private int coin_chance = 30;
-
 	private GameObject coil_prefab;
-	private int coil_chance = 30;
-
 	private GameObject ground_prefab;
-	private GameObject grounds;
-	private int ground_limit = 10;
-
-	private int hole_chance = 30;
-	private int holes_in_row = 0;
-	private int max_holes_in_row = 2;
-
 	private GameObject[] obstacles_prefabs;
+	private GameObject grounds;
+	private GameObject last_item;
+
+	private int coin_chance = 30;
+	private int coil_chance = 30;
+	private int hole_chance = 30;
 	private int obstacle_chance = 30;
 
-	private GameObject last_item;
-	private Vector3 on_ground_offset;
+	private int coils_in_scene;
+	private int holes_in_scene;
+	private int obstacles_in_scene;
 
+	private int max_coils_in_scene = 2;
+	private int max_holes_in_scene = 2;
+	private int max_obstacles_in_scene = 3;
+
+	private int ground_limit = 6;
+	private Vector3 on_ground_offset;
 	private bool is_safe = true;
 
 	void Awake() {
-		instance = this;
+		self = this;
 	}
 
 	void Init() {
@@ -67,21 +69,21 @@ public class SpawnManager : MonoBehaviour {
 		last_item = item_created;
 
 		if (!is_safe){
-			if (HasChance (hole_chance) && holes_in_row < max_holes_in_row) {
+			if (HasChance (hole_chance) && holes_in_scene < max_holes_in_scene) {
 				item_created.GetComponent<BoxCollider2D> ().isTrigger = true;
 				item_created.GetComponent<BoxCollider2D> ().offset = new Vector3(0, -0.5f);
 				item_created.GetComponent<Renderer> ().enabled = false;
 				item_created.name = "Hole";
 				item_created.tag = "Hole";
-				holes_in_row++;
+				holes_in_scene++;
 			} else {
-				if (HasChance (obstacle_chance) && holes_in_row == 0)
+				if (HasChance (obstacle_chance) && holes_in_scene == 0)
 					CreateObstacle ();
 				else if (HasChance (coin_chance))
 					CreateCoin ();
 				else if (HasChance (coil_chance))
 					CreateCoil ();
-				holes_in_row = 0;
+				holes_in_scene = 0;
 			}
 		}
 	}
@@ -97,7 +99,6 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	public void CreateCoin() {
-		GameObject coins_group = new GameObject ();
 		for (int i = 0; i < Random.Range (1, 4); i++) {
 			GameObject coin_created = Instantiate (
              	coin_prefab,

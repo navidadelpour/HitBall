@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-	public static PlayerMovement instance;
+	public static PlayerMovement self;
 	private float jump_time;
 	private Rigidbody2D body;
 	private bool jumping;
 	private int coil_jump_const = 6;
 
 	void Awake() {
-		instance = this;
+		self = this;
 	}
 
 	void Init() {
@@ -37,15 +37,15 @@ public class PlayerMovement : MonoBehaviour {
 		if (!jumping) {
 			jump_time = Time.time;
 			jumping = true;
-			if (GameManager.instance.should_remove_coil) {
-				GameManager.instance.should_remove_coil = false;
-				GameManager.instance.has_coil = false;
+			if (GameManager.self.should_remove_coil) {
+				GameManager.self.should_remove_coil = false;
+				GameManager.self.has_coil = false;
 			}
 		}
 		body.velocity = Vector2.Lerp (
-			Vector2.up * SpeedManager.instance.player_speed,
+			Vector2.up * SpeedManager.self.player_speed,
 			Vector2.zero,
-			(Time.time - jump_time) * SpeedManager.instance.player_speed / (8f + (GameManager.instance.has_coil ? coil_jump_const : 0)));
+			(Time.time - jump_time) * SpeedManager.self.player_speed / (8f + (GameManager.self.has_coil ? coil_jump_const : 0)));
 	}
 
 	void Fall() {
@@ -55,8 +55,8 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		body.velocity = Vector2.Lerp (
 			Vector2.zero,
-			Vector2.down * SpeedManager.instance.player_speed,
-			(Time.time - jump_time) * SpeedManager.instance.player_speed / (8f + (GameManager.instance.has_coil ? coil_jump_const : 0)));
+			Vector2.down * SpeedManager.self.player_speed,
+			(Time.time - jump_time) * SpeedManager.self.player_speed / (8f + (GameManager.self.has_coil ? coil_jump_const : 0)));
 	}
 
 }
