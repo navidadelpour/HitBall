@@ -18,13 +18,15 @@ public class SpawnManager : MonoBehaviour {
 	private int hole_chance = 30;
 	private int obstacle_chance = 30;
 
-	private int coils_in_scene;
-	private int holes_in_scene;
-	private int obstacles_in_scene;
+	private int coins_in_order;
+	private int coils_in_order;
+	private int holes_in_order;
+	private int obstacles_in_order;
 
-	private int max_coils_in_scene = 2;
-	private int max_holes_in_scene = 2;
-	private int max_obstacles_in_scene = 3;
+	private int max_coins_in_order = 1;
+	private int max_coils_in_order = 2;
+	private int max_holes_in_order = 2;
+	private int max_obstacles_in_order = 2;
 
 	private int ground_limit = 6;
 	private Vector3 on_ground_offset;
@@ -69,21 +71,25 @@ public class SpawnManager : MonoBehaviour {
 		last_item = item_created;
 
 		if (!is_safe){
-			if (HasChance (hole_chance) && holes_in_scene < max_holes_in_scene) {
+			if (HasChance (hole_chance) && holes_in_order < max_holes_in_order) {
 				item_created.GetComponent<BoxCollider2D> ().isTrigger = true;
 				item_created.GetComponent<BoxCollider2D> ().offset = new Vector3(0, -0.5f);
 				item_created.GetComponent<Renderer> ().enabled = false;
 				item_created.name = "Hole";
 				item_created.tag = "Hole";
-				holes_in_scene++;
+				holes_in_order++;
 			} else {
-				if (HasChance (obstacle_chance) && holes_in_scene == 0)
+				if (HasChance (obstacle_chance) && obstacles_in_order < max_obstacles_in_order && holes_in_order == 0)
 					CreateObstacle ();
-				else if (HasChance (coin_chance))
+				else if (HasChance (coin_chance) && coins_in_order < max_coins_in_order) {
 					CreateCoin ();
-				else if (HasChance (coil_chance))
+					obstacles_in_order = 0;
+				} else if (HasChance (coil_chance) && coils_in_order < max_coils_in_order) {
 					CreateCoil ();
-				holes_in_scene = 0;
+					coins_in_order = 0;
+				} else
+					coils_in_order = 0;
+				holes_in_order = 0;
 			}
 		}
 	}
@@ -96,6 +102,7 @@ public class SpawnManager : MonoBehaviour {
 			last_item.transform
 		);
 		obstacle_created.tag = "Obstacle";
+		obstacles_in_order++;
 	}
 
 	public void CreateCoin() {
@@ -108,6 +115,7 @@ public class SpawnManager : MonoBehaviour {
           	);
 			coin_created.tag = "Coin";
 		}
+		coins_in_order++;
 	}
 
 	public void CreateCoil() {
@@ -118,6 +126,7 @@ public class SpawnManager : MonoBehaviour {
 			last_item.transform
 		);
 		coil_created.tag = "Coil";
+		coils_in_order++;
 	}
 
 }
