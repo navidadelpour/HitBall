@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour {
 
 			graphic_raycaster.Raycast(pointer_event_data, results);
 
-			should_act = results.Count == 0;
+			should_act = results.Count == 0 || results[0].gameObject.name != "PauseButton";
 		}
 
 		if (should_act) {
