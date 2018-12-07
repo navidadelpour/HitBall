@@ -24,15 +24,18 @@ public class SpawnManager : MonoBehaviour {
 
 	private GameObject[] obstacles_prefabs;
 	private GameObject obstacles;
-	private int obstacle_chance = 90;
+	private int obstacle_chance = 30;
 
 	private GameObject last_item;
-	private Vector3 on_ground_position;
+	private Vector3 on_ground_offset;
 
 	private bool is_safe = true;
 
-	void Init() {
+	void Awake() {
 		instance = this;
+	}
+
+	void Init() {
 		ground_prefab = Resources.Load <GameObject>("prefabs/Ground");
 		coin_prefab = Resources.Load <GameObject>("prefabs/Coin");
 		coil_prefab = Resources.Load <GameObject>("prefabs/Coil");
@@ -54,8 +57,12 @@ public class SpawnManager : MonoBehaviour {
 		Init ();
 		for(int i = 0; i < ground_limit; i++)
 			CreateGround ();
-		on_ground_position = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.localScale.x;
 		is_safe = false;
+		on_ground_offset = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.localScale.x;
+	}
+
+	public bool HasChance(int chance) {
+		return Random.Range (0, 100) < chance;
 	}
 	
 	public void CreateGround() {
@@ -93,7 +100,7 @@ public class SpawnManager : MonoBehaviour {
 	public void CreateObstacle() {
 		GameObject obstacle_created = Instantiate(
 			obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length - 1)],
-			last_item.transform.position + on_ground_position,
+			last_item.transform.position + on_ground_offset,
 			Quaternion.identity,
 			obstacles.transform
 		);
@@ -104,10 +111,10 @@ public class SpawnManager : MonoBehaviour {
 		GameObject coins_group = new GameObject ();
 		coins_group.name = "CoinGroup";
 		coins_group.transform.parent = coins.transform;
-		for (int i = 0; i < Random.Range (3, 5); i++) {
+		for (int i = 0; i < Random.Range (1, 4); i++) {
 			GameObject coin_created = Instantiate (
              	coin_prefab,
-				last_item.transform.position + Vector3.up * i + on_ground_position,
+				last_item.transform.position + Vector3.up * i + on_ground_offset,
 				Quaternion.identity,
 				coins.transform
           	);
@@ -119,14 +126,11 @@ public class SpawnManager : MonoBehaviour {
 	public void CreateCoil() {
 		GameObject coil_created = Instantiate(
 			coil_prefab,
-			last_item.transform.position + on_ground_position,
+			last_item.transform.position + on_ground_offset,
 			Quaternion.identity,
 			coils.transform
 		);
 		coil_created.tag = "Coil";
 	}
 
-	public bool HasChance(int chance) {
-		return Random.Range (0, 100) < chance;
-	}
 }

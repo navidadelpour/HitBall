@@ -4,34 +4,28 @@ using UnityEngine;
 
 public class OffCameraDestroyer : MonoBehaviour {
 
-	private float delay;
+	private int destroy_offset = -12;
 
 	void Init() {
-		delay = .5f;
+
 	}
 
 	void Start () {
 		Init ();
-		StartCoroutine (check());
 	}
 	
 	void Update () {
-	
-	}
-
-	IEnumerator check() {
-		yield return new WaitForSeconds (delay);
-		if (transform.position.x < -10) {
+		if (transform.position.x < destroy_offset) {
 			this.name = "DestroyedObject";
 			Destroy (this.gameObject);
 			switch (this.tag) {
-				case "Ground":
-				case "Hole":
-					SpawnManager.instance.CreateGround();
-					break;
+			case "Ground":
+			case "Hole":
+				GameManager.instance.IncreamentScore ();
+				SpawnManager.instance.CreateGround();
+				break;
 			}
 		}
-		StartCoroutine (check ());
 	}
 
 }

@@ -18,8 +18,11 @@ public class SpeedManager : MonoBehaviour {
 	public float player_min_speed;
 	public float player_speed_increase_amount;
 
-	void Init() {
+	void Awake() {
 		instance = this;
+	}
+
+	void Init() {
 		min_speed = 5f;
 		max_speed = 15f;
 		bound_increase_amount = .001f;

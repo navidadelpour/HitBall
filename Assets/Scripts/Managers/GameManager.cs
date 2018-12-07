@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour {
 	public int score;
 	public int coins;
 
-	void Init() {
+	void Awake() {
 		instance = this;
+	}
+
+	void Init() {
+
 	}
 
 	void Start () {
@@ -38,5 +42,16 @@ public class GameManager : MonoBehaviour {
 	void SetShouldRemoveCoil() {
 		should_remove_coil = true;
 	}
+
+	public void IncreamentScore() {
+		score++;
+		UiManager.instance.SetScore ();
+	}
+
+	public void IncreamentCoins() {
+		coins++;
+		UiManager.instance.SetCoins ();
+	}
+
 
 }

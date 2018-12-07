@@ -10,8 +10,11 @@ public class PlayerMovement : MonoBehaviour {
 	private bool jumping;
 	private int coil_jump_const = 6;
 
-	void Init() {
+	void Awake() {
 		instance = this;
+	}
+
+	void Init() {
 		body = GetComponent<Rigidbody2D> ();
 	}
 

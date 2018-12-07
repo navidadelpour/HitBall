@@ -6,8 +6,12 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 	public static PlayerCollisionHandler instance;
 
-	void Init() {
+	void Awake() {
 		instance = this;
+	}
+
+	void Init() {
+
 	}
 
 	void Start () {
@@ -33,7 +37,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 		case "Coin":
 			Destroy (other.gameObject);
-			GameManager.instance.coins++;
+			GameManager.instance.IncreamentCoins();
 			break;
 
 		case "Hole":
