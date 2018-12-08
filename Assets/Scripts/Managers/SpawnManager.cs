@@ -13,8 +13,8 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject grounds;
 	private GameObject last_item;
 
-	private int coin_chance = 30;
-	private int coil_chance = 30;
+	private int coin_chance = 10;
+	private int coil_chance = 10;
 	private int hole_chance = 30;
 	private int obstacle_chance = 30;
 
@@ -27,6 +27,9 @@ public class SpawnManager : MonoBehaviour {
 	private int max_coils_in_order = 2;
 	private int max_holes_in_order = 2;
 	private int max_obstacles_in_order = 2;
+
+	private int min_coins = 1;
+	private int max_coins = 3;
 
 	private int ground_limit = 6;
 	private Vector3 on_ground_offset;
@@ -69,9 +72,8 @@ public class SpawnManager : MonoBehaviour {
 		item_created.name = "Ground";
 		item_created.tag = "Ground";
 		last_item = item_created;
-
 		if (!is_safe){
-			if (HasChance (hole_chance) && holes_in_order < max_holes_in_order) {
+			if (HasChance (hole_chance) && holes_in_order < max_holes_in_order && obstacles_in_order == 0) {
 				item_created.GetComponent<BoxCollider2D> ().isTrigger = true;
 				item_created.GetComponent<BoxCollider2D> ().offset = new Vector3(0, -0.5f);
 				item_created.GetComponent<Renderer> ().enabled = false;
@@ -106,7 +108,7 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	public void CreateCoin() {
-		for (int i = 0; i < Random.Range (1, 4); i++) {
+		for (int i = 0; i < Random.Range (min_coins, max_coins + 1); i++) {
 			GameObject coin_created = Instantiate (
              	coin_prefab,
 				last_item.transform.position + Vector3.up * i + on_ground_offset,

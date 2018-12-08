@@ -24,7 +24,7 @@ public class SpeedManager : MonoBehaviour {
 
 	void Init() {
 		min_speed = 5f;
-		max_speed = 15f;
+		max_speed = 10f;
 		bound_increase_amount = .001f;
 		speed_increase_amount = .4f;
 		speed_decrease_amount = .2f;

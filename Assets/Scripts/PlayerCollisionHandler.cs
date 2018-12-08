@@ -45,6 +45,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			break;
 
 		case "Coil":
+			PlayerMovement.self.Jump ();
 			GameManager.self.has_coil = true;
 			GameManager.self.should_remove_coil = false;
 			break;
