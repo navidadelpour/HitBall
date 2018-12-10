@@ -31,6 +31,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		switch (other.gameObject.tag) {
 
+		case "Block":
 		case "Obstacle":
 			GameManager.self.game_over = !GameManager.self.has_shield;
 			break;
