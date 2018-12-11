@@ -22,7 +22,7 @@ public class OffCameraDestroyer : MonoBehaviour {
 			case "Ground":
 			case "Hole":
 				GameManager.self.IncreamentScore ();
-				SpawnManager.self.CreateGround();
+				SpawnManager.self.Spawn();
 				break;
 			}
 		}

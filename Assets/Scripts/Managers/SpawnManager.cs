@@ -17,7 +17,7 @@ public class SpawnManager : MonoBehaviour {
 	private int coin_chance = 10;
 	private int coil_chance = 10;
 	private int hole_chance = 30;
-	private int block_chance = 30;
+	private int block_chance = 10;
 	private int obstacle_chance = 30;
 
 	private int coins_in_order;
@@ -39,7 +39,6 @@ public class SpawnManager : MonoBehaviour {
 
 	private int ground_limit = 6;
 	private Vector3 on_ground_offset;
-	private bool is_safe = true;
 
 	void Awake() {
 		self = this;
@@ -53,72 +52,97 @@ public class SpawnManager : MonoBehaviour {
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
 
 		grounds = GameObject.Find ("Grounds");
-
 	}
 
 	void Start () {
 		Init ();
 		for(int i = 0; i < ground_limit; i++)
 			CreateGround ();
-		is_safe = false;
 		on_ground_offset = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y;
+	}
+
+	public void Spawn() {
+		CreateGround ();
+		if (Conditions("Hole")) {
+			CreateHole ();
+		} else if (Conditions("Obstacle")) {
+			CreateObstacle ();
+		} else if (Conditions("Block")) {
+			CreateBlock ();
+		} else if (Conditions("Coil")) {
+			CreateCoil ();
+		} else if (Conditions("Coin")) {
+			CreateCoin ();
+		} else {
+			ZeroAllExcept (ref obstacles_in_order);
+		}
 	}
 
 	public bool HasChance(int chance) {
 		return Random.Range (0, 100) < chance;
 	}
-	
+
+	public void ZeroAllExcept(ref int var_name) {
+		int previous_value = var_name;
+		coils_in_order = 0;
+		obstacles_in_order = 0;
+		coins_in_order = 0;
+		blocks_in_order = 0;
+		grounds_in_order = 0;
+		holes_in_order = 0;
+		var_name = previous_value + 1;
+	}
+
+	public bool Conditions(string name) {
+		bool return_value = false;
+		switch (name) {
+		case "Hole":
+			return_value = HasChance (hole_chance)
+			&& holes_in_order < max_holes_in_order
+			&& obstacles_in_order == 0;
+			break;
+		case "Obstacle":
+			return_value = (HasChance (obstacle_chance) || grounds_in_order > max_grounds_in_order)
+			&& obstacles_in_order < max_obstacles_in_order
+			&& holes_in_order == 0;
+			break;
+		case "Block":
+			return_value = HasChance (block_chance)
+			&& blocks_in_order < max_blocks_in_order
+			&& holes_in_order == 0;
+			break;
+		case "Coil":
+			return_value = HasChance (coil_chance)
+			&& coils_in_order < max_coils_in_order;
+			break;
+		case "Coin":
+			return_value = HasChance (coin_chance)
+			&& coins_in_order < max_coins_in_order;
+			break;
+		}
+		return return_value;
+	}
+
 	public void CreateGround() {
 		last_item = grounds.transform.GetChild (grounds.transform.childCount - 1).gameObject;
 		GameObject item_created = Instantiate (
-	        ground_prefab,
-	        last_item.transform.position + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.localScale.x,
-	        Quaternion.identity,
+			ground_prefab,
+			last_item.transform.position + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.localScale.x,
+			Quaternion.identity,
 			grounds.transform
 		);
 		item_created.name = "Ground";
 		item_created.tag = "Ground";
 		last_item = item_created;
-		if (!is_safe){
-			if (HasChance (hole_chance) && holes_in_order < max_holes_in_order && obstacles_in_order == 0) {
-				item_created.GetComponent<BoxCollider2D> ().isTrigger = true;
-				item_created.GetComponent<BoxCollider2D> ().offset = new Vector3 (0, -0.5f);
-				item_created.GetComponent<Renderer> ().enabled = false;
-				item_created.name = "Hole";
-				item_created.tag = "Hole";
-				holes_in_order++;
-				grounds_in_order = 0;
-			} else {
-				if ((HasChance (obstacle_chance) || grounds_in_order > max_grounds_in_order) && obstacles_in_order < max_obstacles_in_order && holes_in_order == 0) {
-					CreateObstacle ();
-					coils_in_order = 0;
-					coins_in_order = 0;
-					blocks_in_order = 0;
-				} else if (HasChance (block_chance) && blocks_in_order < max_blocks_in_order && holes_in_order == 0) {
-					CreateBlock ();
-					coils_in_order = 0;
-					obstacles_in_order = 0;
-					coins_in_order = 0;
-				} else if (HasChance (coil_chance) && coils_in_order < max_coils_in_order) {
-					CreateCoil ();
-					obstacles_in_order = 0;
-					coins_in_order = 0;
-					blocks_in_order = 0;
-				} else if (HasChance (coin_chance) && coins_in_order < max_coins_in_order) {
-					CreateCoin ();
-					coils_in_order = 0;
-					obstacles_in_order = 0;
-					blocks_in_order = 0;
-				} else {
-					coils_in_order = 0;
-					obstacles_in_order = 0;
-					coins_in_order = 0;
-					blocks_in_order = 0;
-					grounds_in_order++;
-				}
-				holes_in_order = 0;
-			}
-		}
+	}
+
+	public void CreateHole() {
+		last_item.GetComponent<BoxCollider2D> ().isTrigger = true;
+		last_item.GetComponent<BoxCollider2D> ().offset = new Vector3 (0, -0.5f);
+		last_item.GetComponent<Renderer> ().enabled = false;
+		last_item.name = "Hole";
+		last_item.tag = "Hole";
+		ZeroAllExcept (ref holes_in_order);
 	}
 
 	public void CreateObstacle() {
@@ -129,9 +153,9 @@ public class SpawnManager : MonoBehaviour {
 			last_item.transform
 		);
 		obstacle_created.tag = "Obstacle";
-		obstacles_in_order++;
+		ZeroAllExcept (ref obstacles_in_order);
 	}
-
+		
 	public void CreateBlock() {
 		GameObject block_created = Instantiate(
 			block_prefab,
@@ -141,7 +165,7 @@ public class SpawnManager : MonoBehaviour {
 		);
 		block_created.GetComponent<SpriteRenderer> ().color = Random.Range (1, 3) % 2 == 0 ? Color.red : Color.blue;
 		block_created.tag = "Block";
-		blocks_in_order++;
+		ZeroAllExcept (ref blocks_in_order);
 	}
 
 
@@ -155,7 +179,7 @@ public class SpawnManager : MonoBehaviour {
           	);
 			coin_created.tag = "Coin";
 		}
-		coins_in_order++;
+		ZeroAllExcept (ref coins_in_order);
 	}
 
 	public void CreateCoil() {
@@ -166,7 +190,7 @@ public class SpawnManager : MonoBehaviour {
 			last_item.transform
 		);
 		coil_created.tag = "Coil";
-		coils_in_order++;
+		ZeroAllExcept (ref coils_in_order);
 	}
 
 }
