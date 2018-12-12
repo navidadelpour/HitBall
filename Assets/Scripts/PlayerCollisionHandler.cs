@@ -24,6 +24,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Ground") {
+			HeightManager.self.SetHeight ();
 			PlayerMovement.self.Jump ();
 		}
 	}
@@ -46,6 +47,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			break;
 
 		case "Coil":
+			HeightManager.self.SetHeight ();
 			PlayerMovement.self.Jump ();
 			GameManager.self.has_coil = true;
 			GameManager.self.should_remove_coil = false;
