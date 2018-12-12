@@ -8,8 +8,6 @@ public class InputManager : MonoBehaviour {
 
 	public static InputManager self;
 
-	public bool state;
-
 	private GameObject canvas;
 	private GraphicRaycaster graphic_raycaster;
 	private PointerEventData pointer_event_data;

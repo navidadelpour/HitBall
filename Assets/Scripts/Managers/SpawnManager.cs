@@ -159,7 +159,7 @@ public class SpawnManager : MonoBehaviour {
 	public void CreateBlock() {
 		GameObject block_created = Instantiate(
 			block_prefab,
-			last_item.transform.position + on_ground_offset + Vector3.up * Random.Range(1, 5),
+			last_item.transform.position + on_ground_offset + Vector3.up * Random.Range(1f, 6f),
 			Quaternion.identity,
 			last_item.transform
 		);
