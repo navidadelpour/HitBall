@@ -6,6 +6,8 @@ public class SpeedManager : MonoBehaviour {
 
 	public static SpeedManager self;
 
+	public SpeedStates state;
+
 	public float game_speed;
 	private float game_max_speed = 10f;
 	private float game_normal_speed = 7f;
@@ -37,6 +39,18 @@ public class SpeedManager : MonoBehaviour {
 		game_max_speed += game_bound_increase_amount;
 		game_normal_speed += game_bound_increase_amount;
 		game_min_speed += game_bound_increase_amount;
+
+		switch (state) {
+		case SpeedStates.INCREASE:
+			IncreaseSpeed ();
+			break;
+		case SpeedStates.NORMALIZE:
+			NormalizeSpeed ();
+			break;
+		case SpeedStates.DECREASE:
+			DecreaseSpeed ();
+			break;
+		}
 	}
 
 	public void NormalizeSpeed() {

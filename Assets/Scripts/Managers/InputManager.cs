@@ -46,14 +46,14 @@ public class InputManager : MonoBehaviour {
 		if (should_act) {
 			if (Input.GetMouseButton (0) && Input.mousePosition.x > Screen.width / 2) {
 				if (Input.mousePosition.y > Screen.height / 2)
-					SpeedManager.self.IncreaseSpeed ();
+					SpeedManager.self.state = SpeedStates.INCREASE;
 				else
-					SpeedManager.self.DecreaseSpeed ();
+					SpeedManager.self.state = SpeedStates.DECREASE;
 			}
 
 			GameManager.self.has_shield = Input.GetMouseButton (1);
 		} else {
-			SpeedManager.self.NormalizeSpeed ();
+			SpeedManager.self.state = SpeedStates.NORMALIZE;
 		}
 	}
 
