@@ -25,7 +25,17 @@ public class HeightManager : MonoBehaviour {
 	}
 
 	public void SetHeight() {
-		player_jump_height = player_max_jump_height;
+		switch (SpeedManager.self.state) {
+		case SpeedStates.INCREASE:
+			player_jump_height = player_max_jump_height;
+			break;
+		case SpeedStates.NORMALIZE:
+			player_jump_height = player_normal_jump_height;
+			break;
+		case SpeedStates.DECREASE:
+			player_jump_height = player_min_jump_height;
+			break;
+		}
 	}
 
 }
