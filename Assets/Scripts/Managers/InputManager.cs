@@ -29,24 +29,29 @@ public class InputManager : MonoBehaviour {
 
 	void Update () {
 		if (Input.anyKey) {
-			pointer_event_data = new PointerEventData(event_systems);
+			pointer_event_data = new PointerEventData (event_systems);
 			pointer_event_data.position = Input.mousePosition;
 
-			List<RaycastResult> results = new List<RaycastResult>();
+			List<RaycastResult> results = new List<RaycastResult> ();
 
-			graphic_raycaster.Raycast(pointer_event_data, results);
+			graphic_raycaster.Raycast (pointer_event_data, results);
 
-			should_act = results.Count == 0 || results[0].gameObject.name != "PauseButton";
-		}
-
+			should_act = results.Count == 0 || results [0].gameObject.name != "PauseButton";
+		} else
+			should_act = false;
+		
 		if (should_act) {
-			game_act ();
-		}
-	}
+			if (Input.GetMouseButton (0) && Input.mousePosition.x > Screen.width / 2) {
+				if (Input.mousePosition.y > Screen.height / 2)
+					SpeedManager.self.IncreaseSpeed ();
+				else
+					SpeedManager.self.DecreaseSpeed ();
+			}
 
-	void game_act() {
-		SpeedManager.self.ShouldIncreaseSpeed (Input.GetMouseButton (0));
-		GameManager.self.has_shield = Input.GetMouseButton (1);
+			GameManager.self.has_shield = Input.GetMouseButton (1);
+		} else {
+			SpeedManager.self.NormalizeSpeed ();
+		}
 	}
 
 }
