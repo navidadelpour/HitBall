@@ -8,12 +8,12 @@ public class InputManager : MonoBehaviour {
 
 	public static InputManager self;
 
-	private GameObject canvas;
-	GraphicRaycaster graphic_raycaster;
-	PointerEventData pointer_event_data;
-	EventSystem event_systems;
+	public bool state;
 
-	private bool should_act;
+	private GameObject canvas;
+	private GraphicRaycaster graphic_raycaster;
+	private PointerEventData pointer_event_data;
+	private EventSystem event_systems;
 
 	void Awake() {
 		self = this;
@@ -39,22 +39,28 @@ public class InputManager : MonoBehaviour {
 
 			graphic_raycaster.Raycast (pointer_event_data, results);
 
-			should_act = results.Count == 0 || results [0].gameObject.name != "PauseButton";
-		} else
-			should_act = false;
-		
-		if (should_act) {
-			if (Input.GetMouseButton (0) && Input.mousePosition.x > Screen.width / 2) {
-				if (Input.mousePosition.y > Screen.height / 2)
+			if (results.Count == 0 || results [0].gameObject.name != "PauseButton") {
+				switch (results [0].gameObject.name) {
+				case "JumpMaxButton":
 					SpeedManager.self.state = SpeedStates.INCREASE;
-				else
+					break;
+				case "JumpMinButton":
 					SpeedManager.self.state = SpeedStates.DECREASE;
-			}
+					break;
 
-			GameManager.self.has_shield = Input.GetMouseButton (1);
-		} else {
+				}
+				
+			}
+		} else
 			SpeedManager.self.state = SpeedStates.NORMALIZE;
-		}
+	}
+
+	public void PauseButtonHandler() {
+		if(GameManager.self.paused)
+			Time.timeScale = 1;
+		else
+			Time.timeScale = 0;
+		GameManager.self.paused = !GameManager.self.paused;
 	}
 
 }

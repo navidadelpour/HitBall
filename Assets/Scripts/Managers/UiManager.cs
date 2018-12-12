@@ -28,15 +28,7 @@ public class UiManager : MonoBehaviour {
 	void Update () {
 		
 	}
-
-	public void PauseButtonHandler() {
-		if(GameManager.self.paused)
-			Time.timeScale = 1;
-		else
-			Time.timeScale = 0;
-		GameManager.self.paused = !GameManager.self.paused;
-	}
-
+		
 	public void SetScore() {
 		score_text.text = GameManager.self.score + "";
 	}
