@@ -47,12 +47,16 @@ public class InputManager : MonoBehaviour {
 				case "JumpMinButton":
 					SpeedManager.self.state = SpeedStates.DECREASE;
 					break;
-
+				case "ShieldButton":
+					GameManager.self.has_shield = true;
+					break;
 				}
 				
 			}
-		} else
+		} else {
 			SpeedManager.self.state = SpeedStates.NORMALIZE;
+			GameManager.self.has_shield = false;
+		}
 	}
 
 	public void PauseButtonHandler() {
