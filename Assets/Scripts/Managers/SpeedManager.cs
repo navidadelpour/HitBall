@@ -7,34 +7,25 @@ public class SpeedManager : MonoBehaviour {
 	public static SpeedManager self;
 
 	public float game_speed;
-	public float max_speed;
-	public float normal_speed;
-	public float min_speed;
-	private float bound_increase_amount;
-	private float speed_diffrence_amount;
+	private float game_max_speed = 10f;
+	private float game_normal_speed = 7f;
+	private float game_min_speed = 4f;
+	private float game_speed_diffrence_amount = .2f;
+	private float game_bound_increase_amount = 0.001f; 
 
 	public float player_speed;
-	public float player_max_speed;
-	public float player_normal_speed;
-	public float player_min_speed;
-	public float player_speed_difference_amount;
+	private float player_max_speed = 12f;
+	private float player_normal_speed = 10f;
+	private float player_min_speed = 8f;
+	private float player_speed_difference_amount = .2f;
+
 
 	void Awake() {
 		self = this;
 	}
 
 	void Init() {
-		max_speed = 10f;
-		normal_speed = 7f;
-		min_speed = 4f;
-		bound_increase_amount = .001f;
-		speed_diffrence_amount = .2f;
-		game_speed = normal_speed;
-
-		player_max_speed = 12f;
-		player_normal_speed = 10f;
-		player_min_speed = 8f;
-		player_speed_difference_amount = .2f;
+		game_speed = game_normal_speed;
 		player_speed = player_normal_speed;
 	}
 
@@ -42,17 +33,17 @@ public class SpeedManager : MonoBehaviour {
 		Init ();
 	} 
 
-	void Update1 () {
-		max_speed += bound_increase_amount;
-		normal_speed += bound_increase_amount;
-		min_speed += bound_increase_amount;
+	void Update () {
+		game_max_speed += game_bound_increase_amount;
+		game_normal_speed += game_bound_increase_amount;
+		game_min_speed += game_bound_increase_amount;
 	}
 
 	public void NormalizeSpeed() {
-		if (game_speed > normal_speed)
-			game_speed -= speed_diffrence_amount;
+		if (game_speed > game_normal_speed)
+			game_speed -= game_speed_diffrence_amount;
 		else 
-			game_speed += speed_diffrence_amount;
+			game_speed += game_speed_diffrence_amount;
 
 		if (player_speed > player_normal_speed)
 			player_speed -= player_speed_difference_amount;
@@ -61,15 +52,15 @@ public class SpeedManager : MonoBehaviour {
 	}
 
 	public void IncreaseSpeed() {
-		if (game_speed < max_speed)
-			game_speed += speed_diffrence_amount;
+		if (game_speed < game_max_speed)
+			game_speed += game_speed_diffrence_amount;
 		if (player_speed > player_min_speed)
 			player_speed -= player_speed_difference_amount;
 	}
 
 	public void DecreaseSpeed() {
-		if (game_speed > min_speed)
-			game_speed -= speed_diffrence_amount;
+		if (game_speed > game_min_speed)
+			game_speed -= game_speed_diffrence_amount;
 		if (player_speed < player_max_speed)
 			player_speed += player_speed_difference_amount;
 		

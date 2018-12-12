@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour {
 	private float jump_time;
 	private Rigidbody2D body;
 	private bool jumping;
-	private int coil_jump_height = 4;
-	private int jump_height = 6;
 
 	void Awake() {
 		self = this;
@@ -46,7 +44,9 @@ public class PlayerMovement : MonoBehaviour {
 		body.velocity = Vector2.Lerp (
 			Vector2.up * SpeedManager.self.player_speed,
 			Vector2.zero,
-			(Time.time - jump_time) * SpeedManager.self.player_speed / (jump_height + (GameManager.self.has_coil ? coil_jump_height : 0)));
+			(Time.time - jump_time) * SpeedManager.self.player_speed /
+			(HeightManager.self.player_jump_height + (GameManager.self.has_coil ? HeightManager.self.player_coil_jump_height : 0))
+		);
 	}
 
 	void Fall() {
@@ -57,7 +57,9 @@ public class PlayerMovement : MonoBehaviour {
 		body.velocity = Vector2.Lerp (
 			Vector2.zero,
 			Vector2.down * SpeedManager.self.player_speed,
-			(Time.time - jump_time) * SpeedManager.self.player_speed / (jump_height + (GameManager.self.has_coil ? coil_jump_height : 0)));
+			(Time.time - jump_time) * SpeedManager.self.player_speed /
+			(HeightManager.self.player_jump_height + (GameManager.self.has_coil ? HeightManager.self.player_coil_jump_height : 0))
+		);
 	}
 
 }

@@ -15,8 +15,11 @@ public class InputManager : MonoBehaviour {
 
 	private bool should_act;
 
-	void Init() {
+	void Awake() {
 		self = this;
+	}
+
+	void Init() {
 		canvas = GameObject.Find ("Canvas");
 		graphic_raycaster = canvas.GetComponent<GraphicRaycaster>();
 		event_systems = canvas.GetComponent<EventSystem>();
