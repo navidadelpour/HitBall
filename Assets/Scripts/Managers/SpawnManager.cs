@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour {
 	private int min_coins = 1;
 	private int max_coins = 3;
 
-	private int ground_limit = 6;
+	private int ground_limit;
 	private Vector3 on_ground_offset;
 
 	void Awake() {
@@ -52,13 +52,28 @@ public class SpawnManager : MonoBehaviour {
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
 
 		grounds = GameObject.Find ("Grounds");
+		last_item = GameObject.Find("Ground");
+		SetGroundLimit();
 	}
 
 	void Start () {
 		Init ();
-		for(int i = 0; i < ground_limit; i++)
+		for(int i = 1; i < ground_limit; i++)
 			CreateGround ();
 		on_ground_offset = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y;
+		InvokeRepeating("x", 1f, .1f);
+	}
+
+	void Update() {
+		SetGroundLimit();
+	}
+
+	void x() {
+		Debug.Log(ground_limit);
+		if(grounds.transform.childCount < ground_limit)
+			CreateGround();
+		else if(grounds.transform.childCount > ground_limit)
+			Destroy(grounds.transform.GetChild(grounds.transform.childCount - 1).gameObject);
 	}
 
 	public void Spawn() {
@@ -80,6 +95,13 @@ public class SpawnManager : MonoBehaviour {
 
 	public bool HasChance(int chance) {
 		return Random.Range (0, 100) < chance;
+	}
+
+	private void SetGroundLimit() {
+		ground_limit = (int) Mathf.Ceil(
+			(Screen.width / (Camera.main.orthographicSize * 10)) /
+			(grounds.transform.GetChild(0).GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x)
+		);
 	}
 
 	public void ZeroAllExcept(ref int var_name) {
@@ -127,7 +149,7 @@ public class SpawnManager : MonoBehaviour {
 		last_item = grounds.transform.GetChild (grounds.transform.childCount - 1).gameObject;
 		GameObject item_created = Instantiate (
 			ground_prefab,
-			last_item.transform.position + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.localScale.x,
+			last_item.transform.position + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.lossyScale.x,
 			Quaternion.identity,
 			grounds.transform
 		);
