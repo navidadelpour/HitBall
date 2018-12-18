@@ -12,14 +12,14 @@ public class SpeedManager : MonoBehaviour {
 	private float game_max_speed = 10f;
 	private float game_normal_speed = 7f;
 	private float game_min_speed = 4f;
-	private float game_speed_diffrence_amount = .2f;
-	private float game_bound_increase_amount = 0.001f; 
+	private float game_speed_diffrence_amount = .1f;
+	private float game_bound_increase_amount = 0.0001f; 
 
 	public float player_speed;
-	private float player_max_speed = 12f;
+	private float player_max_speed = 14f;
 	private float player_normal_speed = 10f;
-	private float player_min_speed = 8f;
-	private float player_speed_difference_amount = .2f;
+	private float player_min_speed = 6f;
+	private float player_speed_difference_amount = .1f;
 
 
 	void Awake() {
