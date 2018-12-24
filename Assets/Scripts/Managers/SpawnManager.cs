@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +37,7 @@ public class SpawnManager : MonoBehaviour {
 	private int min_coins = 1;
 	private int max_coins = 3;
 
+	private float ground_limit_scale = 1.5f;
 	private int ground_limit;
 	private Vector3 on_ground_offset;
 
@@ -53,11 +54,11 @@ public class SpawnManager : MonoBehaviour {
 
 		grounds = GameObject.Find ("Grounds");
 		last_item = GameObject.Find("Ground");
-		SetGroundLimit();
 	}
 
 	void Start () {
 		Init ();
+		SetGroundLimit();
 		for(int i = 1; i < ground_limit; i++)
 			CreateGround ();
 		on_ground_offset = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y;
@@ -74,6 +75,17 @@ public class SpawnManager : MonoBehaviour {
 			CreateGround();
 		else if(grounds.transform.childCount > ground_limit)
 			Destroy(grounds.transform.GetChild(grounds.transform.childCount - 1).gameObject);
+	}
+
+	public bool HasChance(int chance) {
+		return Random.Range (0, 100) < chance;
+	}
+
+	private void SetGroundLimit() {
+		ground_limit = (int) (ground_limit_scale * Mathf.Ceil(
+			(Screen.width / (Camera.main.orthographicSize * 10)) /
+			(grounds.transform.GetChild(0).GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x)
+		));
 	}
 
 	public void Spawn() {
