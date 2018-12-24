@@ -5,6 +5,8 @@ using UnityEngine;
 public class ScaleManager : MonoBehaviour {
     
     public static ScaleManager self;
+    private int camera_max_size = 10;
+    private float size_increase_amount = .001f;
     private Camera main_camera;
     public float height;
     public float width;
@@ -39,5 +41,8 @@ public class ScaleManager : MonoBehaviour {
         Vector3 offset = -ground_offset + grounds.transform.position + new Vector3 (width, height, 0);
         background.transform.position = offset;
         main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z;
+
+        if(main_camera.orthographicSize < camera_max_size) 
+            main_camera.orthographicSize += size_increase_amount;
     }
 }

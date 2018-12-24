@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour {
 	private int min_coins = 1;
 	private int max_coins = 3;
 
-	private float ground_limit_scale = 1f;
+	private float ground_limit_scale = 1.5f;
 	private int ground_limit;
 	private Vector3 on_ground_offset;
 	private float ground_size_x;
@@ -64,10 +64,6 @@ public class SpawnManager : MonoBehaviour {
 		for(int i = 1; i < ground_limit; i++)
 			CreateGround ();
 		InvokeRepeating("ScaleToGround", 2f, .2f);
-	}
-
-	void Update() {
-		Debug.Log(ground_limit);
 	}
 
 	void ScaleToGround() {
@@ -125,7 +121,7 @@ public class SpawnManager : MonoBehaviour {
 			&& obstacles_in_order == 0;
 			break;
 		case "Obstacle":
-			return_value = (HasChance (100) || grounds_in_order > max_grounds_in_order)
+			return_value = (HasChance (obstacle_chance) || grounds_in_order > max_grounds_in_order)
 			&& obstacles_in_order < max_obstacles_in_order
 			&& holes_in_order == 0;
 			break;
