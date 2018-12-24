@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +40,6 @@ public class SpeedManager : MonoBehaviour {
 
 	void Update () {
 		MakeHard();
-		Debug.Log("max: " + game_max_speed["min"] + " , " + game_max_speed["max"]);
 		switch (state) {
 		case SpeedStates.INCREASE:
 			IncreaseSpeed ();
