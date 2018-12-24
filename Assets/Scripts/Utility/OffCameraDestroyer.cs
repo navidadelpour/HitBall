@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class OffCameraDestroyer : MonoBehaviour {
 
-	private int destroy_offset = -12;
+	private int destroy_offset = -7;
+	private BoxCollider2D box_collider;
 
 	void Init() {
-
+		box_collider = transform.GetComponent<BoxCollider2D> ();
 	}
 
 	void Start () {
@@ -15,7 +16,8 @@ public class OffCameraDestroyer : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (transform.position.x < destroy_offset) {
+		Debug.Log(-1 * box_collider.size.x * transform.lossyScale.x + destroy_offset);
+		if (transform.position.x < -box_collider.size.x * transform.lossyScale.x + destroy_offset) {
 			this.name = "DestroyedObject";
 			Destroy (this.gameObject);
 			switch (this.tag) {
