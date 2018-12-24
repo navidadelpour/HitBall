@@ -34,6 +34,9 @@ public class SpawnManager : MonoBehaviour {
 	private int max_obstacles_in_order = 2;
 	private int max_grounds_in_order = 3;
 
+	private int distance_between_items;
+	private int min_distance_between_items = 1;
+
 	private int min_coins = 1;
 	private int max_coins = 3;
 
@@ -87,18 +90,21 @@ public class SpawnManager : MonoBehaviour {
 
 	public void Spawn() {
 		CreateGround ();
-		if (Conditions("Hole"))
-			CreateHole ();
-		else if (Conditions("Obstacle"))
-			CreateObstacle ();
-		else if (Conditions("Block"))
-			CreateBlock ();
-		else if (Conditions("Coil"))
-			CreateCoil ();
-		else if (Conditions("Coin"))
-			CreateCoin ();
-		else
-			ZeroAllExcept (ref obstacles_in_order);
+		if(distance_between_items > min_distance_between_items) {
+			if (Conditions("Hole"))
+				CreateHole ();
+			else if (Conditions("Obstacle"))
+				CreateObstacle ();
+			else if (Conditions("Block"))
+				CreateBlock ();
+			else if (Conditions("Coil"))
+				CreateCoil ();
+			else if (Conditions("Coin"))
+				CreateCoin ();
+			else
+				ZeroAllExcept (ref obstacles_in_order);
+		} else
+			distance_between_items += 1;
 	}
 
 	public void ZeroAllExcept(ref int var_name) {
@@ -109,6 +115,7 @@ public class SpawnManager : MonoBehaviour {
 		blocks_in_order = 0;
 		grounds_in_order = 0;
 		holes_in_order = 0;
+		distance_between_items = 0;
 		var_name = previous_value + 1;
 	}
 
