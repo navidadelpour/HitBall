@@ -61,14 +61,14 @@ public class SpawnManager : MonoBehaviour {
 		SetGroundLimit();
 		for(int i = 1; i < ground_limit; i++)
 			CreateGround ();
-		on_ground_offset = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y;
-		// InvokeRepeating("x", 2f, .1f);
+		InvokeRepeating("ScaleToGround", 2f, .2f);
 	}
 
 	void Update() {
+		on_ground_offset = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y * last_item.transform.lossyScale.y;
 	}
 
-	void x() {
+	void ScaleToGround() {
 		SetGroundLimit();
 		if(grounds.transform.childCount < ground_limit)
 			CreateGround();
@@ -124,7 +124,7 @@ public class SpawnManager : MonoBehaviour {
 			&& obstacles_in_order == 0;
 			break;
 		case "Obstacle":
-			return_value = (HasChance (obstacle_chance) || grounds_in_order > max_grounds_in_order)
+			return_value = (HasChance (100) || grounds_in_order > max_grounds_in_order)
 			&& obstacles_in_order < max_obstacles_in_order
 			&& holes_in_order == 0;
 			break;
