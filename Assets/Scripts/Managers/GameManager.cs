@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
 	void ResetGame() {
 		if (game_over) {
 			game_over = false;
-			GameObject.Find ("Player").transform.position = Vector3.right * -4f;
+			GameObject.Find ("Player").transform.position = Vector3.right * 2f + Vector3.up * 5f;
 		}
 	}
 
