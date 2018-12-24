@@ -89,19 +89,18 @@ public class SpawnManager : MonoBehaviour {
 
 	public void Spawn() {
 		CreateGround ();
-		if (Conditions("Hole")) {
+		if (Conditions("Hole"))
 			CreateHole ();
-		} else if (Conditions("Obstacle")) {
+		else if (Conditions("Obstacle"))
 			CreateObstacle ();
-		} else if (Conditions("Block")) {
+		else if (Conditions("Block"))
 			CreateBlock ();
-		} else if (Conditions("Coil")) {
+		else if (Conditions("Coil"))
 			CreateCoil ();
-		} else if (Conditions("Coin")) {
+		else if (Conditions("Coin"))
 			CreateCoin ();
-		} else {
+		else
 			ZeroAllExcept (ref obstacles_in_order);
-		}
 	}
 
 	public void ZeroAllExcept(ref int var_name) {
