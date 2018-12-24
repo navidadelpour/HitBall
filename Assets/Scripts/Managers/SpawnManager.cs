@@ -37,10 +37,10 @@ public class SpawnManager : MonoBehaviour {
 	private int min_coins = 1;
 	private int max_coins = 3;
 
-	private float ground_limit_scale = 1.5f;
+	private float ground_limit_scale = 1f;
 	private int ground_limit;
 	private Vector3 on_ground_offset;
-
+	private float ground_size_x;
 	void Awake() {
 		self = this;
 	}
@@ -51,9 +51,11 @@ public class SpawnManager : MonoBehaviour {
 		coil_prefab = Resources.Load <GameObject>("prefabs/Coil");
 		block_prefab = Resources.Load <GameObject>("prefabs/Block");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
-
 		grounds = GameObject.Find ("Grounds");
-		last_item = GameObject.Find("Ground");
+		
+		on_ground_offset = Vector3.up * ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
+		ground_size_x = ground_prefab.GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x;
+		last_item = grounds.transform.GetChild(0).gameObject;
 	}
 
 	void Start () {
@@ -65,7 +67,7 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	void Update() {
-		on_ground_offset = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y * last_item.transform.lossyScale.y;
+		Debug.Log(ground_limit);
 	}
 
 	void ScaleToGround() {
@@ -82,8 +84,8 @@ public class SpawnManager : MonoBehaviour {
 
 	private void SetGroundLimit() {
 		ground_limit = (int) (ground_limit_scale * Mathf.Ceil(
-			(Screen.width / (Camera.main.orthographicSize * 10)) /
-			(grounds.transform.GetChild(0).GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x)
+			(Camera.main.orthographicSize * 2 * Screen.width / Screen.height) / 
+			ground_size_x
 		));
 	}
 
