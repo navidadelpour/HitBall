@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour {
 
 			graphic_raycaster.Raycast (pointer_event_data, results);
 
-			if (results.Count == 0 || results [0].gameObject.name != "PauseButton") {
+			if (results.Count != 0 && results [0].gameObject.name != "PauseButton") {
 				switch (results [0].gameObject.name) {
 				case "JumpMaxButton":
 					SpeedManager.self.state = SpeedStates.INCREASE;
