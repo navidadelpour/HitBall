@@ -7,8 +7,8 @@ public class HeightManager : MonoBehaviour {
 	public static HeightManager self;
 
 	public float player_jump_height;
-	public float player_coil_jump_height = 13f;
-	private float jump_increase_amount = 1f;
+	public float player_coil_jump_height = 12f;
+	private float jump_increase_amount = 2f;
 	private float player_max_jump_height = 12f;
 	private float player_normal_jump_height = 8f;
 	private float player_min_jump_height = 4f;

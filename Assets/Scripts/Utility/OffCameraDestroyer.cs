@@ -16,7 +16,6 @@ public class OffCameraDestroyer : MonoBehaviour {
 	}
 	
 	void Update () {
-		Debug.Log(-1 * box_collider.size.x * transform.lossyScale.x + destroy_offset);
 		if (transform.position.x < -box_collider.size.x * transform.lossyScale.x + destroy_offset) {
 			this.name = "DestroyedObject";
 			Destroy (this.gameObject);

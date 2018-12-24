@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,15 +62,14 @@ public class SpawnManager : MonoBehaviour {
 		for(int i = 1; i < ground_limit; i++)
 			CreateGround ();
 		on_ground_offset = Vector3.up * last_item.GetComponent<BoxCollider2D> ().size.y;
-		InvokeRepeating("x", 1f, .1f);
+		// InvokeRepeating("x", 2f, .1f);
 	}
 
 	void Update() {
-		SetGroundLimit();
 	}
 
 	void x() {
-		Debug.Log(ground_limit);
+		SetGroundLimit();
 		if(grounds.transform.childCount < ground_limit)
 			CreateGround();
 		else if(grounds.transform.childCount > ground_limit)
@@ -103,17 +102,6 @@ public class SpawnManager : MonoBehaviour {
 		} else {
 			ZeroAllExcept (ref obstacles_in_order);
 		}
-	}
-
-	public bool HasChance(int chance) {
-		return Random.Range (0, 100) < chance;
-	}
-
-	private void SetGroundLimit() {
-		ground_limit = (int) Mathf.Ceil(
-			(Screen.width / (Camera.main.orthographicSize * 10)) /
-			(grounds.transform.GetChild(0).GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x)
-		);
 	}
 
 	public void ZeroAllExcept(ref int var_name) {
