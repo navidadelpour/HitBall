@@ -72,10 +72,6 @@ public class SpawnManager : MonoBehaviour {
 		SetGroundLimit();
 	}
 
-	public bool HasChance(int chance) {
-		return Random.Range (0, 100) < chance;
-	}
-
 	private void SetGroundLimit() {
 		ground_limit = (int) (ground_limit_scale * Mathf.Ceil(
 			(Camera.main.orthographicSize * 2 * Screen.width / Screen.height) / 
@@ -123,26 +119,26 @@ public class SpawnManager : MonoBehaviour {
 		bool return_value = false;
 		switch (name) {
 		case "Hole":
-			return_value = HasChance (hole_chance)
+			return_value = Util.HasChance (hole_chance)
 			&& holes_in_order < max_holes_in_order
 			&& obstacles_in_order == 0;
 			break;
 		case "Obstacle":
-			return_value = (HasChance (obstacle_chance) || grounds_in_order > max_grounds_in_order)
+			return_value = (Util.HasChance (obstacle_chance) || grounds_in_order > max_grounds_in_order)
 			&& obstacles_in_order < max_obstacles_in_order
 			&& holes_in_order == 0;
 			break;
 		case "Block":
-			return_value = HasChance (block_chance)
+			return_value = Util.HasChance (block_chance)
 			&& blocks_in_order < max_blocks_in_order
 			&& holes_in_order == 0;
 			break;
 		case "Coil":
-			return_value = HasChance (coil_chance)
+			return_value = Util.HasChance (coil_chance)
 			&& coils_in_order < max_coils_in_order;
 			break;
 		case "Coin":
-			return_value = HasChance (coin_chance)
+			return_value = Util.HasChance (coin_chance)
 			&& coins_in_order < max_coins_in_order;
 			break;
 		}

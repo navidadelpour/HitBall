@@ -53,7 +53,7 @@ public class ScaleManager : MonoBehaviour {
         switch (SpeedManager.self.state) {
             case SpeedStates.INCREASE:
                 if(main_camera.orthographicSize < camera_normal_size + camera_range_size) 
-                    main_camera.orthographicSize = Ease(
+                    main_camera.orthographicSize = Util.Ease(
                         camera_normal_size + camera_range_size,
                         main_camera.orthographicSize,
                         size_increase_amount * 100
@@ -61,13 +61,13 @@ public class ScaleManager : MonoBehaviour {
                 break;
             case SpeedStates.NORMALIZE:
                 if(main_camera.orthographicSize < camera_normal_size) 
-                    main_camera.orthographicSize = Ease(
+                    main_camera.orthographicSize = Util.Ease(
                         camera_normal_size,
                         main_camera.orthographicSize,
                         size_increase_amount * 100
                     );
                 else if (main_camera.orthographicSize > camera_normal_size)
-                    main_camera.orthographicSize = Ease(
+                    main_camera.orthographicSize = Util.Ease(
                         camera_normal_size,
                         main_camera.orthographicSize,
                         size_increase_amount * 100, -1
@@ -75,18 +75,13 @@ public class ScaleManager : MonoBehaviour {
                 break;
             case SpeedStates.DECREASE:
                 if(main_camera.orthographicSize > camera_normal_size - camera_range_size) 
-                    main_camera.orthographicSize = Ease(
+                    main_camera.orthographicSize = Util.Ease(
                         camera_normal_size - camera_range_size,
                         main_camera.orthographicSize,
                         size_increase_amount * 100, -1
                     );
                 break;
         }
-    }
-
-    float Ease(float start, float target, float scale, int sign = 1) {
-        target += Mathf.Abs(target - start) * scale * sign;
-        return target;
     }
 
 }
