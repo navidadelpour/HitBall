@@ -14,11 +14,11 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject grounds;
 	private GameObject last_item;
 
-	private int coin_chance = 10;
+	private int coin_chance = 20;
 	private int coil_chance = 10;
-	private int hole_chance = 30;
-	private int block_chance = 10;
-	private int obstacle_chance = 30;
+	private int hole_chance = 50;
+	private int block_chance = 5;
+	private int obstacle_chance = 50;
 
 	private int coins_in_order;
 	private int coils_in_order;
@@ -70,6 +70,7 @@ public class SpawnManager : MonoBehaviour {
 
 	private void Update() {
 		SetGroundLimit();
+		Debug.Log(grounds_in_order + ", " + obstacles_in_order + ", " + distance_between_items);
 	}
 
 	private void SetGroundLimit() {
@@ -95,11 +96,12 @@ public class SpawnManager : MonoBehaviour {
 					CreateCoil ();
 				else if (Conditions("Coin"))
 					CreateCoin ();
-				else
-					ZeroAllExcept (ref obstacles_in_order);
+				distance_between_items = 0;
 			} else
 				distance_between_items += 1;
-			Spawn();
+
+			if(grounds.transform.childCount < ground_limit)
+				Spawn();
 		}
 	}
 
@@ -111,7 +113,6 @@ public class SpawnManager : MonoBehaviour {
 		blocks_in_order = 0;
 		grounds_in_order = 0;
 		holes_in_order = 0;
-		distance_between_items = 0;
 		var_name = previous_value + 1;
 	}
 
@@ -156,6 +157,7 @@ public class SpawnManager : MonoBehaviour {
 		item_created.name = "Ground";
 		item_created.tag = "Ground";
 		last_item = item_created;
+		ZeroAllExcept (ref grounds_in_order);
 	}
 
 	public void CreateHole() {
