@@ -21,7 +21,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 	}
 	
 	void Update () {
-		Debug.Log(collided);
+
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {

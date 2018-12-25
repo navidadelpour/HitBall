@@ -66,15 +66,10 @@ public class SpawnManager : MonoBehaviour {
 		SetGroundLimit();
 		for(int i = 1; i < ground_limit; i++)
 			CreateGround ();
-		InvokeRepeating("ScaleToGround", 2f, .2f);
 	}
 
-	void ScaleToGround() {
+	private void Update() {
 		SetGroundLimit();
-		if(grounds.transform.childCount < ground_limit)
-			CreateGround();
-		else if(grounds.transform.childCount > ground_limit)
-			Destroy(grounds.transform.GetChild(grounds.transform.childCount - 1).gameObject);
 	}
 
 	public bool HasChance(int chance) {
@@ -89,22 +84,27 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	public void Spawn() {
-		CreateGround ();
-		if(distance_between_items > min_distance_between_items) {
-			if (Conditions("Hole"))
-				CreateHole ();
-			else if (Conditions("Obstacle"))
-				CreateObstacle ();
-			else if (Conditions("Block"))
-				CreateBlock ();
-			else if (Conditions("Coil"))
-				CreateCoil ();
-			else if (Conditions("Coin"))
-				CreateCoin ();
-			else
-				ZeroAllExcept (ref obstacles_in_order);
-		} else
-			distance_between_items += 1;
+		if(grounds.transform.childCount > ground_limit)
+			return;
+		else {
+			CreateGround ();
+			if(distance_between_items > min_distance_between_items) {
+				if (Conditions("Hole"))
+					CreateHole ();
+				else if (Conditions("Obstacle"))
+					CreateObstacle ();
+				else if (Conditions("Block"))
+					CreateBlock ();
+				else if (Conditions("Coil"))
+					CreateCoil ();
+				else if (Conditions("Coin"))
+					CreateCoin ();
+				else
+					ZeroAllExcept (ref obstacles_in_order);
+			} else
+				distance_between_items += 1;
+			Spawn();
+		}
 	}
 
 	public void ZeroAllExcept(ref int var_name) {
