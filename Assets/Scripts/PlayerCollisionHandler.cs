@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerCollisionHandler : MonoBehaviour {
 
 	public static PlayerCollisionHandler self;
-
+	private bool is_collided;
+	public int collided = 0;
 	void Awake() {
 		self = this;
 	}
@@ -16,17 +17,25 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 	void Start () {
 		Init ();
+		InvokeRepeating("CheckForCollision", .1f, .1f);
 	}
 	
 	void Update () {
-		
+		Debug.Log(collided);
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		if (other.gameObject.tag == "Ground") {
-			HeightManager.self.SetHeight ();
-			PlayerMovement.self.Jump ();
-		}
+		if(!is_collided)
+			if (other.gameObject.tag == "Ground") {
+				HeightManager.self.SetHeight ();
+				PlayerMovement.self.Jump ();
+				collided += 1;
+				is_collided = true;
+			}
+	}
+
+	void CheckForCollision() {
+		is_collided = false;
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
