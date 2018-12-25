@@ -5,12 +5,16 @@ using UnityEngine;
 public class ScaleManager : MonoBehaviour {
     
     public static ScaleManager self;
-    private int camera_max_size = 10;
-    private float size_increase_amount = .001f;
+
+    private float camera_max_size = 10f;
+    private float camera_normal_size;
+    private float camera_range_size = 1f;
+    private float size_increase_amount = .0001f;
+
     private Camera main_camera;
-    public float height;
-    public float width;
-    public GameObject background;
+    private float height;
+    private float width;
+    private GameObject background;
     private GameObject grounds;
 	private GameObject ground_prefab;
     private Vector3 ground_offset;
@@ -25,6 +29,7 @@ public class ScaleManager : MonoBehaviour {
         grounds = GameObject.Find ("Grounds");
         main_camera = Camera.main;
         ground_offset = ground_prefab.GetComponent<BoxCollider2D> ().size * (Vector2) ground_prefab.transform.lossyScale / 2;
+        camera_normal_size = main_camera.orthographicSize;
 	}
 
 	void Start () {
@@ -42,7 +47,46 @@ public class ScaleManager : MonoBehaviour {
         background.transform.position = offset;
         main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z;
 
-        if(main_camera.orthographicSize < camera_max_size) 
-            main_camera.orthographicSize += size_increase_amount;
+        if(camera_normal_size < camera_max_size) 
+            camera_normal_size += size_increase_amount;
+
+        switch (SpeedManager.self.state) {
+            case SpeedStates.INCREASE:
+                if(main_camera.orthographicSize < camera_normal_size + camera_range_size) 
+                    main_camera.orthographicSize = Ease(
+                        camera_normal_size + camera_range_size,
+                        main_camera.orthographicSize,
+                        size_increase_amount * 100
+                    );
+                break;
+            case SpeedStates.NORMALIZE:
+                if(main_camera.orthographicSize < camera_normal_size) 
+                    main_camera.orthographicSize = Ease(
+                        camera_normal_size,
+                        main_camera.orthographicSize,
+                        size_increase_amount * 100
+                    );
+                else if (main_camera.orthographicSize > camera_normal_size)
+                    main_camera.orthographicSize = Ease(
+                        camera_normal_size,
+                        main_camera.orthographicSize,
+                        size_increase_amount * 100, -1
+                    );
+                break;
+            case SpeedStates.DECREASE:
+                if(main_camera.orthographicSize > camera_normal_size - camera_range_size) 
+                    main_camera.orthographicSize = Ease(
+                        camera_normal_size - camera_range_size,
+                        main_camera.orthographicSize,
+                        size_increase_amount * 100, -1
+                    );
+                break;
+        }
     }
+
+    float Ease(float start, float target, float scale, int sign = 1) {
+        target += Mathf.Abs(target - start) * scale * sign;
+        return target;
+    }
+
 }
