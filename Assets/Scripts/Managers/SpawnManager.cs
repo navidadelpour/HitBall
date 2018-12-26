@@ -63,7 +63,7 @@ public class SpawnManager : MonoBehaviour {
 		SetGroundLimit();
 		
 		// size - initial_size(5) + defautlsize(1)
-		chances[SpawnState.NOTHING] = (int) Camera.main.orthographicSize - 4;
+		chances[SpawnState.NOTHING] = (int) Camera.main.orthographicSize - 5 + 1;
 	}
 
 	private void SetGroundLimit() {
