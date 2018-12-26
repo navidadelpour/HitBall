@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 	public int score;
 	public int coins;
 
+	private Vector3 player_initial_position;
 	void Awake() {
 		self = this;
 	}
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		Init ();
 		InvokeRepeating ("ResetGame", 3f, 3f);
+		player_initial_position = GameObject.Find ("Player").transform.position;
 	}
 	
 	void Update () {
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour {
 	void ResetGame() {
 		if (game_over) {
 			game_over = false;
-			GameObject.Find ("Player").transform.position = Vector3.right * 2f + Vector3.up * 5f;
+			GameObject.Find ("Player").transform.position = player_initial_position;
 		}
 	}
 
