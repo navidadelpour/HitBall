@@ -25,6 +25,13 @@ public class HeightManager : MonoBehaviour {
 		Init ();
 	}
 
+	void Update() {
+		player_coil_jump_height = (int) Camera.main.orthographicSize - 5 + 12;
+		player_max_jump_height = (int) Camera.main.orthographicSize - 5 + 12;
+		player_normal_jump_height = (int) Camera.main.orthographicSize - 5 + 8;
+		player_min_jump_height = (int) Camera.main.orthographicSize - 5 + 4;
+	}
+
 	public void SetHeight() {
 		switch (SpeedManager.self.state) {
 		case SpeedStates.INCREASE:
