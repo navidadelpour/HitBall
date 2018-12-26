@@ -12,29 +12,17 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject block_prefab;
 	private GameObject[] obstacles_prefabs;
 	private GameObject grounds;
-	private GameObject last_item;
+	private GameObject last_ground;
+	private SpawnState last_item_spawned;
+	private Dictionary<SpawnState, int> chances = new Dictionary<SpawnState, int>() {
+		{SpawnState.COIN, 2},
+		{SpawnState.COIL, 1},
+		{SpawnState.BLOCK, 5},
+		{SpawnState.OBSTACLE, 3},
+		{SpawnState.HOLE, 3},
+	};
 
-	private int coin_chance = 20;
-	private int coil_chance = 10;
-	private int hole_chance = 50;
-	private int block_chance = 5;
-	private int obstacle_chance = 50;
-
-	private int coins_in_order;
-	private int coils_in_order;
-	private int holes_in_order;
-	private int blocks_in_order;
-	private int obstacles_in_order;
-	private int grounds_in_order;
-
-	private int max_coins_in_order = 1;
-	private int max_coils_in_order = 2;
-	private int max_holes_in_order = 2;
-	private int max_blocks_in_order = 2;
-	private int max_obstacles_in_order = 2;
-	private int max_grounds_in_order = 3;
-
-	private int distance_between_items;
+	private int grounds_in_row;
 	private int min_distance_between_items = 1;
 
 	private int min_coins = 1;
@@ -44,6 +32,7 @@ public class SpawnManager : MonoBehaviour {
 	private int ground_limit;
 	private Vector3 on_ground_offset;
 	private float ground_size_x;
+
 	void Awake() {
 		self = this;
 	}
@@ -58,7 +47,7 @@ public class SpawnManager : MonoBehaviour {
 		
 		on_ground_offset = Vector3.up * ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
 		ground_size_x = ground_prefab.GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x;
-		last_item = grounds.transform.GetChild(0).gameObject;
+		last_ground = grounds.transform.GetChild(0).gameObject;
 	}
 
 	void Start () {
@@ -70,7 +59,6 @@ public class SpawnManager : MonoBehaviour {
 
 	private void Update() {
 		SetGroundLimit();
-		Debug.Log(grounds_in_order + ", " + obstacles_in_order + ", " + distance_between_items);
 	}
 
 	private void SetGroundLimit() {
@@ -83,138 +71,119 @@ public class SpawnManager : MonoBehaviour {
 	public void Spawn() {
 		if(grounds.transform.childCount > ground_limit)
 			return;
-		else {
-			CreateGround ();
-			if(distance_between_items > min_distance_between_items) {
-				if (Conditions("Hole"))
-					CreateHole ();
-				else if (Conditions("Obstacle"))
-					CreateObstacle ();
-				else if (Conditions("Block"))
-					CreateBlock ();
-				else if (Conditions("Coil"))
-					CreateCoil ();
-				else if (Conditions("Coin"))
-					CreateCoin ();
-				distance_between_items = 0;
-			} else
-				distance_between_items += 1;
 
-			if(grounds.transform.childCount < ground_limit)
-				Spawn();
+		CreateGround ();
+		switch(ShouldSpawn(Util.GetKeyByChance(chances))) {
+			case SpawnState.HOLE:
+				CreateHole ();
+				break;
+			case SpawnState.OBSTACLE:
+				CreateObstacle ();
+				break;
+			case SpawnState.BLOCK:
+				CreateBlock ();
+				break;
+			case SpawnState.COIL:
+				CreateCoil ();
+				break;
+			case SpawnState.COIN:
+				CreateCoin ();
+				break;
+			case SpawnState.NOTHING:
+				grounds_in_row ++;
+				last_item_spawned = SpawnState.NOTHING;
+				break;
 		}
+
+		if(grounds.transform.childCount < ground_limit)
+			Spawn();
 	}
 
-	public void ZeroAllExcept(ref int var_name) {
-		int previous_value = var_name;
-		coils_in_order = 0;
-		obstacles_in_order = 0;
-		coins_in_order = 0;
-		blocks_in_order = 0;
-		grounds_in_order = 0;
-		holes_in_order = 0;
-		var_name = previous_value + 1;
-	}
-
-	public bool Conditions(string name) {
-		bool return_value = false;
-		switch (name) {
-		case "Hole":
-			return_value = Util.HasChance (hole_chance)
-			&& holes_in_order < max_holes_in_order
-			&& obstacles_in_order == 0;
-			break;
-		case "Obstacle":
-			return_value = (Util.HasChance (obstacle_chance) || grounds_in_order > max_grounds_in_order)
-			&& obstacles_in_order < max_obstacles_in_order
-			&& holes_in_order == 0;
-			break;
-		case "Block":
-			return_value = Util.HasChance (block_chance)
-			&& blocks_in_order < max_blocks_in_order
-			&& holes_in_order == 0;
-			break;
-		case "Coil":
-			return_value = Util.HasChance (coil_chance)
-			&& coils_in_order < max_coils_in_order;
-			break;
-		case "Coin":
-			return_value = Util.HasChance (coin_chance)
-			&& coins_in_order < max_coins_in_order;
-			break;
+	private SpawnState ShouldSpawn(SpawnState item_to_spawn) {
+		bool b = false;
+		switch(item_to_spawn) {
+			case SpawnState.HOLE:
+			case SpawnState.OBSTACLE:
+			case SpawnState.BLOCK:
+				b = last_item_spawned == SpawnState.HOLE ||
+				last_item_spawned == SpawnState.OBSTACLE ||
+				last_item_spawned == SpawnState.BLOCK;
+				break;
+			default:
+				b = false;
+				break;
 		}
-		return return_value;
+		return b ? SpawnState.NOTHING : item_to_spawn;
 	}
 
-	public void CreateGround() {
-		last_item = grounds.transform.GetChild (grounds.transform.childCount - 1).gameObject;
+	private void CreateGround() {
+		last_ground = grounds.transform.GetChild (grounds.transform.childCount - 1).gameObject;
 		GameObject item_created = Instantiate (
 			ground_prefab,
-			last_item.transform.position + Vector3.right * last_item.GetComponent<BoxCollider2D> ().size.x * last_item.transform.lossyScale.x,
+			last_ground.transform.position + Vector3.right * last_ground.GetComponent<BoxCollider2D> ().size.x * last_ground.transform.lossyScale.x,
 			Quaternion.identity,
 			grounds.transform
 		);
+		last_ground = item_created;
 		item_created.name = "Ground";
 		item_created.tag = "Ground";
-		last_item = item_created;
-		ZeroAllExcept (ref grounds_in_order);
 	}
 
-	public void CreateHole() {
-		last_item.GetComponent<BoxCollider2D> ().isTrigger = true;
-		last_item.GetComponent<BoxCollider2D> ().offset = new Vector3 (0, -0.5f);
-		last_item.GetComponent<Renderer> ().enabled = false;
-		last_item.name = "Hole";
-		last_item.tag = "Hole";
-		ZeroAllExcept (ref holes_in_order);
+	private void CreateHole() {
+		last_ground.GetComponent<BoxCollider2D> ().isTrigger = true;
+		last_ground.GetComponent<BoxCollider2D> ().offset = new Vector3 (0, -0.5f);
+		last_ground.GetComponent<Renderer> ().enabled = false;
+		last_ground.name = "Hole";
+		last_ground.tag = "Hole";
+		last_item_spawned = SpawnState.HOLE;
 	}
 
-	public void CreateObstacle() {
+	private void CreateObstacle() {
 		GameObject obstacle_created = Instantiate(
 			obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length - 1)],
-			last_item.transform.position + on_ground_offset,
+			last_ground.transform.position + on_ground_offset,
 			Quaternion.identity,
-			last_item.transform
+			last_ground.transform
 		);
 		obstacle_created.tag = "Obstacle";
-		ZeroAllExcept (ref obstacles_in_order);
+		last_item_spawned = SpawnState.OBSTACLE;
 	}
 		
-	public void CreateBlock() {
+	private void CreateBlock() {
 		GameObject block_created = Instantiate(
 			block_prefab,
-			last_item.transform.position + on_ground_offset + Vector3.up * Random.Range(1f, 6f),
+			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(1f, 6f),
 			Quaternion.identity,
-			last_item.transform
+			last_ground.transform
 		);
 		block_created.GetComponent<SpriteRenderer> ().color = Random.Range (1, 3) % 2 == 0 ? Color.red : Color.blue;
 		block_created.tag = "Block";
-		ZeroAllExcept (ref blocks_in_order);
+		last_item_spawned = SpawnState.BLOCK;
 	}
 
 
-	public void CreateCoin() {
+	private void CreateCoin() {
 		for (int i = 0; i < Random.Range (min_coins, max_coins + 1); i++) {
 			GameObject coin_created = Instantiate (
              	coin_prefab,
-				last_item.transform.position + Vector3.up * i + on_ground_offset,
+				last_ground.transform.position + Vector3.up * i + on_ground_offset,
 				Quaternion.identity,
-				last_item.transform
+				last_ground.transform
           	);
 			coin_created.tag = "Coin";
+		last_item_spawned = SpawnState.COIN;
 		}
-		ZeroAllExcept (ref coins_in_order);
 	}
 
-	public void CreateCoil() {
+	private void CreateCoil() {
 		GameObject coil_created = Instantiate(
 			coil_prefab,
-			last_item.transform.position + on_ground_offset,
+			last_ground.transform.position + on_ground_offset,
 			Quaternion.identity,
-			last_item.transform
+			last_ground.transform
 		);
 		coil_created.tag = "Coil";
-		ZeroAllExcept (ref coils_in_order);
+		last_item_spawned = SpawnState.COIL;
 	}
 
 }
