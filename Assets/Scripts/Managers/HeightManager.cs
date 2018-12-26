@@ -18,6 +18,7 @@ public class HeightManager : MonoBehaviour {
 	}
 
 	void Init() {
+		MakeHard();
 		player_jump_height = player_normal_jump_height;
 	}
 
@@ -26,10 +27,15 @@ public class HeightManager : MonoBehaviour {
 	}
 
 	void Update() {
+		MakeHard();
+	}
+
+	void MakeHard() {
 		player_coil_jump_height = (int) Camera.main.orthographicSize - 5 + 12;
 		player_max_jump_height = (int) Camera.main.orthographicSize - 5 + 12;
 		player_normal_jump_height = (int) Camera.main.orthographicSize - 5 + 8;
 		player_min_jump_height = (int) Camera.main.orthographicSize - 5 + 4;
+
 	}
 
 	public void SetHeight() {
