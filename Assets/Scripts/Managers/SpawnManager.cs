@@ -14,12 +14,14 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject grounds;
 	private GameObject last_ground;
 	private SpawnState last_item_spawned;
+	private int gap_chance;
 	private Dictionary<SpawnState, int> chances = new Dictionary<SpawnState, int>() {
-		{SpawnState.COIN, 2},
 		{SpawnState.COIL, 1},
-		{SpawnState.BLOCK, 5},
+		{SpawnState.COIN, 2},
+		{SpawnState.BLOCK, 2},
 		{SpawnState.OBSTACLE, 3},
 		{SpawnState.HOLE, 3},
+		{SpawnState.NOTHING, 1},
 	};
 
 	private int grounds_in_row;
@@ -59,6 +61,9 @@ public class SpawnManager : MonoBehaviour {
 
 	private void Update() {
 		SetGroundLimit();
+		
+		// size - initial_size(5) + defautlsize(1)
+		chances[SpawnState.NOTHING] = (int) Camera.main.orthographicSize - 4;
 	}
 
 	private void SetGroundLimit() {
