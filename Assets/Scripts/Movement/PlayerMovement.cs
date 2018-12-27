@@ -38,6 +38,14 @@ public class PlayerMovement : MonoBehaviour {
 			} else
 				GameManager.self.item_activated = false;
 		}
+
+		if(GameManager.self.item_activated && GameManager.self.item == Item.FORCE_FALL) {
+			if(jumping){
+				GameManager.self.RemoveItem();
+				Fall();
+			} else
+				GameManager.self.item_activated = false;
+		}
 	}
 
 	public void Jump() {
