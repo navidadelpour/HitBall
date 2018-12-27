@@ -29,6 +29,11 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			if (other.gameObject.tag == "Ground") {
 				HeightManager.self.SetHeight ();
 				PlayerMovement.self.Jump ();
+				if(GameManager.self.has_jump_adjuster) {
+					GameManager.self.has_coil = true;
+					GameManager.self.should_remove_coil = false;
+					GameManager.self.has_jump_adjuster = false;
+				}
 				collided += 1;
 				is_collided = true;
 			}

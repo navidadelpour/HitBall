@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour {
 	public int score;
 	public int coins;
 
+	public bool has_jump_adjuster;
+
 	private Vector3 player_initial_position;
 	void Awake() {
 		self = this;
