@@ -46,6 +46,11 @@ public class PlayerMovement : MonoBehaviour {
 			} else
 				GameManager.self.item_activated = false;
 		}
+
+		if(GameManager.self.has_teleport) {
+			transform.position += Vector3.down * 10f;
+			enabled = false;
+		}
 	}
 
 	public void Jump() {

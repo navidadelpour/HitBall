@@ -9,6 +9,7 @@ public enum Item {
     BLOCK,
     COIN,
     COIL,
+    PORTAL,
     NOTHING,
 
     HIGH_JUMP,
@@ -18,4 +19,5 @@ public enum Item {
     MAGNET,
     SLOW_MOTION,
     ZOOM,
+    TELEPORT,
 }

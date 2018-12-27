@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour {
 	private float zoom_adding_time;
 	private float max_zoom_time = 3f;
 
-	private Vector3 player_initial_position;
+	public bool has_teleport;
+
+	public Vector3 player_initial_position;
 
 	void Awake() {
 		self = this;
@@ -85,6 +87,10 @@ public class GameManager : MonoBehaviour {
 		}
 		has_zoom &= Time.time - zoom_adding_time < max_zoom_time;
 
+		if(item_activated && item == Item.TELEPORT) {
+			RemoveItem();
+			has_teleport = true;
+		}
 	}
 
 	void ResetGame() {

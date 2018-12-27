@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject coil_prefab;
 	private GameObject ground_prefab;
 	private GameObject block_prefab;
+	private GameObject portal_prefab;
 	private GameObject[] obstacles_prefabs;
 	private GameObject grounds;
 	private GameObject last_ground;
@@ -34,6 +35,7 @@ public class SpawnManager : MonoBehaviour {
 	private int ground_limit;
 	private Vector3 on_ground_offset;
 	private float ground_size_x;
+	public bool has_portal;
 
 	void Awake() {
 		self = this;
@@ -44,6 +46,7 @@ public class SpawnManager : MonoBehaviour {
 		coin_prefab = Resources.Load <GameObject>("prefabs/Coin");
 		coil_prefab = Resources.Load <GameObject>("prefabs/Coil");
 		block_prefab = Resources.Load <GameObject>("prefabs/Block");
+		portal_prefab = Resources.Load<GameObject>("prefabs/Portal");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
 		grounds = GameObject.Find ("Grounds");
 		
@@ -78,7 +81,7 @@ public class SpawnManager : MonoBehaviour {
 			return;
 
 		CreateGround ();
-		switch(ShouldSpawn(Util.GetKeyByChance(chances))) {
+		switch(GameManager.self.has_teleport && !has_portal ? Item.PORTAL : ShouldSpawn(Util.GetKeyByChance(chances))) {
 			case Item.HOLE:
 				CreateHole ();
 				break;
@@ -93,6 +96,9 @@ public class SpawnManager : MonoBehaviour {
 				break;
 			case Item.COIN:
 				CreateCoin ();
+				break;
+			case Item.PORTAL:
+				CreatePortal ();
 				break;
 			case Item.NOTHING:
 				grounds_in_row ++;
@@ -193,4 +199,15 @@ public class SpawnManager : MonoBehaviour {
 		last_item_spawned = Item.COIL;
 	}
 
+	private void CreatePortal() {
+		GameObject portal_created = Instantiate(
+			portal_prefab,
+			last_ground.transform.position + on_ground_offset,
+			Quaternion.identity,
+			last_ground.transform
+		);
+		portal_created.tag = "Portal";
+		last_item_spawned = Item.PORTAL;
+		has_portal = true;
+	}
 }
