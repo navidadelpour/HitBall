@@ -176,6 +176,8 @@ public class SpawnManager : MonoBehaviour {
 				last_ground.transform
           	);
 			coin_created.tag = "Coin";
+			if(GameManager.self.has_magnet)
+				coin_created.AddComponent<CoinMovement>();
 		last_item_spawned = Item.COIN;
 		}
 	}
