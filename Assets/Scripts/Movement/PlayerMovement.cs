@@ -52,16 +52,16 @@ public class PlayerMovement : MonoBehaviour {
 		if (!jumping) {
 			jump_time = Time.time;
 			jumping = true;
-			if (GameManager.self.should_remove_coil) {
-				GameManager.self.should_remove_coil = false;
-				GameManager.self.has_coil = false;
+			if (HeightManager.self.should_remove_coil) {
+				HeightManager.self.should_remove_coil = false;
+				HeightManager.self.has_coil = false;
 			}
 		}
 		body.velocity = Vector2.Lerp (
 			Vector2.up * SpeedManager.self.player_speed,
 			Vector2.zero,
 			(Time.time - jump_time) * SpeedManager.self.player_speed /
-			(GameManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
+			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
 		);
 	}
 
@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour {
 			Vector2.zero,
 			Vector2.down * SpeedManager.self.player_speed,
 			(Time.time - jump_time) * SpeedManager.self.player_speed /
-			(GameManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
+			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
 		);
 	}
 

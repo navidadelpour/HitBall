@@ -13,6 +13,9 @@ public class HeightManager : MonoBehaviour {
 	private float player_normal_jump_height;
 	private float player_min_jump_height;
 
+	public bool has_coil;
+	public bool should_remove_coil;
+
 	void Awake() {
 		self = this;
 	}
@@ -28,7 +31,15 @@ public class HeightManager : MonoBehaviour {
 
 	void Update() {
 		MakeHard();
+		if (has_coil && !should_remove_coil)
+			Invoke ("SetShouldRemoveCoil", .2f);
+
 	}
+
+	void SetShouldRemoveCoil() {
+		should_remove_coil = true;
+	}
+
 
 	void MakeHard() {
 		player_coil_jump_height = (int) Camera.main.orthographicSize - 5 + 12;

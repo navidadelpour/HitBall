@@ -30,8 +30,8 @@ public class PlayerCollisionHandler : MonoBehaviour {
 				HeightManager.self.SetHeight ();
 				PlayerMovement.self.Jump ();
 				if(GameManager.self.item_activated && GameManager.self.item == Item.HIGH_JUMP) {
-					GameManager.self.has_coil = true;
-					GameManager.self.should_remove_coil = false;
+					HeightManager.self.has_coil = true;
+					HeightManager.self.should_remove_coil = false;
 					GameManager.self.RemoveItem();
 				}
 				collided += 1;
@@ -63,8 +63,8 @@ public class PlayerCollisionHandler : MonoBehaviour {
 		case "Coil":
 			HeightManager.self.SetHeight ();
 			PlayerMovement.self.Jump ();
-			GameManager.self.has_coil = true;
-			GameManager.self.should_remove_coil = false;
+			HeightManager.self.has_coil = true;
+			HeightManager.self.should_remove_coil = false;
 			break;
 		}
 	}

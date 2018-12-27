@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour {
 	public static GameManager self;
 	public bool has_shield;
 	public bool has_magnet;
-	public bool has_coil;
-	public bool should_remove_coil;
 	public bool game_over;
 	public bool paused;
 	public int score;
@@ -38,8 +36,6 @@ public class GameManager : MonoBehaviour {
 	
 	void Update () {
 		// GameObject.Find ("Player").GetComponent<SpriteRenderer> ().color = new Color(255, 255, 255, game_over && (int) (Time.time * 10) % 2 == 0 ? 0 : 1);
-		if (has_coil && !should_remove_coil)
-			Invoke ("SetShouldRemoveCoil", 1f);
 
 		if(item_activated && item == Item.SHIELD) {
 			RemoveItem();
@@ -67,11 +63,7 @@ public class GameManager : MonoBehaviour {
 			GameObject.Find ("Player").transform.position = player_initial_position;
 		}
 	}
-
-	void SetShouldRemoveCoil() {
-		should_remove_coil = true;
-	}
-
+	
 	public void IncreamentScore() {
 		score++;
 		UiManager.self.SetScore ();
