@@ -30,6 +30,14 @@ public class PlayerMovement : MonoBehaviour {
 		if (body.velocity.y == 0) {
 			Fall ();
 		}
+
+		if(GameManager.self.item_activated && GameManager.self.item == Item.DOUBLE_JUMP) {
+			if(!jumping){
+				GameManager.self.RemoveItem();
+				Jump();
+			} else
+				GameManager.self.item_activated = false;
+		}
 	}
 
 	public void Jump() {

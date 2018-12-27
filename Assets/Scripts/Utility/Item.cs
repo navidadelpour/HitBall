@@ -11,5 +11,6 @@ public enum Item {
     COIL,
     NOTHING,
 
-    HIGH_JUMP
+    HIGH_JUMP,
+    DOUBLE_JUMP,
 }
