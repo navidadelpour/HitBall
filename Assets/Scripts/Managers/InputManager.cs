@@ -53,7 +53,6 @@ public class InputManager : MonoBehaviour {
 			}
 		} else {
 			SpeedManager.self.state = SpeedStates.NORMALIZE;
-			GameManager.self.has_shield = false;
 		}
 	}
 

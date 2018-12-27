@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour {
 
 	public bool item_activated;
 	public Item item;
-
+	private float shield_adding_time;
+	private float max_shield_time = 3f;
 	private Vector3 player_initial_position;
 	void Awake() {
 		self = this;
@@ -36,6 +37,13 @@ public class GameManager : MonoBehaviour {
 		// GameObject.Find ("Player").GetComponent<SpriteRenderer> ().color = new Color(255, 255, 255, game_over && (int) (Time.time * 10) % 2 == 0 ? 0 : 1);
 		if (has_coil && !should_remove_coil)
 			Invoke ("SetShouldRemoveCoil", 1f);
+
+		if(item_activated && item == Item.SHIELD) {
+			RemoveItem();
+			shield_adding_time = Time.time;
+			has_shield = true;
+		}
+		has_shield &= Time.time - shield_adding_time < max_shield_time;
 	}
 
 	void ResetGame() {

@@ -14,4 +14,5 @@ public enum Item {
     HIGH_JUMP,
     DOUBLE_JUMP,
     FORCE_FALL,
+    SHIELD,
 }
