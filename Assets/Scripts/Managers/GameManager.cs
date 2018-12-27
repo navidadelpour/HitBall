@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour {
 	private float slow_motion_adding_time;
 	private float max_slow_motion_time = 3f;
 
+	public bool has_zoom;
+	private float zoom_adding_time;
+	private float max_zoom_time = 3f;
+
 	private Vector3 player_initial_position;
 
 	void Awake() {
@@ -45,6 +49,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		// GameObject.Find ("Player").GetComponent<SpriteRenderer> ().color = new Color(255, 255, 255, game_over && (int) (Time.time * 10) % 2 == 0 ? 0 : 1);
 
+		// shield checker
 		if(item_activated && item == Item.SHIELD) {
 			RemoveItem();
 			shield_adding_time = Time.time;
@@ -52,6 +57,7 @@ public class GameManager : MonoBehaviour {
 		}
 		has_shield &= Time.time - shield_adding_time < max_shield_time;
 
+		// magnet checker
 		if(item_activated && item == Item.MAGNET) {
 			RemoveItem();
 			magnet_adding_time = Time.time;
@@ -63,12 +69,21 @@ public class GameManager : MonoBehaviour {
 		}
 		has_magnet &= Time.time - magnet_adding_time < max_magnet_time;
 
+		// slow motion checker
 		if(item_activated && item == Item.SLOW_MOTION) {
 			RemoveItem();
 			slow_motion_adding_time = Time.time;
 			has_slow_motion = true;
 		}
 		has_slow_motion &= Time.time - slow_motion_adding_time < max_slow_motion_time;
+
+		// zoom checker
+		if(item_activated && item == Item.ZOOM) {
+			RemoveItem();
+			zoom_adding_time = Time.time;
+			has_zoom = true;
+		}
+		has_zoom &= Time.time - zoom_adding_time < max_zoom_time;
 
 	}
 

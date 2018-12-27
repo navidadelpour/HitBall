@@ -10,6 +10,7 @@ public class ScaleManager : MonoBehaviour {
     private float camera_normal_size;
     private float camera_range_size = 1f;
     private float size_increase_amount = .0001f;
+    private float zoom_scale = 2;
 
     private Camera main_camera;
     private float height;
@@ -52,31 +53,31 @@ public class ScaleManager : MonoBehaviour {
 
         switch (SpeedManager.self.state) {
             case SpeedStates.INCREASE:
-                if(main_camera.orthographicSize < camera_normal_size + camera_range_size) 
+                if(main_camera.orthographicSize < (camera_normal_size + camera_range_size) * (GameManager.self.has_zoom ? zoom_scale : 1f)) 
                     main_camera.orthographicSize = Util.Ease(
-                        camera_normal_size + camera_range_size,
+                        (camera_normal_size + camera_range_size) * (GameManager.self.has_zoom ? zoom_scale : 1f),
                         main_camera.orthographicSize,
                         size_increase_amount * 100
                     );
                 break;
             case SpeedStates.NORMALIZE:
-                if(main_camera.orthographicSize < camera_normal_size) 
+                if(main_camera.orthographicSize < camera_normal_size * (GameManager.self.has_zoom ? zoom_scale : 1f)) 
                     main_camera.orthographicSize = Util.Ease(
-                        camera_normal_size,
+                        camera_normal_size * (GameManager.self.has_zoom ? zoom_scale : 1f),
                         main_camera.orthographicSize,
                         size_increase_amount * 100
                     );
-                else if (main_camera.orthographicSize > camera_normal_size)
+                else if (main_camera.orthographicSize > camera_normal_size * (GameManager.self.has_zoom ? zoom_scale : 1f))
                     main_camera.orthographicSize = Util.Ease(
-                        camera_normal_size,
+                        camera_normal_size * (GameManager.self.has_zoom ? zoom_scale : 1f),
                         main_camera.orthographicSize,
                         size_increase_amount * 100, -1
                     );
                 break;
             case SpeedStates.DECREASE:
-                if(main_camera.orthographicSize > camera_normal_size - camera_range_size) 
+                if(main_camera.orthographicSize > (camera_normal_size - camera_range_size) * (GameManager.self.has_zoom ? zoom_scale : 1f)) 
                     main_camera.orthographicSize = Util.Ease(
-                        camera_normal_size - camera_range_size,
+                        (camera_normal_size - camera_range_size) * (GameManager.self.has_zoom ? zoom_scale : 1f),
                         main_camera.orthographicSize,
                         size_increase_amount * 100, -1
                     );

@@ -17,4 +17,5 @@ public enum Item {
     SHIELD,
     MAGNET,
     SLOW_MOTION,
+    ZOOM,
 }
