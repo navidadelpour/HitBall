@@ -12,21 +12,21 @@ public class Util {
         return target;
     }
 
-    public static SpawnState GetKeyByChance(Dictionary<SpawnState, int> chances) {
+    public static Item GetKeyByChance(Dictionary<Item, int> chances) {
 		int chances_sum = 0;
-		foreach (KeyValuePair<SpawnState, int> item in chances) {
+		foreach (KeyValuePair<Item, int> item in chances) {
 			chances_sum += item.Value;
 		}
 
 		int chance = Random.Range (0, chances_sum);
 		int previous_chances = 0;
 
-		foreach (KeyValuePair<SpawnState, int> item in chances) {
+		foreach (KeyValuePair<Item, int> item in chances) {
 			if (chance < item.Value + previous_chances)
 				return item.Key;
 			previous_chances += item.Value; 
 		}
-		return SpawnState.OBSTACLE;
+		return Item.OBSTACLE;
 	}
 
 }

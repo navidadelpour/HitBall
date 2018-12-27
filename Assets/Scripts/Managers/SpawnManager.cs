@@ -13,19 +13,19 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject[] obstacles_prefabs;
 	private GameObject grounds;
 	private GameObject last_ground;
-	private SpawnState last_item_spawned;
+	private Item last_item_spawned;
 	private int gap_chance;
-	private Dictionary<SpawnState, int> chances = new Dictionary<SpawnState, int>() {
-		{SpawnState.COIL, 1},
-		{SpawnState.COIN, 2},
-		{SpawnState.BLOCK, 2},
-		{SpawnState.OBSTACLE, 3},
-		{SpawnState.HOLE, 3},
-		{SpawnState.NOTHING, 1},
+	private Dictionary<Item, int> chances = new Dictionary<Item, int>() {
+		{Item.COIL, 1},
+		{Item.COIN, 2},
+		{Item.BLOCK, 2},
+		{Item.OBSTACLE, 3},
+		{Item.HOLE, 3},
+		{Item.NOTHING, 1},
 	};
 
 	private int grounds_in_row;
-	private int min_distance_between_items = 1;
+	private int min_distance_between_item = 1;
 
 	private int min_coins = 1;
 	private int max_coins = 3;
@@ -63,7 +63,7 @@ public class SpawnManager : MonoBehaviour {
 		SetGroundLimit();
 		
 		// size - initial_size(5) + defautlsize(1)
-		chances[SpawnState.NOTHING] = (int) Camera.main.orthographicSize - 5 + 1;
+		chances[Item.NOTHING] = (int) Camera.main.orthographicSize - 5 + 1;
 	}
 
 	private void SetGroundLimit() {
@@ -79,24 +79,24 @@ public class SpawnManager : MonoBehaviour {
 
 		CreateGround ();
 		switch(ShouldSpawn(Util.GetKeyByChance(chances))) {
-			case SpawnState.HOLE:
+			case Item.HOLE:
 				CreateHole ();
 				break;
-			case SpawnState.OBSTACLE:
+			case Item.OBSTACLE:
 				CreateObstacle ();
 				break;
-			case SpawnState.BLOCK:
+			case Item.BLOCK:
 				CreateBlock ();
 				break;
-			case SpawnState.COIL:
+			case Item.COIL:
 				CreateCoil ();
 				break;
-			case SpawnState.COIN:
+			case Item.COIN:
 				CreateCoin ();
 				break;
-			case SpawnState.NOTHING:
+			case Item.NOTHING:
 				grounds_in_row ++;
-				last_item_spawned = SpawnState.NOTHING;
+				last_item_spawned = Item.NOTHING;
 				break;
 		}
 
@@ -104,21 +104,21 @@ public class SpawnManager : MonoBehaviour {
 			Spawn();
 	}
 
-	private SpawnState ShouldSpawn(SpawnState item_to_spawn) {
+	private Item ShouldSpawn(Item item_to_spawn) {
 		bool b = false;
 		switch(item_to_spawn) {
-			case SpawnState.HOLE:
-			case SpawnState.OBSTACLE:
-			case SpawnState.BLOCK:
-				b = last_item_spawned == SpawnState.HOLE ||
-				last_item_spawned == SpawnState.OBSTACLE ||
-				last_item_spawned == SpawnState.BLOCK;
+			case Item.HOLE:
+			case Item.OBSTACLE:
+			case Item.BLOCK:
+				b = last_item_spawned == Item.HOLE ||
+				last_item_spawned == Item.OBSTACLE ||
+				last_item_spawned == Item.BLOCK;
 				break;
 			default:
 				b = false;
 				break;
 		}
-		return b ? SpawnState.NOTHING : item_to_spawn;
+		return b ? Item.NOTHING : item_to_spawn;
 	}
 
 	private void CreateGround() {
@@ -140,7 +140,7 @@ public class SpawnManager : MonoBehaviour {
 		last_ground.GetComponent<Renderer> ().enabled = false;
 		last_ground.name = "Hole";
 		last_ground.tag = "Hole";
-		last_item_spawned = SpawnState.HOLE;
+		last_item_spawned = Item.HOLE;
 	}
 
 	private void CreateObstacle() {
@@ -151,7 +151,7 @@ public class SpawnManager : MonoBehaviour {
 			last_ground.transform
 		);
 		obstacle_created.tag = "Obstacle";
-		last_item_spawned = SpawnState.OBSTACLE;
+		last_item_spawned = Item.OBSTACLE;
 	}
 		
 	private void CreateBlock() {
@@ -163,7 +163,7 @@ public class SpawnManager : MonoBehaviour {
 		);
 		block_created.GetComponent<SpriteRenderer> ().color = Random.Range (1, 3) % 2 == 0 ? Color.red : Color.blue;
 		block_created.tag = "Block";
-		last_item_spawned = SpawnState.BLOCK;
+		last_item_spawned = Item.BLOCK;
 	}
 
 
@@ -176,7 +176,7 @@ public class SpawnManager : MonoBehaviour {
 				last_ground.transform
           	);
 			coin_created.tag = "Coin";
-		last_item_spawned = SpawnState.COIN;
+		last_item_spawned = Item.COIN;
 		}
 	}
 
@@ -188,7 +188,7 @@ public class SpawnManager : MonoBehaviour {
 			last_ground.transform
 		);
 		coil_created.tag = "Coil";
-		last_item_spawned = SpawnState.COIL;
+		last_item_spawned = Item.COIL;
 	}
 
 }
