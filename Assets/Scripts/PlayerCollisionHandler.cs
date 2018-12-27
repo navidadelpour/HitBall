@@ -29,10 +29,10 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			if (other.gameObject.tag == "Ground") {
 				HeightManager.self.SetHeight ();
 				PlayerMovement.self.Jump ();
-				if(GameManager.self.has_jump_adjuster) {
+				if(GameManager.self.item_activated && GameManager.self.item == Item.HIGH_JUMP) {
 					GameManager.self.has_coil = true;
 					GameManager.self.should_remove_coil = false;
-					GameManager.self.has_jump_adjuster = false;
+					GameManager.self.RemoveItem();
 				}
 				collided += 1;
 				is_collided = true;
@@ -48,7 +48,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 		case "Block":
 		case "Obstacle":
-			GameManager.self.game_over = !GameManager.self.has_shield;
+			// GameManager.self.game_over = !GameManager.self.has_shield;
 			break;
 
 		case "Coin":

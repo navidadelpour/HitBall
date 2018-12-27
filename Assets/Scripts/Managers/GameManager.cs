@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour {
 	public int score;
 	public int coins;
 
-	public bool has_jump_adjuster;
+	public bool item_activated;
+	public Item item;
 
 	private Vector3 player_initial_position;
 	void Awake() {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour {
 
 	void Start () {
 		Init ();
+		RemoveItem();
 		InvokeRepeating ("ResetGame", 3f, 3f);
 		player_initial_position = GameObject.Find ("Player").transform.position;
 	}
@@ -55,6 +57,11 @@ public class GameManager : MonoBehaviour {
 	public void IncreamentCoins() {
 		coins++;
 		UiManager.self.SetCoins ();
+	}
+
+	public void RemoveItem() {
+		item = Item.NOTHING;
+		item_activated = false;
 	}
 
 

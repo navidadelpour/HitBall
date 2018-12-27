@@ -45,8 +45,8 @@ public class InputManager : MonoBehaviour {
 				case "JumpMinButton":
 					SpeedManager.self.state = SpeedStates.DECREASE;
 					break;
-				case "ShieldButton":
-					GameManager.self.has_shield = true;
+				case "ItemButton":
+					GameManager.self.item_activated = true;
 					break;
 				}
 				

@@ -9,5 +9,7 @@ public enum Item {
     BLOCK,
     COIN,
     COIL,
-    NOTHING
+    NOTHING,
+
+    HIGH_JUMP
 }
