@@ -137,7 +137,6 @@ public class SpawnManager : MonoBehaviour {
 		);
 		last_ground = item_created;
 		item_created.name = "Ground";
-		item_created.tag = "Ground";
 	}
 
 	private void CreateHole() {
@@ -156,7 +155,6 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
-		obstacle_created.tag = "Obstacle";
 		last_item_spawned = Item.OBSTACLE;
 	}
 		
@@ -168,7 +166,6 @@ public class SpawnManager : MonoBehaviour {
 			last_ground.transform
 		);
 		block_created.GetComponent<SpriteRenderer> ().color = Random.Range (1, 3) % 2 == 0 ? Color.red : Color.blue;
-		block_created.tag = "Block";
 		last_item_spawned = Item.BLOCK;
 	}
 
@@ -181,7 +178,6 @@ public class SpawnManager : MonoBehaviour {
 				Quaternion.identity,
 				last_ground.transform
           	);
-			coin_created.tag = "Coin";
 			if(GameManager.self.has_magnet)
 				coin_created.AddComponent<CoinMovement>();
 		last_item_spawned = Item.COIN;
@@ -195,7 +191,6 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
-		coil_created.tag = "Coil";
 		last_item_spawned = Item.COIL;
 	}
 
@@ -206,7 +201,6 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
-		portal_created.tag = "Portal";
 		last_item_spawned = Item.PORTAL;
 		has_portal = true;
 	}
