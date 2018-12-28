@@ -126,6 +126,9 @@ public class SpawnManager : MonoBehaviour {
 				last_item_spawned == Things.OBSTACLE ||
 				last_item_spawned == Things.BLOCK;
 				break;
+			case Things.COIL:
+				b = last_item_spawned == Things.COIL;
+				break;
 			default:
 				b = false;
 				break;
@@ -217,7 +220,7 @@ public class SpawnManager : MonoBehaviour {
 		GameObject item_to_instantiate = item_prefabs[Random.Range(0, item_prefabs.Length)];
 		GameObject item_created = Instantiate(
 			item_to_instantiate,
-			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(4f, 8f),
+			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(3f, 5f),
 			Quaternion.identity,
 			last_ground.transform
 		);
