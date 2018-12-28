@@ -48,8 +48,9 @@ public class SpawnManager : MonoBehaviour {
 		block_prefab = Resources.Load <GameObject>("prefabs/Block");
 		portal_prefab = Resources.Load<GameObject>("prefabs/Portal");
 		item_prefab =  Resources.Load<GameObject>("prefabs/Item");
-		item_textures = Resources.LoadAll <Sprite>("textures/Items");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
+		item_textures = Resources.LoadAll <Sprite>("textures/Items");
+
 		grounds = GameObject.Find ("Grounds");
 		
 		on_ground_offset = Vector3.up * ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
@@ -225,7 +226,10 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
-		Sprite item_texture = item_textures[Random.Range(0, item_textures.Length)];
+		Sprite item_texture;
+		do {
+			item_texture = item_textures[Random.Range(0, item_textures.Length)];
+		} while (item_texture.name == "Nothing");
 		item_created.GetComponent<SpriteRenderer>().sprite = item_texture;
 		item_created.name = item_texture.name;
 	}
