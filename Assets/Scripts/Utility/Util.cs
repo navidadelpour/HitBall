@@ -12,21 +12,21 @@ public class Util {
         return target;
     }
 
-    public static Things GetKeyByChance(Dictionary<Things, int> chances) {
+    public static System.Enum GetKeyByChance(Dictionary<System.Enum, int> chances) {
 		int chances_sum = 0;
-		foreach (KeyValuePair<Things, int> item in chances) {
+		foreach (KeyValuePair<System.Enum, int> item in chances) {
 			chances_sum += item.Value;
 		}
 
 		int chance = Random.Range (0, chances_sum);
 		int previous_chances = 0;
 
-		foreach (KeyValuePair<Things, int> item in chances) {
+		foreach (KeyValuePair<System.Enum, int> item in chances) {
 			if (chance < item.Value + previous_chances)
 				return item.Key;
 			previous_chances += item.Value; 
 		}
-		return Things.OBSTACLE;
+		return null;
 	}
 
 }

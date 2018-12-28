@@ -17,7 +17,7 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject last_ground;
 	private Things last_item_spawned;
 	private int gap_chance;
-	private Dictionary<Things, int> chances = new Dictionary<Things, int>() {
+	private Dictionary<System.Enum, int> chances = new Dictionary<System.Enum, int>() {
 		{Things.COIL, 1},
 		{Things.COIN, 2},
 		{Things.BLOCK, 2},
@@ -84,7 +84,11 @@ public class SpawnManager : MonoBehaviour {
 			return;
 
 		CreateGround ();
-		switch(GameManager.self.has_teleport && !has_portal ? Things.PORTAL : ShouldSpawn(Util.GetKeyByChance(chances))) {
+		switch(
+			GameManager.self.has_teleport && !has_portal ?
+			Things.PORTAL :
+			ShouldSpawn((Things)Util.GetKeyByChance(chances))
+		) {
 			case Things.HOLE:
 				CreateHole ();
 				break;
@@ -107,8 +111,7 @@ public class SpawnManager : MonoBehaviour {
 				CreateItem();
 				break;
 			case Things.NOTHING:
-				grounds_in_row ++;
-				last_item_spawned = Things.NOTHING;
+				CreateNothing();
 				break;
 		}
 
@@ -131,6 +134,11 @@ public class SpawnManager : MonoBehaviour {
 				break;
 		}
 		return b ? Things.NOTHING : item_to_spawn;
+	}
+
+	public void CreateNothing() {
+		grounds_in_row ++;
+		last_item_spawned = Things.NOTHING;
 	}
 
 	private void CreateGround() {
