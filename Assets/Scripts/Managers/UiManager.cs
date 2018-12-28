@@ -11,6 +11,7 @@ public class UiManager : MonoBehaviour {
 	public Text coins_text;
 
 	public Button item_button;
+	public Button reset_button;
 
 	void Awake() {
 		self = this;
@@ -21,10 +22,12 @@ public class UiManager : MonoBehaviour {
 		coins_text = GameObject.Find ("CoinsText").GetComponent<Text>();
 
 		item_button = GameObject.Find ("ItemButton").GetComponent<Button>();
+		reset_button = GameObject.Find ("ResetButton").GetComponent<Button>();
 	}
 
 	void Start () {
 		Init ();
+		reset_button.gameObject.active = false;
 		SetScore ();
 		SetCoins ();
 		SetItem();
@@ -32,6 +35,10 @@ public class UiManager : MonoBehaviour {
 	
 	void Update () {
 		
+	}
+
+	public void GameOver() {
+		reset_button.gameObject.active = true;
 	}
 		
 	public void SetScore() {
@@ -43,8 +50,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetItem() {
-		Debug.Log("textures/Items/" + GameManager.self.item.ToString().ToLower() + ".png");
-		item_button.GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + GameManager.self.item.ToString().ToLower());;
+		item_button.GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + GameManager.self.item.ToString().ToLower());
 	}
 
 }

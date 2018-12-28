@@ -56,13 +56,4 @@ public class InputManager : MonoBehaviour {
 			SpeedManager.self.state = SpeedStates.NORMALIZE;
 		}
 	}
-
-	public void PauseButtonHandler() {
-		if(GameManager.self.paused)
-			Time.timeScale = 1;
-		else
-			Time.timeScale = 0;
-		GameManager.self.paused = !GameManager.self.paused;
-	}
-
 }

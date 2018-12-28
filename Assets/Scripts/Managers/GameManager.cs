@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
 	public static GameManager self;
-	public bool game_over;
 	public bool paused;
 	public int score;
 	public int coins;
@@ -38,19 +38,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Init() {
-
+		player_initial_position = GameObject.Find ("Player").transform.position;
 	}
 
 	void Start () {
 		Init ();
 		RemoveItem();
-		InvokeRepeating ("ResetGame", 3f, 3f);
-		player_initial_position = GameObject.Find ("Player").transform.position;
 	}
 	
 	void Update () {
-		// GameObject.Find ("Player").GetComponent<SpriteRenderer> ().color = new Color(255, 255, 255, game_over && (int) (Time.time * 10) % 2 == 0 ? 0 : 1);
-
 		// shield checker
 		if(item_activated && item == Item.SHIELD) {
 			RemoveItem();
@@ -87,18 +83,31 @@ public class GameManager : MonoBehaviour {
 		}
 		has_zoom &= Time.time - zoom_adding_time < max_zoom_time;
 
+		// teleport checker
 		if(item_activated && item == Item.TELEPORT) {
 			RemoveItem();
 			has_teleport = true;
 		}
 	}
 
-	void ResetGame() {
-		if (game_over) {
-			game_over = false;
-			GameObject.Find ("Player").transform.position = player_initial_position;
-		}
+	public void GameOver() {
+		Pause();
+		UiManager.self.GameOver();
 	}
+
+	public void ResetGame() {
+		Pause();
+		SceneManager.LoadScene("Scene1");
+	}
+
+	public void Pause() {
+		if(GameManager.self.paused)
+			Time.timeScale = 1;
+		else
+			Time.timeScale = 0;
+		GameManager.self.paused = !GameManager.self.paused;
+	}
+
 
 	public void IncreamentScore() {
 		score++;

@@ -45,9 +45,11 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		switch (other.gameObject.tag) {
-			case "Block":
+			// case "Block":
 			case "Obstacle":
-				// GameManager.self.game_over = !GameManager.self.has_shield;
+				if(!GameManager.self.has_shield) {
+					GameManager.self.GameOver();
+				}
 				break;
 
 			case "Coin":
@@ -56,7 +58,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 				break;
 
 			case "Hole":
-				GameManager.self.game_over = true;
+				GameManager.self.GameOver();
 				break;
 
 			case "Coil":
