@@ -27,7 +27,7 @@ public class UiManager : MonoBehaviour {
 
 	void Start () {
 		Init ();
-		reset_button.gameObject.active = false;
+		reset_button.gameObject.SetActive(false);
 		SetScore ();
 		SetCoins ();
 		SetItem();
@@ -38,7 +38,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
-		reset_button.gameObject.active = true;
+		reset_button.gameObject.SetActive(true);
 	}
 		
 	public void SetScore() {
