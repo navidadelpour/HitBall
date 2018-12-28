@@ -24,9 +24,8 @@ public class SpawnManager : MonoBehaviour {
 		{Things.OBSTACLE, 3},
 		{Things.HOLE, 3},
 		{Things.NOTHING, 1},
-		{Things.ITEM, 1},
 	};
-
+	private int item_chance = 10;
 	private int grounds_in_row;
 	private int min_distance_between_item = 1;
 
@@ -107,12 +106,12 @@ public class SpawnManager : MonoBehaviour {
 			case Things.PORTAL:
 				CreatePortal ();
 				break;
-			case Things.ITEM:
-				CreateItem();
-				break;
 			case Things.NOTHING:
 				CreateNothing();
 				break;
+		}
+		if(Util.HasChance(item_chance)) {
+			CreateItem();
 		}
 
 		if(grounds.transform.childCount < ground_limit)
@@ -228,6 +227,5 @@ public class SpawnManager : MonoBehaviour {
 			last_ground.transform
 		);
 		item_created.name = item_to_instantiate.name;
-		last_item_spawned = Things.ITEM;
 	}
 }

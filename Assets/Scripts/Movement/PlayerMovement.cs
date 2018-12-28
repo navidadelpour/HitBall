@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour {
 			Fall ();
 		}
 
-		if(GameManager.self.item_activated && GameManager.self.item == Things.DOUBLE_JUMP) {
+		if(GameManager.self.item_activated && GameManager.self.item == Item.DOUBLE_JUMP) {
 			if(!jumping){
 				GameManager.self.RemoveItem();
 				Jump();
@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour {
 				GameManager.self.item_activated = false;
 		}
 
-		if(GameManager.self.item_activated && GameManager.self.item == Things.FORCE_FALL) {
+		if(GameManager.self.item_activated && GameManager.self.item == Item.FORCE_FALL) {
 			if(jumping){
 				GameManager.self.RemoveItem();
 				Fall();

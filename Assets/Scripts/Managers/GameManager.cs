@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 	public int coins;
 
 	public bool item_activated;
-	public Things item;
+	public Item item;
 
 	public bool has_shield;
 	private float shield_adding_time;
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
 		// GameObject.Find ("Player").GetComponent<SpriteRenderer> ().color = new Color(255, 255, 255, game_over && (int) (Time.time * 10) % 2 == 0 ? 0 : 1);
 
 		// shield checker
-		if(item_activated && item == Things.SHIELD) {
+		if(item_activated && item == Item.SHIELD) {
 			RemoveItem();
 			shield_adding_time = Time.time;
 			has_shield = true;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour {
 		has_shield &= Time.time - shield_adding_time < max_shield_time;
 
 		// magnet checker
-		if(item_activated && item == Things.MAGNET) {
+		if(item_activated && item == Item.MAGNET) {
 			RemoveItem();
 			magnet_adding_time = Time.time;
 			has_magnet = true;
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour {
 		has_magnet &= Time.time - magnet_adding_time < max_magnet_time;
 
 		// slow motion checker
-		if(item_activated && item == Things.SLOW_MOTION) {
+		if(item_activated && item == Item.SLOW_MOTION) {
 			RemoveItem();
 			slow_motion_adding_time = Time.time;
 			has_slow_motion = true;
@@ -80,14 +80,14 @@ public class GameManager : MonoBehaviour {
 		has_slow_motion &= Time.time - slow_motion_adding_time < max_slow_motion_time;
 
 		// zoom checker
-		if(item_activated && item == Things.ZOOM) {
+		if(item_activated && item == Item.ZOOM) {
 			RemoveItem();
 			zoom_adding_time = Time.time;
 			has_zoom = true;
 		}
 		has_zoom &= Time.time - zoom_adding_time < max_zoom_time;
 
-		if(item_activated && item == Things.TELEPORT) {
+		if(item_activated && item == Item.TELEPORT) {
 			RemoveItem();
 			has_teleport = true;
 		}
@@ -110,13 +110,13 @@ public class GameManager : MonoBehaviour {
 		UiManager.self.SetCoins ();
 	}
 
-	public void SetItem(Things item) {
+	public void SetItem(Item item) {
 		this.item = item;
 		UiManager.self.SetItem();
 	}
 
 	public void RemoveItem() {
-		item = Things.NOTHING;
+		item = Item.NOTHING;
 		item_activated = false;
 		UiManager.self.SetItem();
 	}

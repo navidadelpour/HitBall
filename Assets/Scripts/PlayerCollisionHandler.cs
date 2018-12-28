@@ -29,7 +29,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			if (other.gameObject.tag == "Ground") {
 				HeightManager.self.SetHeight ();
 				PlayerMovement.self.Jump ();
-				if(GameManager.self.item_activated && GameManager.self.item == Things.HIGH_JUMP) {
+				if(GameManager.self.item_activated && GameManager.self.item == Item.HIGH_JUMP) {
 					HeightManager.self.has_coil = true;
 					HeightManager.self.should_remove_coil = false;
 					GameManager.self.RemoveItem();
@@ -67,7 +67,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 				break;
 			case "Item":
 				Destroy (other.gameObject);
-				Things item = (Things)System.Enum.Parse(typeof(Things), other.name.ToUpper());
+				Item item = (Item)System.Enum.Parse(typeof(Item), other.name.ToUpper());
 				GameManager.self.SetItem(item);
 				break;
 		}
