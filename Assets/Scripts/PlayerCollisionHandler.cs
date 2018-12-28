@@ -29,7 +29,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			if (other.gameObject.tag == "Ground") {
 				HeightManager.self.SetHeight ();
 				PlayerMovement.self.Jump ();
-				if(GameManager.self.item_activated && GameManager.self.item == Item.HIGH_JUMP) {
+				if(GameManager.self.item_activated && GameManager.self.item == Things.HIGH_JUMP) {
 					HeightManager.self.has_coil = true;
 					HeightManager.self.should_remove_coil = false;
 					GameManager.self.RemoveItem();
@@ -45,27 +45,31 @@ public class PlayerCollisionHandler : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		switch (other.gameObject.tag) {
+			case "Block":
+			case "Obstacle":
+				// GameManager.self.game_over = !GameManager.self.has_shield;
+				break;
 
-		case "Block":
-		case "Obstacle":
-			// GameManager.self.game_over = !GameManager.self.has_shield;
-			break;
+			case "Coin":
+				Destroy (other.gameObject);
+				GameManager.self.IncreamentCoins();
+				break;
 
-		case "Coin":
-			Destroy (other.gameObject);
-			GameManager.self.IncreamentCoins();
-			break;
+			case "Hole":
+				GameManager.self.game_over = true;
+				break;
 
-		case "Hole":
-			GameManager.self.game_over = true;
-			break;
-
-		case "Coil":
-			HeightManager.self.SetHeight ();
-			PlayerMovement.self.Jump ();
-			HeightManager.self.has_coil = true;
-			HeightManager.self.should_remove_coil = false;
-			break;
+			case "Coil":
+				HeightManager.self.SetHeight ();
+				PlayerMovement.self.Jump ();
+				HeightManager.self.has_coil = true;
+				HeightManager.self.should_remove_coil = false;
+				break;
+			case "Item":
+				Destroy (other.gameObject);
+				Things item = (Things)System.Enum.Parse(typeof(Things), other.name.ToUpper());
+				GameManager.self.SetItem(item);
+				break;
 		}
 	}
 }

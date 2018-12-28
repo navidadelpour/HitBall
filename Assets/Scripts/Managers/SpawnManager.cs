@@ -12,17 +12,19 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject block_prefab;
 	private GameObject portal_prefab;
 	private GameObject[] obstacles_prefabs;
+	private GameObject[] item_prefabs;
 	private GameObject grounds;
 	private GameObject last_ground;
-	private Item last_item_spawned;
+	private Things last_item_spawned;
 	private int gap_chance;
-	private Dictionary<Item, int> chances = new Dictionary<Item, int>() {
-		{Item.COIL, 1},
-		{Item.COIN, 2},
-		{Item.BLOCK, 2},
-		{Item.OBSTACLE, 3},
-		{Item.HOLE, 3},
-		{Item.NOTHING, 1},
+	private Dictionary<Things, int> chances = new Dictionary<Things, int>() {
+		{Things.COIL, 1},
+		{Things.COIN, 2},
+		{Things.BLOCK, 2},
+		{Things.OBSTACLE, 3},
+		{Things.HOLE, 3},
+		{Things.NOTHING, 1},
+		{Things.ITEM, 1},
 	};
 
 	private int grounds_in_row;
@@ -48,6 +50,7 @@ public class SpawnManager : MonoBehaviour {
 		block_prefab = Resources.Load <GameObject>("prefabs/Block");
 		portal_prefab = Resources.Load<GameObject>("prefabs/Portal");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
+		item_prefabs =  Resources.LoadAll<GameObject>("prefabs/Items");
 		grounds = GameObject.Find ("Grounds");
 		
 		on_ground_offset = Vector3.up * ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
@@ -66,7 +69,7 @@ public class SpawnManager : MonoBehaviour {
 		SetGroundLimit();
 		
 		// size - initial_size(5) + defautlsize(1)
-		chances[Item.NOTHING] = (int) Camera.main.orthographicSize - 5 + 1;
+		chances[Things.NOTHING] = (int) Camera.main.orthographicSize - 5 + 1;
 	}
 
 	private void SetGroundLimit() {
@@ -81,28 +84,31 @@ public class SpawnManager : MonoBehaviour {
 			return;
 
 		CreateGround ();
-		switch(GameManager.self.has_teleport && !has_portal ? Item.PORTAL : ShouldSpawn(Util.GetKeyByChance(chances))) {
-			case Item.HOLE:
+		switch(GameManager.self.has_teleport && !has_portal ? Things.PORTAL : ShouldSpawn(Util.GetKeyByChance(chances))) {
+			case Things.HOLE:
 				CreateHole ();
 				break;
-			case Item.OBSTACLE:
+			case Things.OBSTACLE:
 				CreateObstacle ();
 				break;
-			case Item.BLOCK:
+			case Things.BLOCK:
 				CreateBlock ();
 				break;
-			case Item.COIL:
+			case Things.COIL:
 				CreateCoil ();
 				break;
-			case Item.COIN:
+			case Things.COIN:
 				CreateCoin ();
 				break;
-			case Item.PORTAL:
+			case Things.PORTAL:
 				CreatePortal ();
 				break;
-			case Item.NOTHING:
+			case Things.ITEM:
+				CreateItem();
+				break;
+			case Things.NOTHING:
 				grounds_in_row ++;
-				last_item_spawned = Item.NOTHING;
+				last_item_spawned = Things.NOTHING;
 				break;
 		}
 
@@ -110,21 +116,21 @@ public class SpawnManager : MonoBehaviour {
 			Spawn();
 	}
 
-	private Item ShouldSpawn(Item item_to_spawn) {
+	private Things ShouldSpawn(Things item_to_spawn) {
 		bool b = false;
 		switch(item_to_spawn) {
-			case Item.HOLE:
-			case Item.OBSTACLE:
-			case Item.BLOCK:
-				b = last_item_spawned == Item.HOLE ||
-				last_item_spawned == Item.OBSTACLE ||
-				last_item_spawned == Item.BLOCK;
+			case Things.HOLE:
+			case Things.OBSTACLE:
+			case Things.BLOCK:
+				b = last_item_spawned == Things.HOLE ||
+				last_item_spawned == Things.OBSTACLE ||
+				last_item_spawned == Things.BLOCK;
 				break;
 			default:
 				b = false;
 				break;
 		}
-		return b ? Item.NOTHING : item_to_spawn;
+		return b ? Things.NOTHING : item_to_spawn;
 	}
 
 	private void CreateGround() {
@@ -145,17 +151,17 @@ public class SpawnManager : MonoBehaviour {
 		last_ground.GetComponent<Renderer> ().enabled = false;
 		last_ground.name = "Hole";
 		last_ground.tag = "Hole";
-		last_item_spawned = Item.HOLE;
+		last_item_spawned = Things.HOLE;
 	}
 
 	private void CreateObstacle() {
 		GameObject obstacle_created = Instantiate(
-			obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length - 1)],
+			obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length)],
 			last_ground.transform.position + on_ground_offset,
 			Quaternion.identity,
 			last_ground.transform
 		);
-		last_item_spawned = Item.OBSTACLE;
+		last_item_spawned = Things.OBSTACLE;
 	}
 		
 	private void CreateBlock() {
@@ -166,7 +172,7 @@ public class SpawnManager : MonoBehaviour {
 			last_ground.transform
 		);
 		block_created.GetComponent<SpriteRenderer> ().color = Random.Range (1, 3) % 2 == 0 ? Color.red : Color.blue;
-		last_item_spawned = Item.BLOCK;
+		last_item_spawned = Things.BLOCK;
 	}
 
 
@@ -180,7 +186,7 @@ public class SpawnManager : MonoBehaviour {
           	);
 			if(GameManager.self.has_magnet)
 				coin_created.AddComponent<CoinMovement>();
-		last_item_spawned = Item.COIN;
+		last_item_spawned = Things.COIN;
 		}
 	}
 
@@ -191,7 +197,7 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
-		last_item_spawned = Item.COIL;
+		last_item_spawned = Things.COIL;
 	}
 
 	private void CreatePortal() {
@@ -201,7 +207,19 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
-		last_item_spawned = Item.PORTAL;
+		last_item_spawned = Things.PORTAL;
 		has_portal = true;
+	}
+
+	private void CreateItem() {
+		GameObject item_to_instantiate = item_prefabs[Random.Range(0, item_prefabs.Length)];
+		GameObject item_created = Instantiate(
+			item_to_instantiate,
+			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(0f, 5f),
+			Quaternion.identity,
+			last_ground.transform
+		);
+		item_created.name = item_to_instantiate.name;
+		last_item_spawned = Things.ITEM;
 	}
 }

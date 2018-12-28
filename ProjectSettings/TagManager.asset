@@ -11,6 +11,7 @@ TagManager:
   - Coil
   - Block
   - Portal
+  - Item
   layers:
   - Default
   - TransparentFX
