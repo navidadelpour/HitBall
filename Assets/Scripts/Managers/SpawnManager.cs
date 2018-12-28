@@ -11,8 +11,9 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject ground_prefab;
 	private GameObject block_prefab;
 	private GameObject portal_prefab;
+	private GameObject item_prefab;
+	private Sprite[] item_textures;
 	private GameObject[] obstacles_prefabs;
-	private GameObject[] item_prefabs;
 
 	private GameObject grounds;
 	private GameObject last_ground;
@@ -46,8 +47,9 @@ public class SpawnManager : MonoBehaviour {
 		coil_prefab = Resources.Load <GameObject>("prefabs/Coil");
 		block_prefab = Resources.Load <GameObject>("prefabs/Block");
 		portal_prefab = Resources.Load<GameObject>("prefabs/Portal");
+		item_prefab =  Resources.Load<GameObject>("prefabs/Item");
+		item_textures = Resources.LoadAll <Sprite>("textures/Items");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
-		item_prefabs =  Resources.LoadAll<GameObject>("prefabs/Items");
 		grounds = GameObject.Find ("Grounds");
 		
 		on_ground_offset = Vector3.up * ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
@@ -217,13 +219,14 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void CreateItem() {
-		GameObject item_to_instantiate = item_prefabs[Random.Range(0, item_prefabs.Length)];
 		GameObject item_created = Instantiate(
-			item_to_instantiate,
+			item_prefab,
 			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(3f, 5f),
 			Quaternion.identity,
 			last_ground.transform
 		);
-		item_created.name = item_to_instantiate.name;
+		Sprite item_texture = item_textures[Random.Range(0, item_textures.Length)];
+		item_created.GetComponent<SpriteRenderer>().sprite = item_texture;
+		item_created.name = item_texture.name;
 	}
 }
