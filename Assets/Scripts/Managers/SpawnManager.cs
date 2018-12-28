@@ -13,10 +13,16 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject portal_prefab;
 	private GameObject[] obstacles_prefabs;
 	private GameObject[] item_prefabs;
+
 	private GameObject grounds;
 	private GameObject last_ground;
+	private float ground_limit_scale = 1.5f;
+	private int ground_limit;
+	private Vector3 on_ground_offset;
+	private float ground_size_x;
+
 	private Things last_item_spawned;
-	private int gap_chance;
+	
 	private Dictionary<System.Enum, int> chances = new Dictionary<System.Enum, int>() {
 		{Things.COIL, 1},
 		{Things.COIN, 2},
@@ -26,16 +32,8 @@ public class SpawnManager : MonoBehaviour {
 		{Things.NOTHING, 1},
 	};
 	private int item_chance = 10;
-	private int grounds_in_row;
-	private int min_distance_between_item = 1;
 
-	private int min_coins = 1;
-	private int max_coins = 3;
-
-	private float ground_limit_scale = 1.5f;
-	private int ground_limit;
-	private Vector3 on_ground_offset;
-	private float ground_size_x;
+	private int[] coins_range = {1, 3};
 	public bool has_portal;
 
 	void Awake() {
@@ -136,7 +134,6 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	public void CreateNothing() {
-		grounds_in_row ++;
 		last_item_spawned = Things.NOTHING;
 	}
 
@@ -149,7 +146,6 @@ public class SpawnManager : MonoBehaviour {
 			grounds.transform
 		);
 		last_ground = item_created;
-		item_created.name = "Ground";
 	}
 
 	private void CreateHole() {
@@ -162,7 +158,7 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void CreateObstacle() {
-		GameObject obstacle_created = Instantiate(
+		Instantiate(
 			obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length)],
 			last_ground.transform.position + on_ground_offset,
 			Quaternion.identity,
@@ -172,19 +168,18 @@ public class SpawnManager : MonoBehaviour {
 	}
 		
 	private void CreateBlock() {
-		GameObject block_created = Instantiate(
+		Instantiate(
 			block_prefab,
 			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(1f, 6f),
 			Quaternion.identity,
 			last_ground.transform
 		);
-		block_created.GetComponent<SpriteRenderer> ().color = Random.Range (1, 3) % 2 == 0 ? Color.red : Color.blue;
 		last_item_spawned = Things.BLOCK;
 	}
 
 
 	private void CreateCoin() {
-		for (int i = 0; i < Random.Range (min_coins, max_coins + 1); i++) {
+		for (int i = 0; i < Random.Range (coins_range[0], coins_range[1] + 1); i++) {
 			GameObject coin_created = Instantiate (
              	coin_prefab,
 				last_ground.transform.position + Vector3.up * i + on_ground_offset,
@@ -198,7 +193,7 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void CreateCoil() {
-		GameObject coil_created = Instantiate(
+		Instantiate(
 			coil_prefab,
 			last_ground.transform.position + on_ground_offset,
 			Quaternion.identity,
@@ -208,7 +203,7 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void CreatePortal() {
-		GameObject portal_created = Instantiate(
+		Instantiate(
 			portal_prefab,
 			last_ground.transform.position + on_ground_offset,
 			Quaternion.identity,
@@ -222,7 +217,7 @@ public class SpawnManager : MonoBehaviour {
 		GameObject item_to_instantiate = item_prefabs[Random.Range(0, item_prefabs.Length)];
 		GameObject item_created = Instantiate(
 			item_to_instantiate,
-			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(0f, 5f),
+			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(4f, 8f),
 			Quaternion.identity,
 			last_ground.transform
 		);
