@@ -46,7 +46,8 @@ public class InputManager : MonoBehaviour {
 					SpeedManager.self.state = SpeedStates.DECREASE;
 					break;
 				case "ItemButton":
-					GameManager.self.item_activated = true;
+					if(GameManager.self.item != Item.NOTHING)
+						GameManager.self.item_activated = true;
 					break;
 				}
 				
