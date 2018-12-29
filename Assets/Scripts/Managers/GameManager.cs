@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager self;
 	public bool paused;
 	public int score;
+	public int high_score;
 	public int coins;
 
 	public bool item_activated;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour {
 
 	void Init() {
 		player_initial_position = GameObject.Find ("Player").transform.position;
+		high_score = PlayerPrefs.GetInt("high_score");
 	}
 
 	void Start () {
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver() {
 		Pause();
+		SetHighScore();
 		UiManager.self.GameOver();
 	}
 
@@ -113,6 +116,13 @@ public class GameManager : MonoBehaviour {
 		else
 			Time.timeScale = 0;
 		GameManager.self.paused = !GameManager.self.paused;
+	}
+
+	public void SetHighScore() {
+		if(score > high_score) {
+			high_score = score;
+			PlayerPrefs.SetInt("high_score", high_score);
+		}
 	}
 
 
