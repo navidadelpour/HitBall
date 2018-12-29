@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
 	private float max_zoom_time = 3f;
 
 	public bool has_teleport;
+	public bool has_high_jump;
 
 	public Vector3 player_initial_position;
 
@@ -87,6 +88,12 @@ public class GameManager : MonoBehaviour {
 		if(item_activated && item == Item.TELEPORT) {
 			RemoveItem();
 			has_teleport = true;
+		}
+
+		// high jump checher
+		if(item_activated && item == Item.HIGH_JUMP) {
+			RemoveItem();
+			has_high_jump = true;
 		}
 	}
 
