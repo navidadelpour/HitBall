@@ -22,9 +22,7 @@ public class ScaleManager : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-	}
 
-	void Init() {
 		ground_prefab = Resources.Load <GameObject>("prefabs/Ground");
         background = GameObject.Find("Background");
         grounds = GameObject.Find ("Grounds");
@@ -34,7 +32,7 @@ public class ScaleManager : MonoBehaviour {
 	}
 
 	void Start () {
-		Init ();
+
 	} 
 
     void Update() {

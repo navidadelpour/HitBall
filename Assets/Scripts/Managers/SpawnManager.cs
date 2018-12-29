@@ -39,9 +39,7 @@ public class SpawnManager : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-	}
 
-	void Init() {
 		ground_prefab = Resources.Load <GameObject>("prefabs/Ground");
 		coin_prefab = Resources.Load <GameObject>("prefabs/Coin");
 		coil_prefab = Resources.Load <GameObject>("prefabs/Coil");
@@ -56,10 +54,10 @@ public class SpawnManager : MonoBehaviour {
 		on_ground_offset = Vector3.up * ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
 		ground_size_x = ground_prefab.GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x;
 		last_ground = grounds.transform.GetChild(0).gameObject;
+
 	}
 
 	void Start () {
-		Init ();
 		SetGroundLimit();
 		for(int i = 1; i < ground_limit; i++)
 			CreateGround ();

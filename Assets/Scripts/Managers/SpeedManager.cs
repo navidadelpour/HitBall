@@ -26,9 +26,7 @@ public class SpeedManager : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-	}
 
-	void Init() {
 		game_normal_speed = (game_min_speed["min"] + game_max_speed["min"]) / 2;
 		player_normal_speed = (player_min_speed["min"] + player_max_speed["min"]) / 2;
 		game_min_speed["max"] = game_min_speed["min"] * 2;
@@ -40,7 +38,7 @@ public class SpeedManager : MonoBehaviour {
 	}
 
 	void Start () {
-		Init ();
+
 	} 
 
 	void Update () {

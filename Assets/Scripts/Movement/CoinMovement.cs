@@ -8,12 +8,12 @@ public class CoinMovement : MonoBehaviour {
     private float radius = 5f;
     private bool should_follow;
 
-	void Init() {
+	void Awake() {
         player = GameObject.Find("Player");
 	}
 
 	void Start () {
-		Init ();
+
 	}
 	
 	void FixedUpdate () {

@@ -15,17 +15,14 @@ public class InputManager : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-	}
-
-	void Init() {
+		
 		canvas = GameObject.Find ("Canvas");
 		graphic_raycaster = canvas.GetComponent<GraphicRaycaster>();
 		event_systems = canvas.GetComponent<EventSystem>();
-
 	}
 
 	void Start () {
-		Init ();
+
 	}
 
 	void Update () {

@@ -11,12 +11,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 		self = this;
 	}
 
-	void Init() {
-
-	}
-
 	void Start () {
-		Init ();
 		InvokeRepeating("CheckForCollision", .1f, .1f);
 	}
 	

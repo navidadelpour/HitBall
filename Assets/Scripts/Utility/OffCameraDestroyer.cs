@@ -7,13 +7,13 @@ public class OffCameraDestroyer : MonoBehaviour {
 	private BoxCollider2D box_collider;
 	private float grounds_position_x;
 
-	void Init() {
+	void Awake() {
 		box_collider = transform.GetComponent<BoxCollider2D> ();
 		grounds_position_x = GameObject.Find("Grounds").transform.position.x;
 	}
 
 	void Start () {
-		Init ();
+
 	}
 	
 	void Update () {

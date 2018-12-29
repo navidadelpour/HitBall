@@ -15,11 +15,8 @@ public class UiManager : MonoBehaviour {
 	public Button reset_button;
 
 	void Awake() {
-		Init ();
 		self = this;
-	}
 
-	void Init() {
 		score_text = GameObject.Find ("ScoreText").GetComponent<Text>();
 		high_score_text = GameObject.Find("HighScoreText").GetComponent<Text>();
 		coins_text = GameObject.Find ("CoinsText").GetComponent<Text>();

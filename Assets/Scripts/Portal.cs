@@ -7,12 +7,12 @@ public class Portal : MonoBehaviour {
     private GameObject player;
     private float threshold = .2f;
     
-	void Init() {
+	void Awake() {
         player = GameObject.Find("Player");
 	}
 
 	void Start () {
-		Init ();
+
 	}
 	
 	void Update () {

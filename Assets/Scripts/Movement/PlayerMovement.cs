@@ -11,14 +11,12 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-	}
 
-	void Init() {
 		body = GetComponent<Rigidbody2D> ();
 	}
 
 	void Start () {
-		Init ();
+
 	}
 	
 	void FixedUpdate () {

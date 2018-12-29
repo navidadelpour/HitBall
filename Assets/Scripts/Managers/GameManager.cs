@@ -37,15 +37,12 @@ public class GameManager : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-	}
 
-	void Init() {
 		player_initial_position = GameObject.Find ("Player").transform.position;
 		high_score = PlayerPrefs.GetInt("high_score");
 	}
 
 	void Start () {
-		Init ();
 		RemoveItem();
 	}
 	

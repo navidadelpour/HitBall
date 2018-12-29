@@ -7,12 +7,12 @@ public class OppositeMovement : MonoBehaviour {
 	private float speed;
 	private Rigidbody2D body;
 
-	void Init() {
+	void Awake() {
 		body = GetComponent<Rigidbody2D> ();
 	}
 
 	void Start () {
-		Init ();
+
 	}
 	
 	void FixedUpdate () {

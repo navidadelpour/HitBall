@@ -18,15 +18,13 @@ public class HeightManager : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-	}
 
-	void Init() {
-		MakeHard();
+		player_normal_jump_height = (int) Camera.main.orthographicSize - 5 + 8;
 		player_jump_height = player_normal_jump_height;
 	}
 
 	void Start () {
-		Init ();
+
 	}
 
 	void Update() {
