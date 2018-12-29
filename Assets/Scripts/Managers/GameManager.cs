@@ -100,8 +100,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
-		Pause();
 		SetHighScore();
+		Pause();
 		UiManager.self.GameOver();
 	}
 
@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour {
 		if(score > high_score) {
 			high_score = score;
 			PlayerPrefs.SetInt("high_score", high_score);
+			UiManager.self.SetHighScore();
 		}
 	}
 

@@ -8,17 +8,20 @@ public class UiManager : MonoBehaviour {
 	public static UiManager self;
 
 	public Text score_text;
+	public Text high_score_text;
 	public Text coins_text;
 
 	public Button item_button;
 	public Button reset_button;
 
 	void Awake() {
+		Init ();
 		self = this;
 	}
 
 	void Init() {
 		score_text = GameObject.Find ("ScoreText").GetComponent<Text>();
+		high_score_text = GameObject.Find("HighScoreText").GetComponent<Text>();
 		coins_text = GameObject.Find ("CoinsText").GetComponent<Text>();
 
 		item_button = GameObject.Find ("ItemButton").GetComponent<Button>();
@@ -26,11 +29,10 @@ public class UiManager : MonoBehaviour {
 	}
 
 	void Start () {
-		Init ();
 		reset_button.gameObject.SetActive(false);
 		SetScore ();
+		SetHighScore();
 		SetCoins ();
-		SetItem();
 	}
 	
 	void Update () {
@@ -39,6 +41,10 @@ public class UiManager : MonoBehaviour {
 
 	public void GameOver() {
 		reset_button.gameObject.SetActive(true);
+	}
+
+	public void SetHighScore() {
+		high_score_text.text = "HIGH SCORE: " + GameManager.self.high_score; 
 	}
 		
 	public void SetScore() {
