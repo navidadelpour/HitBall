@@ -42,7 +42,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 		switch (other.gameObject.tag) {
 			// case "Block":
 			case "Obstacle":
-				if(!ItemManager.self.has_shield && !GameManager.self.safe_game) {
+				if(!ItemManager.self.has_shield && !GameManager.self.safe_mode) {
 					GameManager.self.GameOver();
 				}
 				break;

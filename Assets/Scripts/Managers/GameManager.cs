@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager self;
 
-	public bool safe_game = true;
+	public bool safe_mode = true;
 	public bool paused;
 	public int score;
 	public int high_score;
