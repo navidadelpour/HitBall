@@ -11,7 +11,7 @@ public class UiManager : MonoBehaviour {
 	public Text high_score_text;
 	public Text coins_text;
 
-	public Button item_button;
+	public Button[] item_buttons;
 	public Button reset_button;
 
 	void Awake() {
@@ -21,7 +21,7 @@ public class UiManager : MonoBehaviour {
 		high_score_text = GameObject.Find("HighScoreText").GetComponent<Text>();
 		coins_text = GameObject.Find ("CoinsText").GetComponent<Text>();
 
-		item_button = GameObject.Find ("ItemButton").GetComponent<Button>();
+		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
 		reset_button = GameObject.Find ("ResetButton").GetComponent<Button>();
 	}
 
@@ -52,8 +52,8 @@ public class UiManager : MonoBehaviour {
 		coins_text.text = GameManager.self.coins + "";
 	}
 
-	public void SetItems() {
-		item_button.GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + ItemManager.self.item.ToString().ToLower());
+	public void SetItem(int i, Item item) {
+		item_buttons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
 	}
 
 }

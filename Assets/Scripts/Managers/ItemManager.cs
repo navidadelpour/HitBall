@@ -8,7 +8,6 @@ public class ItemManager : MonoBehaviour {
 
 	public bool item_activated;
     public int item_activated_index;
-	public Item item;
 
     public AvailableItem[] available_items;
     public int items_size = 3;
@@ -36,6 +35,8 @@ public class ItemManager : MonoBehaviour {
     void Awake() {
         self = this;
         available_items = new AvailableItem[items_size];
+        for(int i = 0; i < items_size; i++)
+            available_items[i] = new AvailableItem(Item.NOTHING);
     }
 
     void Start() {
@@ -43,6 +44,7 @@ public class ItemManager : MonoBehaviour {
     }
 
     void Update() {
+        Debug.Log(item_activated_index);
         if(item_activated){
 			switch (available_items[item_activated_index].item) {
 				case Item.SHIELD:
@@ -102,15 +104,18 @@ public class ItemManager : MonoBehaviour {
 
     public void AddItem(Item item) {
         // checking if the item exists already
-        foreach (AvailableItem available_item in available_items)
-            if(available_item.item == item)
+        for(int i = 0; i < items_size; i++) {
+            if(available_items[i].item == item){
+                available_items[i] = new AvailableItem(item);
                 return;
+            }
+        }
 
         // adding to null slot
         for(int i = 0; i < items_size; i++) {
             if(available_items[i].item == Item.NOTHING) {
                 available_items[i] = new AvailableItem(item);
-		        UiManager.self.SetItems();
+		        UiManager.self.SetItem(i, item);
                 return;
             }
         }
@@ -121,15 +126,16 @@ public class ItemManager : MonoBehaviour {
             if(i == 0 || available_items[i].time_added < old_item.time_added)
                 old_item = available_items[i];
         }
-        available_items[Array.IndexOf(available_items, old_item)] = new AvailableItem(item);
-        
-        UiManager.self.SetItems();
+        int j = Array.IndexOf(available_items, old_item);
+        available_items[j] = new AvailableItem(item);
+
+        UiManager.self.SetItem(j, item);
 	}
 
 	public void RemoveItem() {
         available_items[item_activated_index] = new AvailableItem(Item.NOTHING);
 		item_activated = false;
-		UiManager.self.SetItems();
+		UiManager.self.SetItem(item_activated_index, Item.NOTHING);
 	}
 
 }

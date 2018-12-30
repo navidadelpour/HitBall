@@ -42,10 +42,14 @@ public class InputManager : MonoBehaviour {
 				case "JumpMinButton":
 					SpeedManager.self.state = SpeedStates.DECREASE;
 					break;
-				case "ItemButton":
-					if(ItemManager.self.item != Item.NOTHING)
+				case "2":
+				case "1":
+				case "0":
+					int index = int.Parse(results [0].gameObject.name);
+					if(ItemManager.self.available_items[index].item != Item.NOTHING) {
 						ItemManager.self.item_activated = true;
-						ItemManager.self.item_activated_index = int.Parse(results [0].gameObject.name);
+						ItemManager.self.item_activated_index = index;
+					}
 					break;
 				}
 				
