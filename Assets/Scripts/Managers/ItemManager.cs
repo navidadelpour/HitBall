@@ -44,7 +44,6 @@ public class ItemManager : MonoBehaviour {
     }
 
     void Update() {
-        Debug.Log(item_activated_index);
         if(item_activated){
 			switch (available_items[item_activated_index].item) {
 				case Item.SHIELD:

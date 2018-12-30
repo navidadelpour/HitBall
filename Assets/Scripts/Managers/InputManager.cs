@@ -35,24 +35,22 @@ public class InputManager : MonoBehaviour {
 			graphic_raycaster.Raycast (pointer_event_data, results);
 
 			if (results.Count != 0 && results [0].gameObject.name != "PauseButton") {
-				switch (results [0].gameObject.name) {
-				case "JumpMaxButton":
-					SpeedManager.self.state = SpeedStates.INCREASE;
-					break;
-				case "JumpMinButton":
-					SpeedManager.self.state = SpeedStates.DECREASE;
-					break;
-				case "2":
-				case "1":
-				case "0":
+				try {
 					int index = int.Parse(results [0].gameObject.name);
 					if(ItemManager.self.available_items[index].item != Item.NOTHING) {
 						ItemManager.self.item_activated = true;
 						ItemManager.self.item_activated_index = index;
 					}
-					break;
+				} catch (System.Exception) {
+					switch (results [0].gameObject.name) {
+					case "JumpMaxButton":
+						SpeedManager.self.state = SpeedStates.INCREASE;
+						break;
+					case "JumpMinButton":
+						SpeedManager.self.state = SpeedStates.DECREASE;
+						break;
+					}
 				}
-				
 			}
 		} else {
 			SpeedManager.self.state = SpeedStates.NORMALIZE;
