@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool jumping;
 	private float jump_time;
 	private Rigidbody2D body;
+	private Vector2 last_velocity;
 
 	void Awake() {
 		self = this;
@@ -43,6 +44,17 @@ public class PlayerMovement : MonoBehaviour {
 			transform.position += Vector3.down * 10f;
 			enabled = false;
 		}
+		
+		float dv = Mathf.Abs(body.velocity.y - last_velocity.y);
+		transform.localScale = Vector3.one
+		+ Vector3.up * dv * Time.deltaTime * 1.5f
+		+ Vector3.right * (.3f - dv * Time.deltaTime * 1.5f);
+
+		if(transform.position.y < 2.5f)
+			transform.localScale = Vector3.one
+			+ Vector3.right * Mathf.Abs(transform.position.y - 2.5f) * Time.deltaTime * 15f;
+
+
 	}
 
 	public void Jump() {
