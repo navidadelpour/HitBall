@@ -46,36 +46,38 @@ public class ScaleManager : MonoBehaviour {
         background.transform.position = offset;
         main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z;
 
+        // adding an amount to size as the time goes by...
         if(camera_normal_size < camera_max_size) 
             camera_normal_size += size_increase_amount;
 
+        bool has_zoom = ItemManager.self.has_zoom;
         switch (SpeedManager.self.state) {
             case SpeedStates.INCREASE:
-                if(main_camera.orthographicSize < (camera_normal_size + camera_range_size) * (ItemManager.self.has_zoom ? zoom_scale : 1f)) 
+                if(main_camera.orthographicSize < (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f)) 
                     main_camera.orthographicSize = Util.Ease(
-                        (camera_normal_size + camera_range_size) * (ItemManager.self.has_zoom ? zoom_scale : 1f),
+                        (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f),
                         main_camera.orthographicSize,
                         size_increase_amount * 100
                     );
                 break;
             case SpeedStates.NORMALIZE:
-                if(main_camera.orthographicSize < camera_normal_size * (ItemManager.self.has_zoom ? zoom_scale : 1f)) 
+                if(main_camera.orthographicSize < camera_normal_size * (has_zoom ? zoom_scale : 1f)) 
                     main_camera.orthographicSize = Util.Ease(
-                        camera_normal_size * (ItemManager.self.has_zoom ? zoom_scale : 1f),
+                        camera_normal_size * (has_zoom ? zoom_scale : 1f),
                         main_camera.orthographicSize,
                         size_increase_amount * 100
                     );
-                else if (main_camera.orthographicSize > camera_normal_size * (ItemManager.self.has_zoom ? zoom_scale : 1f))
+                else if (main_camera.orthographicSize > camera_normal_size * (has_zoom ? zoom_scale : 1f))
                     main_camera.orthographicSize = Util.Ease(
-                        camera_normal_size * (ItemManager.self.has_zoom ? zoom_scale : 1f),
+                        camera_normal_size * (has_zoom ? zoom_scale : 1f),
                         main_camera.orthographicSize,
                         size_increase_amount * 100, -1
                     );
                 break;
             case SpeedStates.DECREASE:
-                if(main_camera.orthographicSize > (camera_normal_size - camera_range_size) * (ItemManager.self.has_zoom ? zoom_scale : 1f)) 
+                if(main_camera.orthographicSize > (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f)) 
                     main_camera.orthographicSize = Util.Ease(
-                        (camera_normal_size - camera_range_size) * (ItemManager.self.has_zoom ? zoom_scale : 1f),
+                        (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f),
                         main_camera.orthographicSize,
                         size_increase_amount * 100, -1
                     );
