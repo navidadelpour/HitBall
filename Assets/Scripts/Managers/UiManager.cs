@@ -53,7 +53,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetItem() {
-		item_button.GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + GameManager.self.item.ToString().ToLower());
+		item_button.GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + ItemManager.self.item.ToString().ToLower());
 	}
 
 }

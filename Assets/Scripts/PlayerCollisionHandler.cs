@@ -24,10 +24,10 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			if (other.gameObject.tag == "Ground") {
 				HeightManager.self.SetHeight ();
 				PlayerMovement.self.Jump ();
-				if(GameManager.self.has_high_jump) {
+				if(ItemManager.self.has_high_jump) {
 					HeightManager.self.has_coil = true;
 					HeightManager.self.should_remove_coil = false;
-					GameManager.self.has_high_jump = false;
+					ItemManager.self.has_high_jump = false;
 				}
 				collided += 1;
 				is_collided = true;
@@ -42,7 +42,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 		switch (other.gameObject.tag) {
 			// case "Block":
 			case "Obstacle":
-				if(!GameManager.self.has_shield) {
+				if(!ItemManager.self.has_shield) {
 					GameManager.self.GameOver();
 				}
 				break;
@@ -65,7 +65,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			case "Item":
 				Destroy (other.gameObject);
 				Item item = (Item)System.Enum.Parse(typeof(Item), other.name.ToUpper());
-				GameManager.self.SetItem(item);
+				ItemManager.self.SetItem(item);
 				break;
 		}
 	}

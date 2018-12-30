@@ -45,13 +45,13 @@ public class SpeedManager : MonoBehaviour {
 		MakeHard();
 		switch (state) {
 		case SpeedStates.INCREASE:
-			if (game_speed < game_max_speed["min"] / (GameManager.self.has_slow_motion ? slow_motion_scale : 1f))
+			if (game_speed < game_max_speed["min"] / (ItemManager.self.has_slow_motion ? slow_motion_scale : 1f))
 				game_speed += game_speed_diffrence_amount;
 			if (player_speed > player_min_speed["min"])
 				player_speed -= player_speed_difference_amount;
 			break;
 		case SpeedStates.NORMALIZE:
-			if (game_speed > game_normal_speed / (GameManager.self.has_slow_motion ? slow_motion_scale : 1f))
+			if (game_speed > game_normal_speed / (ItemManager.self.has_slow_motion ? slow_motion_scale : 1f))
 				game_speed -= game_speed_diffrence_amount;
 			else 
 				game_speed += game_speed_diffrence_amount;
@@ -62,7 +62,7 @@ public class SpeedManager : MonoBehaviour {
 				player_speed += player_speed_difference_amount;
 			break;
 		case SpeedStates.DECREASE:
-			if (game_speed > game_min_speed["min"] / (GameManager.self.has_slow_motion ? slow_motion_scale : 1f))
+			if (game_speed > game_min_speed["min"] / (ItemManager.self.has_slow_motion ? slow_motion_scale : 1f))
 				game_speed -= game_speed_diffrence_amount;
 			if (player_speed < player_max_speed["min"])
 				player_speed += player_speed_difference_amount;

@@ -17,7 +17,7 @@ public class Portal : MonoBehaviour {
 	
 	void Update () {
         if(Mathf.Abs(GameManager.self.player_initial_position.x - transform.position.x) < threshold) {
-            GameManager.self.has_teleport = false;
+            ItemManager.self.has_teleport = false;
             PlayerMovement.self.enabled = true;
             player.transform.position = transform.position;
         }

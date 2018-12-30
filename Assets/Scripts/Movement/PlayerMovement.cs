@@ -29,17 +29,17 @@ public class PlayerMovement : MonoBehaviour {
 			Fall ();
 		}
 
-		if(GameManager.self.has_double_jump){
+		if(ItemManager.self.has_double_jump){
 			Jump();
-			GameManager.self.has_double_jump = false;
+			ItemManager.self.has_double_jump = false;
 		}
 
-		if(GameManager.self.has_force_fall){
+		if(ItemManager.self.has_force_fall){
 			Fall();
-			GameManager.self.has_force_fall = false;
+			ItemManager.self.has_force_fall = false;
 		}
 
-		if(GameManager.self.has_teleport) {
+		if(ItemManager.self.has_teleport) {
 			transform.position += Vector3.down * 10f;
 			enabled = false;
 		}
