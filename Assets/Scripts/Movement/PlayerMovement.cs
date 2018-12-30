@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
 	public static PlayerMovement self;
+	public bool jumping;
 	private float jump_time;
 	private Rigidbody2D body;
-	private bool jumping;
 
 	void Awake() {
 		self = this;
@@ -29,20 +29,14 @@ public class PlayerMovement : MonoBehaviour {
 			Fall ();
 		}
 
-		if(GameManager.self.item_activated && GameManager.self.item == Item.DOUBLE_JUMP) {
-			if(!jumping){
-				GameManager.self.RemoveItem();
-				Jump();
-			} else
-				GameManager.self.item_activated = false;
+		if(GameManager.self.has_double_jump){
+			Jump();
+			GameManager.self.has_double_jump = false;
 		}
 
-		if(GameManager.self.item_activated && GameManager.self.item == Item.FORCE_FALL) {
-			if(jumping){
-				GameManager.self.RemoveItem();
-				Fall();
-			} else
-				GameManager.self.item_activated = false;
+		if(GameManager.self.has_force_fall){
+			Fall();
+			GameManager.self.has_force_fall = false;
 		}
 
 		if(GameManager.self.has_teleport) {

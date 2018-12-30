@@ -32,7 +32,8 @@ public class GameManager : MonoBehaviour {
 
 	public bool has_teleport;
 	public bool has_high_jump;
-
+	public bool has_double_jump;
+	public bool has_force_fall;
 	public Vector3 player_initial_position;
 
 	void Awake() {
@@ -48,52 +49,60 @@ public class GameManager : MonoBehaviour {
 	
 	void Update () {
 		// shield checker
-		if(item_activated && item == Item.SHIELD) {
-			RemoveItem();
-			shield_adding_time = Time.time;
-			has_shield = true;
-		}
-		has_shield &= Time.time - shield_adding_time < max_shield_time;
+		if(item_activated){
+			switch (item) {
+				case Item.SHIELD:
+					RemoveItem();
+					shield_adding_time = Time.time;
+					has_shield = true;
+					break;
+				case Item.MAGNET:
+					RemoveItem();
+					magnet_adding_time = Time.time;
+					has_magnet = true;
+					GameObject[] coins_in_scene = GameObject.FindGameObjectsWithTag("Coin");
+					foreach (GameObject coin in coins_in_scene)
+						coin.AddComponent<CoinMovement>();
+					break;
+				case Item.SLOW_MOTION:
+					RemoveItem();
+					slow_motion_adding_time = Time.time;
+					has_slow_motion = true;
+					break;
+				case Item.ZOOM:
+					RemoveItem();
+					zoom_adding_time = Time.time;
+					has_zoom = true;
+					break;
+				case Item.TELEPORT:
+					RemoveItem();
+					has_teleport = true;
+					break;
+				case Item.HIGH_JUMP:
+					RemoveItem();
+					has_high_jump = true;
+					break;
+				case Item.DOUBLE_JUMP:
+					if(!PlayerMovement.self.jumping){
+						RemoveItem();
+						has_double_jump = true;
+					} else
+						item_activated = false;
+					break;
+				case Item.FORCE_FALL:
+					if(PlayerMovement.self.jumping){
+						RemoveItem();
+						has_force_fall = true;
+					} else
+						item_activated = false;
+					break;
 
-		// magnet checker
-		if(item_activated && item == Item.MAGNET) {
-			RemoveItem();
-			magnet_adding_time = Time.time;
-			has_magnet = true;
-			GameObject[] coins_in_scene = GameObject.FindGameObjectsWithTag("Coin");
-			foreach (GameObject coin in coins_in_scene) {
-				coin.AddComponent<CoinMovement>();
 			}
 		}
+		has_shield &= Time.time - shield_adding_time < max_shield_time;
 		has_magnet &= Time.time - magnet_adding_time < max_magnet_time;
-
-		// slow motion checker
-		if(item_activated && item == Item.SLOW_MOTION) {
-			RemoveItem();
-			slow_motion_adding_time = Time.time;
-			has_slow_motion = true;
-		}
 		has_slow_motion &= Time.time - slow_motion_adding_time < max_slow_motion_time;
-
-		// zoom checker
-		if(item_activated && item == Item.ZOOM) {
-			RemoveItem();
-			zoom_adding_time = Time.time;
-			has_zoom = true;
-		}
 		has_zoom &= Time.time - zoom_adding_time < max_zoom_time;
-
-		// teleport checker
-		if(item_activated && item == Item.TELEPORT) {
-			RemoveItem();
-			has_teleport = true;
-		}
-
-		// high jump checher
-		if(item_activated && item == Item.HIGH_JUMP) {
-			RemoveItem();
-			has_high_jump = true;
-		}
 	}
 
 	public void GameOver() {
