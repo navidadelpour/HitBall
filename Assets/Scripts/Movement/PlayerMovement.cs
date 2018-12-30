@@ -72,6 +72,12 @@ public class PlayerMovement : MonoBehaviour {
 			(Time.time - jump_time) * SpeedManager.self.player_speed /
 			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
 		);
+		transform.localEulerAngles = Vector3.Lerp(
+			Vector3.forward * 20,
+			Vector3.zero,
+			(Time.time - jump_time) * SpeedManager.self.player_speed /
+			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
+		);
 	}
 
 	void Fall() {
@@ -85,6 +91,13 @@ public class PlayerMovement : MonoBehaviour {
 			(Time.time - jump_time) * SpeedManager.self.player_speed /
 			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
 		);
+		transform.localEulerAngles = Vector3.Lerp(
+			Vector3.zero,
+			Vector3.forward * -20,
+			(Time.time - jump_time) * SpeedManager.self.player_speed /
+			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
+		);
+
 	}
 
 }
