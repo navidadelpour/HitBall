@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Things {
+    NOTHING,
     GROUND,
 	HOLE,
 	OBSTACLE,
@@ -10,5 +11,4 @@ public enum Things {
     COIN,
     COIL,
     PORTAL,
-    NOTHING,
 }
