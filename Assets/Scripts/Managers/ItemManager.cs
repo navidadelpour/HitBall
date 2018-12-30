@@ -8,26 +8,25 @@ public class ItemManager : MonoBehaviour {
 	public bool item_activated;
 	public Item item;
 
-	public bool has_shield;
-	private float shield_adding_time;
-	private float max_shield_time = 3f;
-
+    public bool has_shield;
 	public bool has_magnet;
-	private float magnet_adding_time;
-	private float max_magnet_time = 3f;
-
 	public bool has_slow_motion;
-	private float slow_motion_adding_time;
-	private float max_slow_motion_time = 3f;
-
 	public bool has_zoom;
-	private float zoom_adding_time;
-	private float max_zoom_time = 3f;
-
 	public bool has_teleport;
 	public bool has_high_jump;
 	public bool has_double_jump;
 	public bool has_force_fall;
+
+
+	private float shield_adding_time;
+	private float magnet_adding_time;
+	private float slow_motion_adding_time;
+	private float zoom_adding_time;
+
+	private float max_shield_time = 3f;
+	private float max_magnet_time = 3f;
+	private float max_slow_motion_time = 3f;
+	private float max_zoom_time = 3f;
 
     void Awake() {
         self = this;
