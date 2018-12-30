@@ -54,7 +54,7 @@ public class SpawnManager : MonoBehaviour {
 		on_ground_offset = Vector3.up * ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
 		ground_size_x = ground_prefab.GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x;
 		last_ground = grounds.transform.GetChild(0).gameObject;
-
+		chances[Things.HOLE] = GameManager.self.safe_game ? 0 : chances[Things.HOLE];
 	}
 
 	void Start () {

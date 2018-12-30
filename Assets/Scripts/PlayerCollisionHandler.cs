@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +42,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 		switch (other.gameObject.tag) {
 			// case "Block":
 			case "Obstacle":
-				if(!ItemManager.self.has_shield) {
+				if(!ItemManager.self.has_shield && !GameManager.self.safe_game) {
 					GameManager.self.GameOver();
 				}
 				break;
