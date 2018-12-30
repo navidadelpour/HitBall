@@ -34,10 +34,6 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			}
 	}
 
-	void CheckForCollision() {
-		is_collided = false;
-	}
-
 	void OnTriggerEnter2D(Collider2D other) {
 		switch (other.gameObject.tag) {
 			// case "Block":
