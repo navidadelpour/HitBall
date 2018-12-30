@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour {
 	public bool jumping;
 	private float jump_time;
 	private Rigidbody2D body;
-	private Vector2 last_velocity;
 
 	void Awake() {
 		self = this;
@@ -45,10 +44,9 @@ public class PlayerMovement : MonoBehaviour {
 			enabled = false;
 		}
 		
-		float dv = Mathf.Abs(body.velocity.y - last_velocity.y);
 		transform.localScale = Vector3.one
-		+ Vector3.up * dv * Time.deltaTime * 1.5f
-		+ Vector3.right * (.3f - dv * Time.deltaTime * 1.5f);
+		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f
+		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f);
 
 		if(transform.position.y < 2.5f)
 			transform.localScale = Vector3.one
@@ -73,7 +71,7 @@ public class PlayerMovement : MonoBehaviour {
 			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
 		);
 		transform.localEulerAngles = Vector3.Lerp(
-			Vector3.forward * 20,
+			Vector3.forward * 15,
 			Vector3.zero,
 			(Time.time - jump_time) * SpeedManager.self.player_speed /
 			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
@@ -93,7 +91,7 @@ public class PlayerMovement : MonoBehaviour {
 		);
 		transform.localEulerAngles = Vector3.Lerp(
 			Vector3.zero,
-			Vector3.forward * -20,
+			Vector3.forward * -15,
 			(Time.time - jump_time) * SpeedManager.self.player_speed /
 			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
 		);
