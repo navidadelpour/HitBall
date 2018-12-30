@@ -45,6 +45,7 @@ public class InputManager : MonoBehaviour {
 				case "ItemButton":
 					if(ItemManager.self.item != Item.NOTHING)
 						ItemManager.self.item_activated = true;
+						ItemManager.self.item_activated_index = int.Parse(results [0].gameObject.name);
 					break;
 				}
 				

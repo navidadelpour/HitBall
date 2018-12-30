@@ -52,7 +52,7 @@ public class UiManager : MonoBehaviour {
 		coins_text.text = GameManager.self.coins + "";
 	}
 
-	public void SetItem() {
+	public void SetItems() {
 		item_button.GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + ItemManager.self.item.ToString().ToLower());
 	}
 

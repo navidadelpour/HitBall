@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -65,7 +65,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 			case "Item":
 				Destroy (other.gameObject);
 				Item item = (Item)System.Enum.Parse(typeof(Item), other.name.ToUpper());
-				ItemManager.self.SetItem(item);
+				ItemManager.self.AddItem(item);
 				break;
 		}
 	}
