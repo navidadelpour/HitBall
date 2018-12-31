@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool jumping;
 	private float jump_time;
 	private Rigidbody2D body;
+	private int rotate_angle = 15;
 
 	void Awake() {
 		self = this;
@@ -20,6 +21,9 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
+		Rotate(rotate_angle);
+		Scale();
+
 		if (jumping)
 			Jump ();
 		else
@@ -43,16 +47,6 @@ public class PlayerMovement : MonoBehaviour {
 			transform.position += Vector3.down * 10f;
 			enabled = false;
 		}
-		
-		transform.localScale = Vector3.one
-		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f
-		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f);
-
-		if(transform.position.y < 2.5f)
-			transform.localScale = Vector3.one
-			+ Vector3.right * Mathf.Abs(transform.position.y - 2.5f) * Time.deltaTime * 15f;
-
-
 	}
 
 	public void Jump() {
@@ -89,11 +83,26 @@ public class PlayerMovement : MonoBehaviour {
 			(Time.time - jump_time) * SpeedManager.self.player_speed /
 			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
 		);
+	}
+
+	private void Scale() {
+		transform.localScale = Vector3.one
+		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f
+		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f);
+
+		if(transform.position.y < 2.5f)
+			transform.localScale = Vector3.one
+			+ Vector3.right * Mathf.Abs(transform.position.y - 2.5f) * Time.deltaTime * 15f;
+
+	}
+
+	private void Rotate(int angle) {
+		float t = (Time.time - jump_time) * SpeedManager.self.player_speed /
+			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height);
 		transform.localEulerAngles = Vector3.Lerp(
+			Vector3.forward * (jumping ? 1 : -1) * angle,
 			Vector3.zero,
-			Vector3.forward * -15,
-			(Time.time - jump_time) * SpeedManager.self.player_speed /
-			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
+			jumping ? t : 1 - t
 		);
 
 	}
