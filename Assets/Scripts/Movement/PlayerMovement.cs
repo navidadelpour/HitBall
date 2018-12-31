@@ -33,16 +33,6 @@ public class PlayerMovement : MonoBehaviour {
 			Fall ();
 		}
 
-		if(ItemManager.self.has_double_jump){
-			Jump();
-			ItemManager.self.has_double_jump = false;
-		}
-
-		if(ItemManager.self.has_force_fall){
-			Fall();
-			ItemManager.self.has_force_fall = false;
-		}
-
 		if(ItemManager.self.has_teleport) {
 			transform.position += Vector3.down * 10f;
 			enabled = false;
@@ -64,15 +54,9 @@ public class PlayerMovement : MonoBehaviour {
 			(Time.time - jump_time) * SpeedManager.self.player_speed /
 			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
 		);
-		transform.localEulerAngles = Vector3.Lerp(
-			Vector3.forward * 15,
-			Vector3.zero,
-			(Time.time - jump_time) * SpeedManager.self.player_speed /
-			(HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height)
-		);
 	}
 
-	void Fall() {
+	public void Fall() {
 		if (jumping) {
 			jump_time = Time.time;
 			jumping = false;

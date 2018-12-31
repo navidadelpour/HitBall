@@ -18,9 +18,6 @@ public class ItemManager : MonoBehaviour {
 	public bool has_zoom;
 	public bool has_teleport;
 	public bool has_high_jump;
-	public bool has_double_jump;
-	public bool has_force_fall;
-
 
 	private float shield_adding_time;
 	private float magnet_adding_time;
@@ -80,14 +77,14 @@ public class ItemManager : MonoBehaviour {
 				case Item.DOUBLE_JUMP:
 					if(!PlayerMovement.self.jumping){
 						RemoveItem();
-						has_double_jump = true;
+						PlayerMovement.self.Jump();
 					} else
 						item_activated = false;
 					break;
 				case Item.FORCE_FALL:
 					if(PlayerMovement.self.jumping){
 						RemoveItem();
-						has_force_fall = true;
+						PlayerMovement.self.Fall();
 					} else
 						item_activated = false;
 					break;
