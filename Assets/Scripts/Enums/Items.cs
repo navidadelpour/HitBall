@@ -13,4 +13,5 @@ public enum Item {
     ZOOM,
     TELEPORT,
     JUMP_POWER,
+    DISABLER,
 }
