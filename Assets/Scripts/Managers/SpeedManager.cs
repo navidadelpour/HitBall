@@ -46,27 +46,42 @@ public class SpeedManager : MonoBehaviour {
 		bool has_slow_motion = ItemManager.self.actives[Item.SLOW_MOTION];
 		switch (state) {
 		case SpeedStates.INCREASE:
-			if (game_speed < game_max_speed["min"] / (has_slow_motion ? slow_motion_scale : 1f))
-				game_speed += game_speed_diffrence_amount;
-			if (player_speed > player_min_speed["min"])
-				player_speed -= player_speed_difference_amount;
+			if(ItemManager.self.actives[Item.JUMP_POWER]) {
+				game_speed = game_max_speed["min"];
+				player_speed = player_min_speed["min"];
+			} else {
+				if (game_speed < game_max_speed["min"] / (has_slow_motion ? slow_motion_scale : 1f))
+					game_speed += game_speed_diffrence_amount;
+				if (player_speed > player_min_speed["min"])
+					player_speed -= player_speed_difference_amount;
+			}
 			break;
 		case SpeedStates.NORMALIZE:
-			if (game_speed > game_normal_speed / (has_slow_motion ? slow_motion_scale : 1f))
-				game_speed -= game_speed_diffrence_amount;
-			else 
-				game_speed += game_speed_diffrence_amount;
+			if(ItemManager.self.actives[Item.JUMP_POWER]) {
+				game_speed = game_normal_speed;
+				player_speed = player_normal_speed;
+			} else {
+				if (game_speed > game_normal_speed / (has_slow_motion ? slow_motion_scale : 1f))
+					game_speed -= game_speed_diffrence_amount;
+				else 
+					game_speed += game_speed_diffrence_amount;
 
-			if (player_speed > player_normal_speed)
-				player_speed -= player_speed_difference_amount;
-			else
-				player_speed += player_speed_difference_amount;
+				if (player_speed > player_normal_speed)
+					player_speed -= player_speed_difference_amount;
+				else
+					player_speed += player_speed_difference_amount;
+			}
 			break;
 		case SpeedStates.DECREASE:
-			if (game_speed > game_min_speed["min"] / (has_slow_motion ? slow_motion_scale : 1f))
-				game_speed -= game_speed_diffrence_amount;
-			if (player_speed < player_max_speed["min"])
-				player_speed += player_speed_difference_amount;
+			if(ItemManager.self.actives[Item.JUMP_POWER]) {
+				game_speed = game_min_speed["min"];
+				player_speed = player_max_speed["min"];
+			} else {
+				if (game_speed > game_min_speed["min"] / (has_slow_motion ? slow_motion_scale : 1f))
+					game_speed -= game_speed_diffrence_amount;
+				if (player_speed < player_max_speed["min"])
+					player_speed += player_speed_difference_amount;
+			}
 			break;
 		}
 	}
