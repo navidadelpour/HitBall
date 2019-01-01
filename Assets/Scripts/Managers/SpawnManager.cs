@@ -83,7 +83,7 @@ public class SpawnManager : MonoBehaviour {
 
 		CreateGround ();
 		switch(
-			ItemManager.self.has_teleport && !has_portal ?
+			ItemManager.self.actives[Item.TELEPORT] && !has_portal ?
 			Things.PORTAL :
 			ShouldSpawn((Things)Util.GetKeyByChance(chances))
 		) {
@@ -190,7 +190,7 @@ public class SpawnManager : MonoBehaviour {
 				Quaternion.identity,
 				last_ground.transform
           	);
-			if(ItemManager.self.has_magnet)
+			if(ItemManager.self.actives[Item.MAGNET])
 				coin_created.AddComponent<CoinMovement>();
 		last_item_spawned = Things.COIN;
 		}

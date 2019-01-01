@@ -43,7 +43,7 @@ public class SpeedManager : MonoBehaviour {
 
 	void Update () {
 		MakeHard();
-		bool has_slow_motion = ItemManager.self.has_slow_motion;
+		bool has_slow_motion = ItemManager.self.actives[Item.SLOW_MOTION];
 		switch (state) {
 		case SpeedStates.INCREASE:
 			if (game_speed < game_max_speed["min"] / (has_slow_motion ? slow_motion_scale : 1f))

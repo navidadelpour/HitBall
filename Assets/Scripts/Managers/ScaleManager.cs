@@ -50,7 +50,7 @@ public class ScaleManager : MonoBehaviour {
         if(camera_normal_size < camera_max_size) 
             camera_normal_size += size_increase_amount;
 
-        bool has_zoom = ItemManager.self.has_zoom;
+        bool has_zoom = ItemManager.self.actives[Item.ZOOM];
         switch (SpeedManager.self.state) {
             case SpeedStates.INCREASE:
                 if(main_camera.orthographicSize < (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f)) 

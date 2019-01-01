@@ -20,7 +20,7 @@ public class ObstacleSweepMovement : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(!ItemManager.self.has_disabler){
+		if(!ItemManager.self.actives[Item.DISABLER]){
 			if(should_go_right) {
 				if(parameter < 1)
 					parameter += Time.deltaTime / time_should_take;

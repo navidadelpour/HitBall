@@ -33,7 +33,18 @@ public class PlayerMovement : MonoBehaviour {
 			Fall ();
 		}
 
-		if(ItemManager.self.has_teleport) {
+		if(ItemManager.self.actives[Item.DOUBLE_JUMP]) {
+			Jump();
+			ItemManager.self.actives[Item.DOUBLE_JUMP] = false;
+		}
+
+		if(ItemManager.self.actives[Item.FORCE_FALL]) {
+			Fall();
+			ItemManager.self.actives[Item.FORCE_FALL] = false;
+		}
+
+
+		if(ItemManager.self.actives[Item.TELEPORT]) {
 			transform.position += Vector3.down * 10f;
 			enabled = false;
 		}

@@ -50,7 +50,7 @@ public class HeightManager : MonoBehaviour {
 	public void SetHeight() {
 		switch (SpeedManager.self.state) {
 		case SpeedStates.INCREASE:
-			if(ItemManager.self.has_jump_power)
+			if(ItemManager.self.actives[Item.JUMP_POWER])
 				player_jump_height = player_max_jump_height;
 			else {
 				if(player_jump_height < player_normal_jump_height)
@@ -60,7 +60,7 @@ public class HeightManager : MonoBehaviour {
 			}
 			break;
 		case SpeedStates.NORMALIZE:
-			if(ItemManager.self.has_jump_power)
+			if(ItemManager.self.actives[Item.JUMP_POWER])
 				player_jump_height = player_normal_jump_height;
 			else {
 				if(player_jump_height > player_normal_jump_height)
@@ -70,7 +70,7 @@ public class HeightManager : MonoBehaviour {
 			}
 			break;
 		case SpeedStates.DECREASE:
-			if(ItemManager.self.has_jump_power)
+			if(ItemManager.self.actives[Item.JUMP_POWER])
 				player_jump_height = player_min_jump_height;
 			else {
 				if(player_jump_height > player_normal_jump_height)
