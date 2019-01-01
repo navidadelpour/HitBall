@@ -29,6 +29,10 @@ public class PlayerCollisionHandler : MonoBehaviour {
 					HeightManager.self.should_remove_coil = false;
 					ItemManager.self.actives[Item.HIGH_JUMP] = false;
 				}
+				if(ItemManager.self.actives[Item.GROUND_DIGGER]) {
+					transform.position += Vector3.down * 10f;
+					PlayerMovement.self.enabled = false;
+				}
 				collided += 1;
 				is_collided = true;
 			}

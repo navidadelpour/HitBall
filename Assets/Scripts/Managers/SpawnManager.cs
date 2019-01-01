@@ -83,7 +83,7 @@ public class SpawnManager : MonoBehaviour {
 
 		CreateGround ();
 		switch(
-			ItemManager.self.actives[Item.TELEPORT] && !has_portal ?
+			(ItemManager.self.actives[Item.TELEPORT] || ItemManager.self.actives[Item.GROUND_DIGGER]) && !has_portal ?
 			Things.PORTAL :
 			ShouldSpawn((Things)Util.GetKeyByChance(chances))
 		) {
@@ -207,12 +207,13 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void CreatePortal() {
-		Instantiate(
+		GameObject portal_created = Instantiate(
 			portal_prefab,
 			last_ground.transform.position + on_ground_offset,
 			Quaternion.identity,
 			last_ground.transform
 		);
+		portal_created.GetComponent<Renderer> ().enabled = false;
 		last_item_spawned = Things.PORTAL;
 		has_portal = true;
 	}
