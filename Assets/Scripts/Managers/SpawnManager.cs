@@ -213,7 +213,8 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
-		portal_created.GetComponent<Renderer> ().enabled = false;
+		if(ItemManager.self.actives[Item.GROUND_DIGGER])
+			portal_created.GetComponent<Renderer> ().enabled = false;
 		last_item_spawned = Things.PORTAL;
 		has_portal = true;
 	}
