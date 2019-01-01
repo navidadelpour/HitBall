@@ -14,6 +14,7 @@ public class ItemManager : MonoBehaviour {
 	private Item[] items;
 	private Dictionary<Item, float> started_times = new Dictionary<Item, float>();
 	public Dictionary<Item, bool> actives = new Dictionary<Item, bool>();
+	private float max_time = 5f;
 
     void Awake() {
         self = this;
@@ -64,7 +65,7 @@ public class ItemManager : MonoBehaviour {
 				RemoveItem();	
 		}
 		foreach (Item item in items)
-			actives[item] &= Time.time - started_times[item] < 3;
+			actives[item] &= Time.time - started_times[item] < max_time;
     }
 
     public void AddItem(Item item) {
