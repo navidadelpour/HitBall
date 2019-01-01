@@ -50,22 +50,34 @@ public class HeightManager : MonoBehaviour {
 	public void SetHeight() {
 		switch (SpeedManager.self.state) {
 		case SpeedStates.INCREASE:
-			if(player_jump_height < player_normal_jump_height)
-				player_jump_height = player_normal_jump_height;
-			else if(player_jump_height < player_max_jump_height)
-			    player_jump_height += jump_increase_amount;
+			if(ItemManager.self.has_jump_power)
+				player_jump_height = player_max_jump_height;
+			else {
+				if(player_jump_height < player_normal_jump_height)
+					player_jump_height = player_normal_jump_height;
+				else if(player_jump_height < player_max_jump_height)
+					player_jump_height += jump_increase_amount;
+			}
 			break;
 		case SpeedStates.NORMALIZE:
-            if(player_jump_height > player_normal_jump_height)
-			    player_jump_height -= jump_increase_amount;
-            else if (player_jump_height < player_normal_jump_height)
-                player_jump_height += jump_increase_amount;
+			if(ItemManager.self.has_jump_power)
+				player_jump_height = player_normal_jump_height;
+			else {
+				if(player_jump_height > player_normal_jump_height)
+					player_jump_height -= jump_increase_amount;
+				else if (player_jump_height < player_normal_jump_height)
+					player_jump_height += jump_increase_amount;
+			}
 			break;
 		case SpeedStates.DECREASE:
-			if(player_jump_height > player_normal_jump_height)
-				player_jump_height = player_normal_jump_height;
-			else if(player_jump_height > player_min_jump_height)
-			    player_jump_height -= jump_increase_amount;
+			if(ItemManager.self.has_jump_power)
+				player_jump_height = player_min_jump_height;
+			else {
+				if(player_jump_height > player_normal_jump_height)
+					player_jump_height = player_normal_jump_height;
+				else if(player_jump_height > player_min_jump_height)
+					player_jump_height -= jump_increase_amount;
+			}
 			break;
 		}
 	}

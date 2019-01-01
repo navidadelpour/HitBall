@@ -18,16 +18,19 @@ public class ItemManager : MonoBehaviour {
 	public bool has_zoom;
 	public bool has_teleport;
 	public bool has_high_jump;
+	public bool has_jump_power;
 
 	private float shield_adding_time;
 	private float magnet_adding_time;
 	private float slow_motion_adding_time;
 	private float zoom_adding_time;
+	private float jump_power_adding_time;
 
 	private float max_shield_time = 3f;
 	private float max_magnet_time = 3f;
 	private float max_slow_motion_time = 3f;
 	private float max_zoom_time = 3f;
+	private float max_jump_power_time = 3f;
 
     void Awake() {
         self = this;
@@ -43,6 +46,11 @@ public class ItemManager : MonoBehaviour {
     void Update() {
         if(item_activated){
 			switch (available_items[item_activated_index].item) {
+				case Item.JUMP_POWER:
+					RemoveItem();
+					jump_power_adding_time = Time.time;
+					has_jump_power = true;
+					break;
 				case Item.SHIELD:
 					RemoveItem();
 					shield_adding_time = Time.time;
@@ -95,7 +103,7 @@ public class ItemManager : MonoBehaviour {
 		has_magnet &= Time.time - magnet_adding_time < max_magnet_time;
 		has_slow_motion &= Time.time - slow_motion_adding_time < max_slow_motion_time;
 		has_zoom &= Time.time - zoom_adding_time < max_zoom_time;
-
+		has_jump_power &= Time.time - jump_power_adding_time < max_jump_power_time;
     }
 
     public void AddItem(Item item) {

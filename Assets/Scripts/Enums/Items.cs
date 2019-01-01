@@ -12,4 +12,5 @@ public enum Item {
     SLOW_MOTION,
     ZOOM,
     TELEPORT,
+    JUMP_POWER,
 }
