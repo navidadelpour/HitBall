@@ -20,19 +20,18 @@ public class ObstacleSweepMovement : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(!ItemManager.self.actives[Item.DISABLER]){
-			if(should_go_right) {
-				if(parameter < 1)
-					parameter += Time.deltaTime / time_should_take;
-				else
-					should_go_right = false;
-			} else {
-				if(parameter > 0)
-					parameter -= Time.deltaTime / time_should_take;
-				else
-					should_go_right = true;
-			}
-			transform.localPosition = Vector3.Lerp(Vector3.right * range, Vector3.left * range, parameter) + initial_height;
+		bool disabled = ItemManager.self.actives[Item.DISABLER];	
+		if(should_go_right) {
+			if(parameter < 1)
+				parameter += disabled ? 0 : Time.deltaTime / time_should_take;
+			else
+				should_go_right = false;
+		} else {
+			if(parameter > 0)
+				parameter -= disabled ? 0 : Time.deltaTime / time_should_take;
+			else
+				should_go_right = true;
 		}
+		transform.localPosition = Vector3.Lerp(Vector3.right * range, Vector3.left * range, parameter) + initial_height;
 	}
 }
