@@ -11,6 +11,7 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject ground_prefab;
 	private GameObject block_prefab;
 	private GameObject portal_prefab;
+	private GameObject arrow_prefab;
 	private GameObject item_prefab;
 	private Sprite[] item_textures;
 	private GameObject[] obstacles_prefabs;
@@ -33,7 +34,7 @@ public class SpawnManager : MonoBehaviour {
 		{Things.NOTHING, 1},
 	};
 	private int item_chance = 10;
-
+	private int arrow_chance = 50;
 	private int[] coins_range = {1, 3};
 	public bool has_portal;
 
@@ -46,6 +47,7 @@ public class SpawnManager : MonoBehaviour {
 		block_prefab = Resources.Load <GameObject>("prefabs/Block");
 		portal_prefab = Resources.Load<GameObject>("prefabs/Portal");
 		item_prefab =  Resources.Load<GameObject>("prefabs/Item");
+		arrow_prefab =  Resources.Load<GameObject>("prefabs/Arrow");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
 		item_textures = Resources.LoadAll <Sprite>("textures/Items");
 
@@ -109,9 +111,10 @@ public class SpawnManager : MonoBehaviour {
 				CreateNothing();
 				break;
 		}
-		if(Util.HasChance(item_chance)) {
+		if(Util.HasChance(item_chance))
 			CreateItem();
-		}
+		if(Util.HasChance(arrow_chance))
+			CreateArrow();
 
 		if(grounds.transform.childCount < ground_limit)
 			Spawn();
@@ -217,6 +220,15 @@ public class SpawnManager : MonoBehaviour {
 			portal_created.GetComponent<Renderer> ().enabled = false;
 		last_item_spawned = Things.PORTAL;
 		has_portal = true;
+	}
+
+	private void CreateArrow() {
+		Instantiate(
+			arrow_prefab,
+			last_ground.transform.position + on_ground_offset,
+			Quaternion.identity,
+			last_ground.transform
+		);
 	}
 
 	private void CreateItem() {

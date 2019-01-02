@@ -45,6 +45,7 @@ public class PlayerCollisionHandler : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		switch (other.gameObject.tag) {
 			// case "Block":
+			// case "Arrow":
 			case "Obstacle":
 				if(!GameManager.self.safe_mode) {
 					if(ItemManager.self.actives[Item.SHIELD])

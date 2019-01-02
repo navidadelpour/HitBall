@@ -11,4 +11,5 @@ public enum Things {
     COIN,
     COIL,
     PORTAL,
+    ARROW,
 }
