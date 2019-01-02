@@ -85,9 +85,9 @@ public class PlayerMovement : MonoBehaviour {
 		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f
 		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f);
 
-		if(transform.position.y < 2.5f)
+		if(transform.position.y < 2.1f)
 			transform.localScale = Vector3.one
-			+ Vector3.right * Mathf.Abs(transform.position.y - 2.5f) * Time.deltaTime * 15f;
+			+ Vector3.right * Mathf.Abs(transform.position.y - 2.1f) * Time.deltaTime * 30f;
 
 	}
 
