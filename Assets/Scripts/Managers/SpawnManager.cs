@@ -229,7 +229,7 @@ public class SpawnManager : MonoBehaviour {
 		Sprite item_texture;
 		do {
 			item_texture = item_textures[Random.Range(0, item_textures.Length)];
-		} while (item_texture.name == "Nothing");
+		} while (item_texture.name == "nothing");
 		item_created.GetComponent<SpriteRenderer>().sprite = item_texture;
 		item_created.name = item_texture.name;
 	}
