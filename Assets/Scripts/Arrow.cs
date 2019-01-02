@@ -6,6 +6,7 @@ public class Arrow : MonoBehaviour {
 
 	private Vector3 direction;
 	private float speed_scale;
+	private float min_speed = 3;
 
 	void Awake() {
 		bool b = Random.Range(0, 2) == 0;
@@ -15,9 +16,10 @@ public class Arrow : MonoBehaviour {
 	}
 
 	void Start () {
+
 	}
 	
 	void Update () {
-
+		transform.Translate(direction * Time.deltaTime * speed_scale * min_speed);
 	}
 }

@@ -34,7 +34,7 @@ public class SpawnManager : MonoBehaviour {
 		{Things.NOTHING, 1},
 	};
 	private int item_chance = 10;
-	private int arrow_chance = 50;
+	private int arrow_chance = 10;
 	private int[] coins_range = {1, 3};
 	public bool has_portal;
 
