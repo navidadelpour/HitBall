@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour {
 	private float jump_time;
 	private Rigidbody2D body;
 	private int rotate_angle = 15;
+	private float min_scale = .5f;
+	private float scale_amount = 1;
 
 	void Awake() {
 		self = this;
@@ -81,13 +83,18 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void Scale() {
-		transform.localScale = Vector3.one
+		if(ItemManager.self.actives[Item.SCALER])
+			scale_amount = Util.Ease(min_scale, scale_amount, .1f, -1);
+		else
+			scale_amount = Util.Ease(1, scale_amount, .1f);
+
+		transform.localScale = Vector3.one * scale_amount
 		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f
 		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f);
 
 		if(transform.position.y < 2.1f)
-			transform.localScale = Vector3.one
-			+ Vector3.right * Mathf.Abs(transform.position.y - 2.1f) * Time.deltaTime * 30f;
+			transform.localScale = Vector3.one * scale_amount
+			+ Vector3.right * Mathf.Abs(transform.position.y - 2.1f) * Time.deltaTime * 30f * scale_amount;
 
 	}
 

@@ -15,4 +15,5 @@ public enum Item {
     JUMP_POWER,
     DISABLER,
     GROUND_DIGGER,
+    SCALER,
 }
