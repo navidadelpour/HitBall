@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4264345570830414}
   - component: {fileID: 212729943607827894}
-  - component: {fileID: 50489046085915472}
   - component: {fileID: 58893678068891550}
   - component: {fileID: 114471592569876136}
   - component: {fileID: 114073608614323138}
+  - component: {fileID: 50643482523041038}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -44,7 +44,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50489046085915472
+--- !u!50 &50643482523041038
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -59,7 +59,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0d51cca5eb3a4064b862f52db269c17f, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7173c943b344c4b89ea1c55b060613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumping: 0
 --- !u!212 &212729943607827894
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -387,18 +387,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c738b1ab705b0478e1aecb30eb2445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_activated: 0
-  item_activated_index: 0
   available_items: []
-  items_size: 3
-  has_shield: 0
-  has_magnet: 0
-  has_slow_motion: 0
-  has_zoom: 0
-  has_teleport: 0
-  has_high_jump: 0
-  has_double_jump: 0
-  has_force_fall: 0
+  available_items_size: 3
 --- !u!1 &187631592
 GameObject:
   m_ObjectHideFlags: 0
