@@ -6,9 +6,6 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour {
     public static ItemManager self;
 
-	public bool item_activated;
-    public int item_activated_index;
-
     public AvailableItem[] available_items;
     public int available_items_size = 3;
 	
@@ -21,45 +18,43 @@ public class ItemManager : MonoBehaviour {
         for(int i = 0; i < available_items_size; i++)
             available_items[i] = new AvailableItem(Item.NOTHING);
 
-		foreach (Item item in (Item[]) Enum.GetValues(typeof(Item))){
+		foreach (Item item in (Item[]) Enum.GetValues(typeof(Item)))
 			actives.Add(item, false);
-		}
     }
 
-	public 
-
     void Start() {
-		RemoveItem();
+
     }
 
     void Update() {
-        if(item_activated){
-			StartCoroutine(SetActive(available_items[item_activated_index].item));
 
-			if(actives[Item.MAGNET]) {
-				GameObject[] coins_in_scene = GameObject.FindGameObjectsWithTag("Coin");
-				foreach (GameObject coin in coins_in_scene)
-					coin.AddComponent<CoinMovement>();
-			}
-			
-			if(actives[Item.DOUBLE_JUMP]) {
-				if(PlayerMovement.self.jumping){
-					item_activated = false;
-					actives[Item.DOUBLE_JUMP] = false;
-				}
-			}
-
-			if(actives[Item.FORCE_FALL]) {
-				if(!PlayerMovement.self.jumping){
-					item_activated = false;
-					actives[Item.FORCE_FALL] = false;
-				}
-			}
-
-			if(item_activated)
-				RemoveItem();	
-		}
     }
+
+	public void ActiveItem(int index) {
+		StartCoroutine(SetActive(available_items[index].item));
+
+		if(actives[Item.MAGNET]) {
+			GameObject[] coins_in_scene = GameObject.FindGameObjectsWithTag("Coin");
+			foreach (GameObject coin in coins_in_scene)
+				coin.AddComponent<CoinMovement>();
+		}
+		
+		if(actives[Item.DOUBLE_JUMP]) {
+			if(PlayerMovement.self.jumping){
+				actives[Item.DOUBLE_JUMP] = false;
+				return;
+			}
+		}
+
+		if(actives[Item.FORCE_FALL]) {
+			if(!PlayerMovement.self.jumping){
+				actives[Item.FORCE_FALL] = false;
+				return;
+			}
+		}
+
+		RemoveItem(index);	
+	}
 
 	IEnumerator SetActive(Item item) {
 		actives[item] = true;
@@ -97,10 +92,9 @@ public class ItemManager : MonoBehaviour {
         UiManager.self.SetItem(j, item);
 	}
 
-	public void RemoveItem() {
-        available_items[item_activated_index] = new AvailableItem(Item.NOTHING);
-		item_activated = false;
-		UiManager.self.SetItem(item_activated_index, Item.NOTHING);
+	public void RemoveItem(int index) {
+        available_items[index] = new AvailableItem(Item.NOTHING);
+		UiManager.self.SetItem(index, Item.NOTHING);
 	}
 
 }

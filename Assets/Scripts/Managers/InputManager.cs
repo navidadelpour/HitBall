@@ -38,8 +38,7 @@ public class InputManager : MonoBehaviour {
 				try {
 					int index = int.Parse(results [0].gameObject.name);
 					if(ItemManager.self.available_items[index].item != Item.NOTHING) {
-						ItemManager.self.item_activated = true;
-						ItemManager.self.item_activated_index = index;
+						ItemManager.self.ActiveItem(index);
 					}
 				} catch (System.Exception) {
 					switch (results [0].gameObject.name) {
