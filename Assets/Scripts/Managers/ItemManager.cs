@@ -11,8 +11,7 @@ public class ItemManager : MonoBehaviour {
 
     public AvailableItem[] available_items;
     public int available_items_size = 3;
-	private Item[] items;
-	private Dictionary<Item, float> started_times = new Dictionary<Item, float>();
+	
 	public Dictionary<Item, bool> actives = new Dictionary<Item, bool>();
 	private float max_time = 5f;
 
@@ -22,9 +21,7 @@ public class ItemManager : MonoBehaviour {
         for(int i = 0; i < available_items_size; i++)
             available_items[i] = new AvailableItem(Item.NOTHING);
 
-		items = (Item[]) Enum.GetValues(typeof(Item));
-		foreach (Item item in items){
-			started_times.Add(item, 0f);
+		foreach (Item item in (Item[]) Enum.GetValues(typeof(Item))){
 			actives.Add(item, false);
 		}
     }
@@ -37,9 +34,7 @@ public class ItemManager : MonoBehaviour {
 
     void Update() {
         if(item_activated){
-			Item item = available_items[item_activated_index].item;
-			started_times[item] = Time.time;
-			actives[item] = true;
+			StartCoroutine(SetActive(available_items[item_activated_index].item));
 
 			if(actives[Item.MAGNET]) {
 				GameObject[] coins_in_scene = GameObject.FindGameObjectsWithTag("Coin");
@@ -64,9 +59,13 @@ public class ItemManager : MonoBehaviour {
 			if(item_activated)
 				RemoveItem();	
 		}
-		foreach (Item item in items)
-			actives[item] &= Time.time - started_times[item] < max_time;
     }
+
+	IEnumerator SetActive(Item item) {
+		actives[item] = true;
+		yield return new WaitForSeconds(max_time);
+		actives[item] = false;
+	}
 
     public void AddItem(Item item) {
         // checking if the item exists already
