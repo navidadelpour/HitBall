@@ -84,9 +84,9 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void Scale() {
 		if(ItemManager.self.actives[Item.SCALER])
-			scale_amount = Util.Ease(min_scale, scale_amount, .1f, -1);
+			Util.Ease(ref scale_amount, min_scale, 2f);
 		else
-			scale_amount = Util.Ease(1, scale_amount, .1f);
+			Util.Ease(ref scale_amount, 1, 2f);
 
 		transform.localScale = Vector3.one * scale_amount
 		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f

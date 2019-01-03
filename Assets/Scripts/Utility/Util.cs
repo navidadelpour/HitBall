@@ -7,9 +7,8 @@ public class Util {
 		return Random.Range (0, 100) < chance;
 	}
 
-    public static float Ease(float start, float target, float scale, int sign = 1) {
-        target += Mathf.Abs(target - start) * scale * sign;
-        return target;
+	public static void Ease(ref float start, float target, float time) {
+        start += (target - start) * Time.deltaTime * time;
     }
 
     public static System.Enum GetKeyByChance(Dictionary<System.Enum, int> chances) {
