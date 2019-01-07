@@ -52,45 +52,47 @@ public class ScaleManager : MonoBehaviour {
         if(camera_normal_size < camera_max_size) 
             camera_normal_size += size_increase_amount;
 
-        bool has_zoom = ItemManager.self.actives[Item.ZOOM];
-        switch (SpeedManager.self.state) {
-            case SpeedStates.INCREASE:
-                if(main_camera.orthographicSize < (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f)) {
-                    Util.Ease(
-                        ref camera_size,
-                        (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f),
-                        .5f
-                    );
-                    main_camera.orthographicSize = camera_size;
-                }
-                break;
-            case SpeedStates.NORMALIZE:
-                if(main_camera.orthographicSize < camera_normal_size * (has_zoom ? zoom_scale : 1f)){ 
-                    Util.Ease(
-                        ref camera_size,
-                        camera_normal_size * (has_zoom ? zoom_scale : 1f),
-                        .5f
-                    );
-                    main_camera.orthographicSize = camera_size;
-                } else if (main_camera.orthographicSize > camera_normal_size * (has_zoom ? zoom_scale : 1f)){
-                    Util.Ease(
-                        ref camera_size,
-                        camera_normal_size * (has_zoom ? zoom_scale : 1f),
-                        .5f
-                    );
-                    main_camera.orthographicSize = camera_size;
-                }
-                break;
-            case SpeedStates.DECREASE:
-                if(main_camera.orthographicSize > (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f)){
-                    Util.Ease(
-                        ref camera_size,
-                        (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f),
-                        .5f
-                    );
-                    main_camera.orthographicSize = camera_size;
-                }
-                break;
+		if(!ItemManager.self.actives[Item.WINGS]) {
+            bool has_zoom = ItemManager.self.actives[Item.ZOOM];
+            switch (SpeedManager.self.state) {
+                case SpeedStates.INCREASE:
+                    if(main_camera.orthographicSize < (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f)) {
+                        Util.Ease(
+                            ref camera_size,
+                            (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f),
+                            .5f
+                        );
+                        main_camera.orthographicSize = camera_size;
+                    }
+                    break;
+                case SpeedStates.NORMALIZE:
+                    if(main_camera.orthographicSize < camera_normal_size * (has_zoom ? zoom_scale : 1f)){ 
+                        Util.Ease(
+                            ref camera_size,
+                            camera_normal_size * (has_zoom ? zoom_scale : 1f),
+                            .5f
+                        );
+                        main_camera.orthographicSize = camera_size;
+                    } else if (main_camera.orthographicSize > camera_normal_size * (has_zoom ? zoom_scale : 1f)){
+                        Util.Ease(
+                            ref camera_size,
+                            camera_normal_size * (has_zoom ? zoom_scale : 1f),
+                            .5f
+                        );
+                        main_camera.orthographicSize = camera_size;
+                    }
+                    break;
+                case SpeedStates.DECREASE:
+                    if(main_camera.orthographicSize > (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f)){
+                        Util.Ease(
+                            ref camera_size,
+                            (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f),
+                            .5f
+                        );
+                        main_camera.orthographicSize = camera_size;
+                    }
+                    break;
+            }
         }
     }
 

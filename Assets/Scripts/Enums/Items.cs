@@ -16,4 +16,5 @@ public enum Item {
     DISABLER,
     GROUND_DIGGER,
     SCALER,
+    WINGS,
 }
