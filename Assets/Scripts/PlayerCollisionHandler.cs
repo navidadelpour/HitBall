@@ -22,6 +22,8 @@ public class PlayerCollisionHandler : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		if(!is_collided)
 			if (other.gameObject.tag == "Ground") {
+				ItemManager.self.actives[Item.WINGS] = false;
+				ItemManager.self.actives[Item.WEB] = false;
 				HeightManager.self.SetHeight ();
 				PlayerMovement.self.Jump ();
 				if(ItemManager.self.actives[Item.HIGH_JUMP]) {

@@ -15,7 +15,11 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector2 force;
 	private float force_time;
 	private bool set_force_time;
-	private bool wing_started;
+	private bool stoped;
+	private float angle_rotated = 0;
+	private float web_speed = 60f;
+	private float max_web_angle = 90f;
+	private Vector3 started_position;
 
 	void Awake() {
 		self = this;
@@ -30,9 +34,9 @@ public class PlayerMovement : MonoBehaviour {
 	
 	void FixedUpdate () {
 		if(ItemManager.self.actives[Item.WINGS]) {
-			if(!wing_started) {
+			if(!stoped) {
 				body.velocity = Vector2.zero;
-				wing_started = true;
+				stoped = true;
 			}
 			Rotate(0);
 			transform.localScale = Vector3.one * scale_amount
@@ -57,7 +61,43 @@ public class PlayerMovement : MonoBehaviour {
 				);
 			}
 
+		} else if(ItemManager.self.actives[Item.WEB]) {
+
+			if(!stoped) {
+				body.velocity = Vector2.zero;
+				stoped = true;
+				started_position = transform.position;
+			}
+			
+			Rotate(0);
+			Scale();
+			body.gravityScale = 0;
+
+			if(angle_rotated < max_web_angle) {
+				float angle = Time.deltaTime * web_speed;
+				angle_rotated += angle;
+				// transform.RotateAround(new Vector3(6, 9, 0), Vector3.forward, angle);
+				// transform.position = Vector3.up * transform.position.y + Vector3.right * GameManager.self.player_initial_position.x;
+				float t = (int) ((angle_rotated) / (max_web_angle / 2)) == 0 ?
+					angle_rotated / (max_web_angle / 2) :
+					(max_web_angle - angle_rotated) / (max_web_angle / 2);
+				Debug.Log(t);
+				transform.position = Vector3.Lerp(
+					started_position,
+					started_position + Vector3.down * 2,
+					t
+				);
+				transform.localEulerAngles = Vector3.Lerp(
+					Vector3.back * max_web_angle / 2,
+					Vector3.forward * max_web_angle / 2,
+					angle_rotated / max_web_angle
+				);
+			} else {
+				ItemManager.self.actives[Item.WEB] = false;
+			}
 		} else {
+			stoped = false;
+			angle_rotated = 0;
 			Rotate(rotate_angle);
 			Scale();
 
@@ -84,7 +124,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		if(ItemManager.self.actives[Item.TELEPORT]) {
-			transform.position += Vector3.down * 10f;
+			transform.position += Vector3.down * 2f;
 			enabled = false;
 		}
 	}
