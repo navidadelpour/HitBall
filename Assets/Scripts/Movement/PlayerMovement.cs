@@ -12,10 +12,12 @@ public class PlayerMovement : MonoBehaviour {
 	private float min_scale = .5f;
 	private float scale_amount = 1;
 
+	private bool stoped;
+
 	private Vector2 force;
 	private float force_time;
 	private bool set_force_time;
-	private bool stoped;
+
 	private float angle_rotated = 0;
 	private float web_speed = 60f;
 	private float max_web_angle = 90f;
@@ -34,71 +36,17 @@ public class PlayerMovement : MonoBehaviour {
 	
 	void FixedUpdate () {
 		if(ItemManager.self.actives[Item.WINGS]) {
-			if(!stoped) {
-				body.velocity = Vector2.zero;
-				stoped = true;
-				body.gravityScale = 0;
-				Rotate(0);
-			}
-
-			transform.localScale = Vector3.one * scale_amount
-			+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f;
-
-			if(SpeedManager.self.state == SpeedStates.INCREASE){
-				force = Vector2.up;
-				body.AddForce(force * 10f);
-			} else if (SpeedManager.self.state == SpeedStates.DECREASE) {
-				force = Vector2.down;
-				body.AddForce(force * 10f);
-			} else {
-				if(!set_force_time) {
-					force_time = Time.time;
-					set_force_time = true;
-				}
-				body.velocity = Vector2.Lerp (
-					body.velocity,
-					Vector2.zero,
-					(Time.time - force_time) * Time.deltaTime
-				);
-			}
-
+			Wings();
 		} else if(ItemManager.self.actives[Item.WEB]) {
-
-			if(!stoped) {
-				body.velocity = Vector2.zero;
-				stoped = true;
-				started_position = transform.position;
-				body.gravityScale = 0;
-				Rotate(0);
-				Scale();
-			}
-			
-
-			if(angle_rotated < max_web_angle) {
-				float angle = Time.deltaTime * web_speed;
-				angle_rotated += angle;
-				
-				transform.position = Vector3.Lerp(
-					started_position,
-					started_position + Vector3.down * 2,
-					Mathf.Abs((((int) ((angle_rotated) / ((max_web_angle / 2) + 1)) * max_web_angle) - angle_rotated)) / (max_web_angle / 2)
-				);
-
-				transform.localEulerAngles = Vector3.Lerp(
-					Vector3.back * max_web_angle / 2,
-					Vector3.forward * max_web_angle / 2,
-					angle_rotated / max_web_angle
-				);
-			} else {
-				ItemManager.self.actives[Item.WEB] = false;
-			}
+			Web();
 		} else {
 			stoped = false;
 			angle_rotated = 0;
+			body.gravityScale = 1;
+			
 			Rotate(rotate_angle);
 			Scale();
 
-			body.gravityScale = 1;
 			if (jumping)
 				Jump ();
 			else
@@ -181,6 +129,67 @@ public class PlayerMovement : MonoBehaviour {
 			jumping ? t : 1 - t
 		);
 
+	}
+
+	private void Wings() {
+		if(!stoped) {
+			body.velocity = Vector2.zero;
+			stoped = true;
+			body.gravityScale = 0;
+			Rotate(0);
+		}
+
+		transform.localScale = Vector3.one * scale_amount
+		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f;
+
+		if(SpeedManager.self.state == SpeedStates.INCREASE){
+			force = Vector2.up;
+			body.AddForce(force * 10f);
+		} else if (SpeedManager.self.state == SpeedStates.DECREASE) {
+			force = Vector2.down;
+			body.AddForce(force * 10f);
+		} else {
+			if(!set_force_time) {
+				force_time = Time.time;
+				set_force_time = true;
+			}
+			body.velocity = Vector2.Lerp (
+				body.velocity,
+				Vector2.zero,
+				(Time.time - force_time) * Time.deltaTime
+			);
+		}
+	}
+
+	private void Web() {
+		if(!stoped) {
+			body.velocity = Vector2.zero;
+			stoped = true;
+			started_position = transform.position;
+			body.gravityScale = 0;
+			Rotate(0);
+			Scale();
+		}
+		
+
+		if(angle_rotated < max_web_angle) {
+			float angle = Time.deltaTime * web_speed;
+			angle_rotated += angle;
+			
+			transform.position = Vector3.Lerp(
+				started_position,
+				started_position + Vector3.down * 2,
+				Mathf.Abs((((int) ((angle_rotated) / ((max_web_angle / 2) + 1)) * max_web_angle) - angle_rotated)) / (max_web_angle / 2)
+			);
+
+			transform.localEulerAngles = Vector3.Lerp(
+				Vector3.back * max_web_angle / 2,
+				Vector3.forward * max_web_angle / 2,
+				angle_rotated / max_web_angle
+			);
+		} else {
+			ItemManager.self.actives[Item.WEB] = false;
+		}
 	}
 
 }
