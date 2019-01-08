@@ -37,12 +37,13 @@ public class PlayerMovement : MonoBehaviour {
 			if(!stoped) {
 				body.velocity = Vector2.zero;
 				stoped = true;
+				body.gravityScale = 0;
+				Rotate(0);
 			}
-			Rotate(0);
+
 			transform.localScale = Vector3.one * scale_amount
 			+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f;
 
-			body.gravityScale = 0;
 			if(SpeedManager.self.state == SpeedStates.INCREASE){
 				force = Vector2.up;
 				body.AddForce(force * 10f);
@@ -67,26 +68,22 @@ public class PlayerMovement : MonoBehaviour {
 				body.velocity = Vector2.zero;
 				stoped = true;
 				started_position = transform.position;
+				body.gravityScale = 0;
+				Rotate(0);
+				Scale();
 			}
 			
-			Rotate(0);
-			Scale();
-			body.gravityScale = 0;
 
 			if(angle_rotated < max_web_angle) {
 				float angle = Time.deltaTime * web_speed;
 				angle_rotated += angle;
-				// transform.RotateAround(new Vector3(6, 9, 0), Vector3.forward, angle);
-				// transform.position = Vector3.up * transform.position.y + Vector3.right * GameManager.self.player_initial_position.x;
-				float t = (int) ((angle_rotated) / (max_web_angle / 2)) == 0 ?
-					angle_rotated / (max_web_angle / 2) :
-					(max_web_angle - angle_rotated) / (max_web_angle / 2);
-				Debug.Log(t);
+				
 				transform.position = Vector3.Lerp(
 					started_position,
 					started_position + Vector3.down * 2,
-					t
+					Mathf.Abs((((int) ((angle_rotated) / ((max_web_angle / 2) + 1)) * max_web_angle) - angle_rotated)) / (max_web_angle / 2)
 				);
+
 				transform.localEulerAngles = Vector3.Lerp(
 					Vector3.back * max_web_angle / 2,
 					Vector3.forward * max_web_angle / 2,
@@ -124,7 +121,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		if(ItemManager.self.actives[Item.TELEPORT]) {
-			transform.position += Vector3.down * 2f;
+			transform.position += Vector3.down * 10f;
 			enabled = false;
 		}
 	}
