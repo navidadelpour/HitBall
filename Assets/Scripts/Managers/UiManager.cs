@@ -10,6 +10,7 @@ public class UiManager : MonoBehaviour {
 	public Text score_text;
 	public Text high_score_text;
 	public Text coins_text;
+	public Text combo_text;
 	public Text gun_text;
 
 	public Button[] item_buttons;
@@ -23,6 +24,7 @@ public class UiManager : MonoBehaviour {
 		score_text = GameObject.Find ("ScoreText").GetComponent<Text>();
 		high_score_text = GameObject.Find("HighScoreText").GetComponent<Text>();
 		coins_text = GameObject.Find ("CoinsText").GetComponent<Text>();
+		combo_text = GameObject.Find ("ComboText").GetComponent<Text>();
 		gun_text = GameObject.Find ("GunText").GetComponent<Text>();
 
 		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
@@ -37,6 +39,7 @@ public class UiManager : MonoBehaviour {
 		SetScore ();
 		SetHighScore();
 		SetCoins ();
+		SetCombo ();
 	}
 	
 	void Update () {
@@ -70,6 +73,10 @@ public class UiManager : MonoBehaviour {
 
 	public void SetGunText(int current_ammo, int ammo) {
 		gun_text.text = current_ammo + " / " + ammo;
+	}
+
+	public void SetCombo() {
+		combo_text.text = "COMBO: " + GameManager.self.combo; 
 	}
 
 

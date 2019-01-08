@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour {
 
 	public bool safe_mode = true;
 	public bool paused;
+	public int combo = 1;
 	public int score;
+	public int enemies_killed_in_combo;
 	public int high_score;
 	public int coins;
 
@@ -27,7 +29,10 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void Update () {
-
+		if(((int) Mathf.Floor(Mathf.Log(enemies_killed_in_combo / 2 < 1 ? 1 : enemies_killed_in_combo / 2, 2))) + 1 > combo) {
+			combo += 1;
+			UiManager.self.SetCombo();
+		}
 	}
 
 	public void GameOver() {
@@ -66,6 +71,11 @@ public class GameManager : MonoBehaviour {
 	public void IncreamentCoins() {
 		coins++;
 		UiManager.self.SetCoins ();
+	}
+
+	public void ResetCombo() {
+		enemies_killed_in_combo = 0;
+		combo = 1;
 	}
 
 }
