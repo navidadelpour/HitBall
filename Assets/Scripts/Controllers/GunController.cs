@@ -11,16 +11,19 @@ public class GunController : MonoBehaviour {
     private Guns active_gun;
 
     private float start_shoting;
+    private bool reloading;
+    private float current_ammo;
 
     private void Awake() {
         self = this;
         bullet_prefab = Resources.Load <GameObject>("prefabs/Bullet");
         guns = new Dictionary<Guns, Gun> {
-            {Guns.PISTOL, new Gun(Guns.PISTOL, 7, .5f, 1)},
+            {Guns.PISTOL, new Gun(Guns.PISTOL, 7, .5f, 2)},
             {Guns.RIFLE, new Gun(Guns.RIFLE, 30, .2f, 2)},
             {Guns.SHOTGUN, new Gun(Guns.SHOTGUN, 10, 1, 3)},
         };
         active_gun = Guns.PISTOL;
+        current_ammo = guns[active_gun].ammo;
     }
 
     private void Start() {
@@ -28,14 +31,16 @@ public class GunController : MonoBehaviour {
     }
 
     private void Update() {
-
+        if(current_ammo == 0 && !reloading) {
+            StartCoroutine(Reload());
+        }
     }
 
     public void Shot() {
-        if(Time.time - start_shoting > guns[active_gun].shot_time) {
+        if(Time.time - start_shoting > guns[active_gun].shot_time && current_ammo > 0) {
             start_shoting = Time.time;
-            
-            Debug.Log("shot!");
+
+            // Debug.Log("shot!");
             bool killed = false;
             RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.right * 1f, Vector3.right);
             if(hit != null && hit.collider != null && !killed) {
@@ -44,7 +49,16 @@ public class GunController : MonoBehaviour {
                     killed = true;
                 }
             }
+
+            current_ammo--;
         }
+    }
+
+    IEnumerator Reload() {
+        reloading = true;
+        yield return new WaitForSeconds(guns[active_gun].reload_time);
+        current_ammo = guns[active_gun].ammo;
+        reloading = false;
     }
 
 }
