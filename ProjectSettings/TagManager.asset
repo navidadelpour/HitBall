@@ -12,6 +12,7 @@ TagManager:
   - Block
   - Portal
   - Item
+  - Arrow
   layers:
   - Default
   - TransparentFX
