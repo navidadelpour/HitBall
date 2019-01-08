@@ -48,7 +48,7 @@ public class InputManager : MonoBehaviour {
 					case "JumpMinButton":
 						SpeedManager.self.state = SpeedStates.DECREASE;
 						break;
-					case "Gun":
+					case "GunButton":
 						GunController.self.Shot();
 						break;
 					}

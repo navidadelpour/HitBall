@@ -294,8 +294,10 @@ MonoBehaviour:
   score_text: {fileID: 0}
   high_score_text: {fileID: 0}
   coins_text: {fileID: 0}
+  gun_text: {fileID: 0}
   item_buttons: []
   reset_button: {fileID: 0}
+  gun_texture: {fileID: 0}
 --- !u!114 &133496661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,7 +1132,7 @@ GameObject:
   - component: {fileID: 1189310293}
   - component: {fileID: 1189310292}
   m_Layer: 5
-  m_Name: Gun
+  m_Name: GunButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

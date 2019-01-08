@@ -6,28 +6,27 @@ public class GunController : MonoBehaviour {
     
     public static GunController self;
 
-    private GameObject bullet_prefab;
-    private Dictionary<Guns, Gun> guns;
+    public Dictionary<Guns, Gun> guns;
     private Guns active_gun;
 
     private float start_shoting;
     private bool reloading;
-    private float current_ammo;
+    private int current_ammo;
 
     private void Awake() {
         self = this;
-        bullet_prefab = Resources.Load <GameObject>("prefabs/Bullet");
         guns = new Dictionary<Guns, Gun> {
             {Guns.PISTOL, new Gun(Guns.PISTOL, 7, .5f, 2)},
             {Guns.RIFLE, new Gun(Guns.RIFLE, 30, .2f, 2)},
             {Guns.SHOTGUN, new Gun(Guns.SHOTGUN, 10, 1, 3)},
         };
-        active_gun = Guns.PISTOL;
+        active_gun = Guns.RIFLE;
         current_ammo = guns[active_gun].ammo;
     }
 
     private void Start() {
-
+        UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
+        UiManager.self.SetGun(active_gun);
     }
 
     private void Update() {
@@ -51,6 +50,7 @@ public class GunController : MonoBehaviour {
             }
 
             current_ammo--;
+            UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
         }
     }
 
@@ -59,6 +59,7 @@ public class GunController : MonoBehaviour {
         yield return new WaitForSeconds(guns[active_gun].reload_time);
         current_ammo = guns[active_gun].ammo;
         reloading = false;
+        UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
     }
 
 }
