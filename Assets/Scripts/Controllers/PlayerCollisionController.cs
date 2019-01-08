@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCollisionHandler : MonoBehaviour {
+public class PlayerCollisionController : MonoBehaviour {
 
-	public static PlayerCollisionHandler self;
+	public static PlayerCollisionController self;
 	private bool is_collided;
 	public int collided = 0;
 	void Awake() {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Portal : MonoBehaviour {
+public class PortalController : MonoBehaviour {
 
     private GameObject player;
     private float threshold = .2f;

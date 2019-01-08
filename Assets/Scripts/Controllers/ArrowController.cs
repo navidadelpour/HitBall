@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour {
+public class ArrowController : MonoBehaviour {
 
 	private Vector3 direction;
 	private float speed_scale;
