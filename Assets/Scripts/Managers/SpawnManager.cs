@@ -28,7 +28,7 @@ public class SpawnManager : MonoBehaviour {
 	private Dictionary<System.Enum, int> chances = new Dictionary<System.Enum, int>() {
 		{Things.COIL, 1},
 		{Things.COIN, 2},
-		{Things.BLOCK, 2},
+		{Things.BLOCK, 10},
 		{Things.OBSTACLE, 3},
 		{Things.HOLE, 3},
 		{Things.NOTHING, 1},
