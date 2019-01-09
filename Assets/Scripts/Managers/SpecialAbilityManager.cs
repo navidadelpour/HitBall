@@ -21,7 +21,8 @@ public class SpecialAbilityManager : MonoBehaviour {
 	}
 
 	void Start () {
-        StartCoroutine(Give());
+        UiManager.self.SetSpecialAbility(current_ability);
+        StartCoroutine(Disable(0));
 	}
 	
 	void Update () {
@@ -31,6 +32,7 @@ public class SpecialAbilityManager : MonoBehaviour {
     IEnumerator Give() {
         yield return new WaitForSeconds(Random.Range(-range, range) + time);
         has = true;
+        UiManager.self.EnableSpecialAbility();
     }
 
     public void Active() {
@@ -44,6 +46,7 @@ public class SpecialAbilityManager : MonoBehaviour {
         yield return new WaitForSeconds(time);
         active = false;
         has = false;
+        UiManager.self.DisableSpecialAbility();
         StartCoroutine(Give());
     }
 
