@@ -51,6 +51,9 @@ public class InputManager : MonoBehaviour {
 					case "GunButton":
 						GunController.self.Shot();
 						break;
+					case "SpecialAbilityButton":
+						SpecialAbilityManager.self.Active();
+						break;
 					}
 				}
 			}
