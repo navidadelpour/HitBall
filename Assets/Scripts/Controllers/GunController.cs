@@ -42,7 +42,7 @@ public class GunController : MonoBehaviour {
             // Debug.Log("shot!");
             bool killed = false;
             RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.right * 1f, Vector3.right);
-            if(hit != null && hit.collider != null && !killed) {
+            if(hit.collider != null && !killed) {
                 if(hit.collider.tag == "Block" || hit.collider.tag == "Arrow"){
                     Destroy(hit.collider.gameObject);
                     GameManager.self.enemies_killed_in_combo ++;
