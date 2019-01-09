@@ -17,7 +17,7 @@ public class SpecialAbilityManager : MonoBehaviour {
 	void Awake() {
 		self = this;
 
-        current_ability = SpecialAbility.ENEMY_EARNER;
+        current_ability = SpecialAbility.LUCKY;
 	}
 
 	void Start () {

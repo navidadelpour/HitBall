@@ -111,7 +111,7 @@ public class SpawnManager : MonoBehaviour {
 				CreateNothing();
 				break;
 		}
-		if(Util.HasChance(item_chance))
+		if(Util.HasChance(item_chance * (SpecialAbilityManager.self.Has(SpecialAbility.LUCKY) ? 2 : 1)))
 			CreateItem();
 		if(Util.HasChance(arrow_chance))
 			CreateArrow();
