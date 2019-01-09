@@ -43,10 +43,10 @@ public class SpecialAbilityManager : MonoBehaviour {
     }
 
     IEnumerator Disable(float time) {
+        UiManager.self.DisableSpecialAbility();
         yield return new WaitForSeconds(time);
         active = false;
         has = false;
-        UiManager.self.DisableSpecialAbility();
         StartCoroutine(Give());
     }
 
