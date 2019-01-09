@@ -46,7 +46,12 @@ public class PlayerCollisionController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		switch (other.gameObject.tag) {
-			// case "Block":
+			case "Block":
+				if(SpecialAbilityManager.self.Has(SpecialAbility.ENEMY_EARNER)) {
+					Destroy(other.gameObject);
+					GameManager.self.EnemyEarn();
+				}
+				break;
 			// case "Arrow":
 			case "Obstacle":
 				if(!GameManager.self.safe_mode) {

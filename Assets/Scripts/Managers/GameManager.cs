@@ -68,6 +68,10 @@ public class GameManager : MonoBehaviour {
 		UiManager.self.SetScore ();
 	}
 
+	public void EnemyEarn() {
+		score += 10;
+	}
+
 	public void IncreamentCoins() {
 		coins++;
 		UiManager.self.SetCoins ();
