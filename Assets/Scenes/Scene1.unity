@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 103855778}
   - component: {fileID: 103855777}
   m_Layer: 5
-  m_Name: SpecialAbility
+  m_Name: SpecialAbilityButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,8 +242,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -365,6 +365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 133496659}
   - component: {fileID: 133496665}
+  - component: {fileID: 133496668}
   - component: {fileID: 133496664}
   - component: {fileID: 133496663}
   - component: {fileID: 133496662}
@@ -410,7 +411,8 @@ MonoBehaviour:
   gun_text: {fileID: 0}
   item_buttons: []
   reset_button: {fileID: 0}
-  gun_texture: {fileID: 0}
+  gun_image: {fileID: 0}
+  special_ability_image: {fileID: 0}
 --- !u!114 &133496661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,6 +508,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   available_items: []
   available_items_size: 3
+--- !u!114 &133496668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 133496658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1724301ca800a734a9ae3134dd7b4a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current_ability: 0
+  time: 5
+  range: 0.5
+  has: 0
+  active: 0
+  set_active: 0
+  disable_time: 5
 --- !u!1 &187631592
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,7 +911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2030,7 +2050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2514,7 +2534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
