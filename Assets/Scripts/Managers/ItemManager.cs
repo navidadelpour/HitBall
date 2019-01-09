@@ -27,7 +27,14 @@ public class ItemManager : MonoBehaviour {
     }
 
     void Update() {
-
+        if(SpecialAbilityManager.self.Has(SpecialAbility.RANDOMER)) {
+            Array items = Enum.GetValues(typeof(Item));
+            foreach(AvailableItem available_item in available_items) {
+                if(available_item.item == Item.NOTHING) {
+                    AddItem((Item) items.GetValue(UnityEngine.Random.Range(0, items.Length - 1)));
+                }
+            }
+        }
     }
 
 	public void ActiveItem(int index) {
@@ -53,7 +60,12 @@ public class ItemManager : MonoBehaviour {
 			}
 		}
 
-		RemoveItem(index);	
+		RemoveItem(index);
+
+        if(SpecialAbilityManager.self.Has(SpecialAbility.RANDOMER)) {
+            Array items = Enum.GetValues(typeof(Item));
+            AddItem((Item) items.GetValue(UnityEngine.Random.Range(0, items.Length - 1)));
+        }
 	}
 
 	IEnumerator SetActive(Item item) {
