@@ -36,7 +36,8 @@ public class GunController : MonoBehaviour {
     }
 
     public void Shot() {
-        if(Time.time - start_shoting > guns[active_gun].shot_time && current_ammo > 0) {
+        float time = guns[active_gun].shot_time * (SpecialAbilityManager.self.Has(SpecialAbility.GUNNER) ? .5f : 1);
+        if(Time.time - start_shoting > time && current_ammo > 0) {
             start_shoting = Time.time;
 
             // Debug.Log("shot!");
@@ -57,7 +58,8 @@ public class GunController : MonoBehaviour {
 
     IEnumerator Reload() {
         reloading = true;
-        yield return new WaitForSeconds(guns[active_gun].reload_time);
+        float time = guns[active_gun].reload_time * (SpecialAbilityManager.self.Has(SpecialAbility.GUNNER) ? .5f : 1);
+        yield return new WaitForSeconds(time);
         current_ammo = guns[active_gun].ammo;
         reloading = false;
         UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);

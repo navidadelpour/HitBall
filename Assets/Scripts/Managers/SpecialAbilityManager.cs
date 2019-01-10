@@ -17,7 +17,7 @@ public class SpecialAbilityManager : MonoBehaviour {
 	void Awake() {
 		self = this;
 
-        current_ability = SpecialAbility.BOUNCY;
+        current_ability = SpecialAbility.GUNNER;
 	}
 
 	void Start () {
