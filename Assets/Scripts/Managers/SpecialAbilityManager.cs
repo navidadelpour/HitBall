@@ -6,7 +6,7 @@ public class SpecialAbilityManager : MonoBehaviour {
 
 	public static SpecialAbilityManager self;
     public SpecialAbility current_ability;
-    public float time = 5f;
+    public float time = 1f;
     public float range = .5f;
     public bool has = false;
     public bool active = false;
@@ -17,7 +17,7 @@ public class SpecialAbilityManager : MonoBehaviour {
 	void Awake() {
 		self = this;
 
-        current_ability = SpecialAbility.RANDOMER;
+        current_ability = SpecialAbility.BOUNCY;
 	}
 
 	void Start () {

@@ -8,4 +8,5 @@ public enum SpecialAbility {
 	ENEMY_EARNER,
     SPIKY,
     GUNNER,
+	BOUNCY,
 }
