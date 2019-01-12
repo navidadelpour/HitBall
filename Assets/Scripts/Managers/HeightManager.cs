@@ -32,6 +32,9 @@ public class HeightManager : MonoBehaviour {
 		if (has_coil && !should_remove_coil)
 			Invoke ("SetShouldRemoveCoil", .2f);
 
+		if(ItemManager.self.actives[Item.WEB]) {
+			player_jump_height = player_min_jump_height;
+		}
 	}
 
 	void SetShouldRemoveCoil() {

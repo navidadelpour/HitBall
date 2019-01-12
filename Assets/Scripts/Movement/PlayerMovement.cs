@@ -192,6 +192,8 @@ public class PlayerMovement : MonoBehaviour {
 				angle_rotated / max_web_angle
 			);
 		} else {
+			jumping = false;
+			Jump();
 			ItemManager.self.actives[Item.WEB] = false;
 		}
 	}
