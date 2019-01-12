@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 	public bool paused;
 	public int combo = 1;
 	public int score;
+	public int exp;
 	public int enemies_killed_in_combo;
 	public int high_score;
 	public int coins;
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour {
 		player_initial_position = GameObject.Find ("Player").transform.position;
 		high_score = PlayerPrefs.GetInt("high_score");
 		coins = PlayerPrefs.GetInt("coins");
+		exp = PlayerPrefs.GetInt("exp");
 	}
 
 	void Start () {
@@ -37,8 +39,12 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
-		PlayerPrefs.SetInt("coins", coins);
 		SetHighScore();
+		IncreamentExp();
+		
+		PlayerPrefs.SetInt("coins", coins);
+		PlayerPrefs.SetInt("exp", exp);
+
 		Pause();
 		UiManager.self.GameOver();
 	}
@@ -77,6 +83,10 @@ public class GameManager : MonoBehaviour {
 	public void IncreamentCoins() {
 		coins++;
 		UiManager.self.SetCoins ();
+	}
+
+	private void IncreamentExp() {
+		exp += score;
 	}
 
 	public void ResetCombo() {
