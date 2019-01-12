@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 
 		player_initial_position = GameObject.Find ("Player").transform.position;
 		high_score = PlayerPrefs.GetInt("high_score");
+		coins = PlayerPrefs.GetInt("coins");
 	}
 
 	void Start () {
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
+		PlayerPrefs.SetInt("coins", coins);
 		SetHighScore();
 		Pause();
 		UiManager.self.GameOver();
