@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 	public void GameOver() {
 		SetHighScore();
 		IncreamentExp();
-		
+
 		PlayerPrefs.SetInt("coins", coins);
 		PlayerPrefs.SetInt("exp", exp);
 
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour {
 
 
 	public void IncreamentScore() {
-		score++;
+		score += combo;
 		UiManager.self.SetScore ();
 	}
 
