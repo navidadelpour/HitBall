@@ -6,7 +6,7 @@ public class SpecialAbilityManager : MonoBehaviour {
 
 	public static SpecialAbilityManager self;
     public SpecialAbility current_ability;
-    public float time = 1f;
+    public float time = 10f;
     public float range = .5f;
     public bool has = false;
     public bool active = false;

@@ -28,13 +28,13 @@ public class SpawnManager : MonoBehaviour {
 	private Dictionary<System.Enum, int> chances = new Dictionary<System.Enum, int>() {
 		{Things.COIL, 1},
 		{Things.COIN, 2},
-		{Things.BLOCK, 10},
+		{Things.BLOCK, 1},
 		{Things.OBSTACLE, 3},
 		{Things.HOLE, 3},
 		{Things.NOTHING, 1},
 	};
 	private int item_chance = 10;
-	private int arrow_chance = 10;
+	private int arrow_chance = 5;
 	private int[] coins_range = {1, 3};
 	public bool has_portal;
 

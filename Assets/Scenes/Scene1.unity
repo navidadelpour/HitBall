@@ -480,6 +480,7 @@ MonoBehaviour:
   paused: 0
   combo: 1
   score: 0
+  exp: 0
   enemies_killed_in_combo: 0
   high_score: 0
   coins: 0
@@ -520,12 +521,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   current_ability: 0
-  time: 5
+  time: 10
   range: 0.5
   has: 0
   active: 0
   set_active: 0
-  disable_time: 1
+  disable_time: 5
 --- !u!1 &187631592
 GameObject:
   m_ObjectHideFlags: 0
