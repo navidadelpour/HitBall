@@ -525,7 +525,7 @@ MonoBehaviour:
   has: 0
   active: 0
   set_active: 0
-  disable_time: 5
+  disable_time: 1
 --- !u!1 &187631592
 GameObject:
   m_ObjectHideFlags: 0

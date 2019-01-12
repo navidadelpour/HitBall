@@ -6,7 +6,6 @@ public enum SpecialAbility {
 	RANDOMER,
 	LUCKY,
 	ENEMY_EARNER,
-    SPIKY,
     GUNNER,
 	BOUNCY,
 }
