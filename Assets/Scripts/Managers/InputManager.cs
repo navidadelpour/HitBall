@@ -61,4 +61,9 @@ public class InputManager : MonoBehaviour {
 			SpeedManager.self.state = SpeedStates.NORMALIZE;
 		}
 	}
+
+	public void OnPauseButtonClick() {
+		GameManager.self.started = true;
+	}
+
 }

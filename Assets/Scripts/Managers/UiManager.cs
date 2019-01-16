@@ -19,6 +19,9 @@ public class UiManager : MonoBehaviour {
 	public Image gun_image;
 	public Image special_ability_image;
 
+	public GameObject menu_panel;
+	public GameObject game_panel;
+
 	void Awake() {
 		self = this;
 
@@ -33,11 +36,15 @@ public class UiManager : MonoBehaviour {
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
 		special_ability_image = GameObject.Find ("SpecialAbilityButton").GetComponent<Image>();
+
+		menu_panel = GameObject.Find("MenuPanel");
+		game_panel = GameObject.Find("GamePanel");
 	}
 
 	void Start () {
 		reset_button.gameObject.SetActive(false);
 		high_score_text.gameObject.SetActive(false);
+		game_panel.SetActive(false);
 		SetScore ();
 		SetHighScore();
 		SetCoins ();
@@ -94,5 +101,9 @@ public class UiManager : MonoBehaviour {
 		combo_text.text = "COMBO: " + GameManager.self.combo; 
 	}
 
+	public void OnPauseButtonClick() {
+		menu_panel.SetActive(false);
+		game_panel.SetActive(true);
+	}
 
 }
