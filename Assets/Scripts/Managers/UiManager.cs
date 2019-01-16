@@ -101,7 +101,7 @@ public class UiManager : MonoBehaviour {
 		combo_text.text = "COMBO: " + GameManager.self.combo; 
 	}
 
-	public void OnPauseButtonClick() {
+	public void OnPlayButtonClick() {
 		menu_panel.SetActive(false);
 		game_panel.SetActive(true);
 	}

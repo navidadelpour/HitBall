@@ -62,7 +62,7 @@ public class InputManager : MonoBehaviour {
 		}
 	}
 
-	public void OnPauseButtonClick() {
+	public void OnPlayButtonClick() {
 		GameManager.self.started = true;
 	}
 
