@@ -46,21 +46,13 @@ public class GameManager : MonoBehaviour {
 		PlayerPrefs.SetInt("coins", coins);
 		PlayerPrefs.SetInt("exp", exp);
 
-		Pause();
+		InputManager.self.OnPauseButtonClick();
 		UiManager.self.GameOver();
 	}
 
 	public void ResetGame() {
-		Pause();
+		InputManager.self.OnPauseButtonClick();
 		SceneManager.LoadScene("Scene1");
-	}
-
-	public void Pause() {
-		if(GameManager.self.paused)
-			Time.timeScale = 1;
-		else
-			Time.timeScale = 0;
-		GameManager.self.paused = !GameManager.self.paused;
 	}
 
 	public void SetHighScore() {

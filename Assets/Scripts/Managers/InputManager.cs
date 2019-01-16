@@ -66,4 +66,12 @@ public class InputManager : MonoBehaviour {
 		GameManager.self.started = true;
 	}
 
+	public void OnPauseButtonClick() {
+		if(GameManager.self.paused)
+			Time.timeScale = 1;
+		else
+			Time.timeScale = 0;
+		GameManager.self.paused = !GameManager.self.paused;
+	}
+
 }
