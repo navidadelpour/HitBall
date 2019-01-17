@@ -15,6 +15,8 @@ public class InputManager : MonoBehaviour {
 	private EventSystem event_systems;
 
 	private bool gun_button_pressed;
+	private bool jump_max_button_pressed;
+	private bool jump_min_button_pressed;
 
 	void Awake() {
 		self = this;
@@ -46,10 +48,10 @@ public class InputManager : MonoBehaviour {
 				} catch (System.Exception) {
 					switch (results [0].gameObject.name) {
 					case "JumpMaxButton":
-						SpeedManager.self.state = SpeedStates.INCREASE;
+						// SpeedManager.self.state = SpeedStates.INCREASE;
 						break;
 					case "JumpMinButton":
-						SpeedManager.self.state = SpeedStates.DECREASE;
+						// SpeedManager.self.state = SpeedStates.DECREASE;
 						break;
 					case "GunButton":
 						// GunController.self.Shot();
@@ -61,11 +63,18 @@ public class InputManager : MonoBehaviour {
 				}
 			}
 		} else {
-			SpeedManager.self.state = SpeedStates.NORMALIZE;
+			// SpeedManager.self.state = SpeedStates.NORMALIZE;
 		}
 
 		if(gun_button_pressed)
 			GunController.self.Shot();
+
+		if(jump_max_button_pressed)
+			SpeedManager.self.state = SpeedStates.INCREASE;
+		else if(jump_min_button_pressed)
+			SpeedManager.self.state = SpeedStates.DECREASE;
+		else
+			SpeedManager.self.state = SpeedStates.NORMALIZE;
 
 	}
 
@@ -92,6 +101,14 @@ public class InputManager : MonoBehaviour {
 
 	public void OnSpecialAbilitybuttonClick() {
 		SpecialAbilityManager.self.Active();
+	}
+
+	public void OnJumpMaxButtonHold() {
+		jump_max_button_pressed = !jump_max_button_pressed;
+	}
+
+	public void OnJumpMinButtonHold() {
+		jump_min_button_pressed = !jump_min_button_pressed;
 	}
 
 }
