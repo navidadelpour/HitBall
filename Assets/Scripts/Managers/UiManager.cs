@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UiManager : MonoBehaviour {
 
@@ -133,6 +134,18 @@ public class UiManager : MonoBehaviour {
 
 	public void OnShopButtonClick() {
 		GoToPanel(menu_panel, shop_panel);
+	}
+
+	public void OnBackToMenuButtonClick() {
+		GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
+	}
+
+	public void OnGunsPanelButtonClick() {
+		GoToPanel(shop_panel, guns_panel);
+	}
+
+	public void OnSpecialAbilitiesPanelButtonClick() {
+		GoToPanel(shop_panel, special_abilities_panel);
 	}
 
 }
