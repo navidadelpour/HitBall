@@ -55,7 +55,7 @@ public class InputManager : MonoBehaviour {
 						// GunController.self.Shot();
 						break;
 					case "SpecialAbilityButton":
-						SpecialAbilityManager.self.Active();
+						// SpecialAbilityManager.self.Active();
 						break;
 					}
 				}
@@ -88,6 +88,10 @@ public class InputManager : MonoBehaviour {
 
 	public void OnGunbuttonHold() {
 		gun_button_pressed = !gun_button_pressed;
+	}
+
+	public void OnSpecialAbilitybuttonClick() {
+		SpecialAbilityManager.self.Active();
 	}
 
 }
