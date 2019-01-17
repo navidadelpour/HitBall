@@ -20,6 +20,9 @@ public class UiManager : MonoBehaviour {
 
 	public GameObject menu_panel;
 	public GameObject game_panel;
+	public GameObject shop_panel;
+	public GameObject guns_panel;
+	public GameObject special_abilities_panel;
 	public GameObject game_over_panel;
 
 	void Awake() {
@@ -36,9 +39,15 @@ public class UiManager : MonoBehaviour {
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
 		special_ability_image = GameObject.Find ("SpecialAbilityButton").GetComponent<Image>();
 
-		menu_panel = GameObject.Find("MenuPanel");
-		game_panel = GameObject.Find("GamePanel");
-		game_over_panel = GameObject.Find("GameOverPanel");
+		BringPanelsToCenter(new GameObject[]{
+			menu_panel = GameObject.Find("MenuPanel"),
+			game_panel = GameObject.Find("GamePanel"),
+			shop_panel = GameObject.Find("ShopPanel"),
+			guns_panel = GameObject.Find("GunsPanel"),
+			special_abilities_panel = GameObject.Find("SpecialAbilitiesPanel"),
+			game_over_panel = GameObject.Find("GameOverPanel"),
+		});
+		menu_panel.SetActive(true);
 	}
 
 	void Start () {
@@ -91,6 +100,14 @@ public class UiManager : MonoBehaviour {
 		special_ability_image.color = new Color32(255, 255, 255, 70);
 	}
 
+	public void BringPanelsToCenter(GameObject[] panels) {
+		foreach(GameObject panel in panels) {
+			RectTransform rect_transform = panel.GetComponent<RectTransform>();
+			rect_transform.offsetMax = new Vector2(0, 0);
+			rect_transform.offsetMin = new Vector2(0, 0);
+			panel.SetActive(false);
+		}
+	}
 
 	public void SetGunText(int current_ammo, int ammo) {
 		gun_text.text = current_ammo + " / " + ammo;
