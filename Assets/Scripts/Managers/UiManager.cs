@@ -122,4 +122,9 @@ public class UiManager : MonoBehaviour {
 		game_panel.SetActive(true);
 	}
 
+	public void OnShopButtonClick() {
+		menu_panel.SetActive(false);
+		shop_panel.SetActive(true);
+	}
+
 }
