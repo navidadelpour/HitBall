@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour {
 
@@ -72,6 +73,11 @@ public class InputManager : MonoBehaviour {
 		else
 			Time.timeScale = 0;
 		GameManager.self.paused = !GameManager.self.paused;
+	}
+
+	public void OnResetButtonClick() {
+		OnPauseButtonClick();
+		SceneManager.LoadScene("Scene1");
 	}
 
 }

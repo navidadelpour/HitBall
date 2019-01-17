@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -48,11 +47,6 @@ public class GameManager : MonoBehaviour {
 
 		InputManager.self.OnPauseButtonClick();
 		UiManager.self.GameOver();
-	}
-
-	public void ResetGame() {
-		InputManager.self.OnPauseButtonClick();
-		SceneManager.LoadScene("Scene1");
 	}
 
 	public void SetHighScore() {

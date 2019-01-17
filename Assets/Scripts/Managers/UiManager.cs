@@ -14,13 +14,13 @@ public class UiManager : MonoBehaviour {
 	public Text gun_text;
 
 	public Button[] item_buttons;
-	public Button reset_button;
 
 	public Image gun_image;
 	public Image special_ability_image;
 
 	public GameObject menu_panel;
 	public GameObject game_panel;
+	public GameObject game_over_panel;
 
 	void Awake() {
 		self = this;
@@ -32,18 +32,17 @@ public class UiManager : MonoBehaviour {
 		gun_text = GameObject.Find ("GunText").GetComponent<Text>();
 
 		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
-		reset_button = GameObject.Find ("ResetButton").GetComponent<Button>();
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
 		special_ability_image = GameObject.Find ("SpecialAbilityButton").GetComponent<Image>();
 
 		menu_panel = GameObject.Find("MenuPanel");
 		game_panel = GameObject.Find("GamePanel");
+		game_over_panel = GameObject.Find("GameOverPanel");
 	}
 
 	void Start () {
-		reset_button.gameObject.SetActive(false);
-		high_score_text.gameObject.SetActive(false);
+		game_over_panel.SetActive(false);
 		game_panel.SetActive(false);
 		SetScore ();
 		SetHighScore();
@@ -56,8 +55,8 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
-		reset_button.gameObject.SetActive(true);
-		high_score_text.gameObject.SetActive(true);
+		game_panel.SetActive(false);
+		game_over_panel.SetActive(true);
 	}
 
 	public void SetHighScore() {
