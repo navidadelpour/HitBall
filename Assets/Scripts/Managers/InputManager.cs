@@ -14,6 +14,8 @@ public class InputManager : MonoBehaviour {
 	private PointerEventData pointer_event_data;
 	private EventSystem event_systems;
 
+	private bool gun_button_pressed;
+
 	void Awake() {
 		self = this;
 		
@@ -50,7 +52,7 @@ public class InputManager : MonoBehaviour {
 						SpeedManager.self.state = SpeedStates.DECREASE;
 						break;
 					case "GunButton":
-						GunController.self.Shot();
+						// GunController.self.Shot();
 						break;
 					case "SpecialAbilityButton":
 						SpecialAbilityManager.self.Active();
@@ -61,6 +63,10 @@ public class InputManager : MonoBehaviour {
 		} else {
 			SpeedManager.self.state = SpeedStates.NORMALIZE;
 		}
+
+		if(gun_button_pressed)
+			GunController.self.Shot();
+
 	}
 
 	public void OnPlayButtonClick() {
@@ -78,6 +84,14 @@ public class InputManager : MonoBehaviour {
 	public void OnResetButtonClick() {
 		OnPauseButtonClick();
 		SceneManager.LoadScene("Scene1");
+	}
+
+	public void OnGunbuttonPointerDown() {
+		gun_button_pressed = true;
+	}
+
+	public void OnGunbuttonPointerUp() {
+		gun_button_pressed = false;
 	}
 
 }
