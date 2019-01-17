@@ -51,8 +51,6 @@ public class UiManager : MonoBehaviour {
 	}
 
 	void Start () {
-		game_over_panel.SetActive(false);
-		game_panel.SetActive(false);
 		SetScore ();
 		SetHighScore();
 		SetCoins ();
@@ -63,10 +61,7 @@ public class UiManager : MonoBehaviour {
 		
 	}
 
-	public void GameOver() {
-		game_panel.SetActive(false);
-		game_over_panel.SetActive(true);
-	}
+	// ================================== ui changes ==================================
 
 	public void SetHighScore() {
 		high_score_text.text = "HIGH SCORE: " + GameManager.self.high_score; 
@@ -80,12 +75,20 @@ public class UiManager : MonoBehaviour {
 		coins_text.text = GameManager.self.coins + "";
 	}
 
+	public void SetCombo() {
+		combo_text.text = "COMBO: " + GameManager.self.combo; 
+	}
+
 	public void SetItem(int i, Item item) {
 		item_buttons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
 	}
 
 	public void SetGun(Guns gun) {
 		gun_image.sprite = Resources.Load<Sprite>("textures/Guns/" + gun.ToString().ToLower());
+	}
+
+	public void SetGunText(int current_ammo, int ammo) {
+		gun_text.text = current_ammo + " / " + ammo;
 	}
 
 	public void SetSpecialAbility(SpecialAbility special_ability) {
@@ -100,6 +103,13 @@ public class UiManager : MonoBehaviour {
 		special_ability_image.color = new Color32(255, 255, 255, 70);
 	}
 
+	// ================================== utility functions ==================================
+
+	public void GameOver() {
+		game_panel.SetActive(false);
+		game_over_panel.SetActive(true);
+	}
+
 	public void BringPanelsToCenter(GameObject[] panels) {
 		foreach(GameObject panel in panels) {
 			RectTransform rect_transform = panel.GetComponent<RectTransform>();
@@ -109,22 +119,19 @@ public class UiManager : MonoBehaviour {
 		}
 	}
 
-	public void SetGunText(int current_ammo, int ammo) {
-		gun_text.text = current_ammo + " / " + ammo;
+	private void GoToPanel(GameObject from, GameObject to) {
+		from.SetActive(false);
+		to.SetActive(true);
 	}
 
-	public void SetCombo() {
-		combo_text.text = "COMBO: " + GameManager.self.combo; 
-	}
+	// ================================== listeners ==================================
 
 	public void OnPlayButtonClick() {
-		menu_panel.SetActive(false);
-		game_panel.SetActive(true);
+		GoToPanel(menu_panel, game_panel);
 	}
 
 	public void OnShopButtonClick() {
-		menu_panel.SetActive(false);
-		shop_panel.SetActive(true);
+		GoToPanel(menu_panel, shop_panel);
 	}
 
 }
