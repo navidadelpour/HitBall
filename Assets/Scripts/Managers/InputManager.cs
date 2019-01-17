@@ -86,12 +86,8 @@ public class InputManager : MonoBehaviour {
 		SceneManager.LoadScene("Scene1");
 	}
 
-	public void OnGunbuttonPointerDown() {
-		gun_button_pressed = true;
-	}
-
-	public void OnGunbuttonPointerUp() {
-		gun_button_pressed = false;
+	public void OnGunbuttonHold() {
+		gun_button_pressed = !gun_button_pressed;
 	}
 
 }
