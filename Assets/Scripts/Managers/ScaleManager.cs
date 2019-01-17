@@ -49,7 +49,7 @@ public class ScaleManager : MonoBehaviour {
         main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z;
 
         // adding an amount to size as the time goes by...
-        if(camera_normal_size < camera_max_size) 
+        if(camera_normal_size < camera_max_size && GameManager.self.started) 
             camera_normal_size += size_increase_amount;
 
 		if(!ItemManager.self.actives[Item.WINGS]) {

@@ -42,7 +42,8 @@ public class SpeedManager : MonoBehaviour {
 	} 
 
 	void Update () {
-		MakeHard();
+		if(GameManager.self.started)
+			MakeHard();
 		bool has_slow_motion = ItemManager.self.actives[Item.SLOW_MOTION];
 		if(!ItemManager.self.actives[Item.WINGS]) {
 			switch (state) {

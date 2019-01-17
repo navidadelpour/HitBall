@@ -12,7 +12,7 @@ public class SpecialAbilityManager : MonoBehaviour {
     public bool active = false;
     public bool set_active = false;
     public float disable_time = 5f;
-
+    private bool started;
 
 	void Awake() {
 		self = this;
@@ -21,11 +21,13 @@ public class SpecialAbilityManager : MonoBehaviour {
 	}
 
 	void Start () {
-        StartCoroutine(Disable(0));
 	}
 	
 	void Update () {
-
+        if(GameManager.self.started && !started) {
+            started = true;
+            StartCoroutine(Disable(0));
+        }
 	}
 
     IEnumerator Give() {

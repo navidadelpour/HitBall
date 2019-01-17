@@ -28,7 +28,8 @@ public class HeightManager : MonoBehaviour {
 	}
 
 	void Update() {
-		MakeHard();
+		if(GameManager.self.started)
+			MakeHard();
 		if (has_coil && !should_remove_coil)
 			Invoke ("SetShouldRemoveCoil", .2f);
 
