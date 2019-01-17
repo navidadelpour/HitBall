@@ -108,8 +108,7 @@ public class UiManager : MonoBehaviour {
 	// ================================== utility functions ==================================
 
 	public void GameOver() {
-		game_panel.SetActive(false);
-		game_over_panel.SetActive(true);
+		GoToPanel(game_panel, game_over_panel);
 	}
 
 	public void BringPanelsToCenter(GameObject[] panels) {
