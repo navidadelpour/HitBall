@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -109,6 +109,13 @@ public class InputManager : MonoBehaviour {
 
 	public void OnJumpMinButtonHold() {
 		jump_min_button_pressed = !jump_min_button_pressed;
+	}
+
+	public void OnItemButtonClick() {
+		int index = int.Parse(EventSystem.current.currentSelectedGameObject.name);
+		if(ItemManager.self.available_items[index].item != Item.NOTHING) {
+			ItemManager.self.ActiveItem(index);
+		}
 	}
 
 }
