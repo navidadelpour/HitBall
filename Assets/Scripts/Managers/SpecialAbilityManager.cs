@@ -21,7 +21,6 @@ public class SpecialAbilityManager : MonoBehaviour {
 	}
 
 	void Start () {
-        UiManager.self.SetSpecialAbility(current_ability);
         StartCoroutine(Disable(0));
 	}
 	

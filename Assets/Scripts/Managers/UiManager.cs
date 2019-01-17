@@ -14,9 +14,9 @@ public class UiManager : MonoBehaviour {
 	public Text gun_text;
 
 	public Button[] item_buttons;
+	public Button special_ability_button;
 
 	public Image gun_image;
-	public Image special_ability_image;
 
 	public GameObject menu_panel;
 	public GameObject game_panel;
@@ -35,9 +35,9 @@ public class UiManager : MonoBehaviour {
 		gun_text = GameObject.Find ("GunText").GetComponent<Text>();
 
 		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
+		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
-		special_ability_image = GameObject.Find ("SpecialAbilityButton").GetComponent<Image>();
 
 		BringPanelsToCenter(new GameObject[]{
 			menu_panel = GameObject.Find("MenuPanel"),
@@ -55,6 +55,7 @@ public class UiManager : MonoBehaviour {
 		SetHighScore();
 		SetCoins ();
 		SetCombo ();
+        SetSpecialAbility();
 	}
 	
 	void Update () {
@@ -91,16 +92,17 @@ public class UiManager : MonoBehaviour {
 		gun_text.text = current_ammo + " / " + ammo;
 	}
 
-	public void SetSpecialAbility(SpecialAbility special_ability) {
-		special_ability_image.sprite = Resources.Load<Sprite>("textures/SpecialAbilities/" + special_ability.ToString().ToLower());
+	public void SetSpecialAbility() {
+		special_ability_button.gameObject.GetComponent<Image>().sprite =
+			Resources.Load<Sprite>("textures/SpecialAbilities/" + SpecialAbilityManager.self.current_ability.ToString().ToLower());
 	}
 
 	public void EnableSpecialAbility() {
-		special_ability_image.color = new Color32(255, 255, 255, 255);
+		special_ability_button.interactable = true;
 	}
 
 	public void DisableSpecialAbility() {
-		special_ability_image.color = new Color32(255, 255, 255, 70);
+		special_ability_button.interactable = false;
 	}
 
 	// ================================== utility functions ==================================
