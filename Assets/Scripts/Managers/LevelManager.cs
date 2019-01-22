@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour {
     public static LevelManager self;
 
     public Dictionary<System.Enum, bool> unlocks;
+    public System.Enum[] levels;
 
     void Awake() {
         self = this;
@@ -20,6 +21,19 @@ public class LevelManager : MonoBehaviour {
             if(type.ToString() != Item.NOTHING.ToString())
                 unlocks.Add(type, PlayerPrefs.GetInt(type.ToString() + "_unlocks") == 1);
         }
+
+        levels = new System.Enum[] {
+            Item.NOTHING,
+            SpecialAbility.LUCKY,
+            Guns.RIFLE,
+            SpecialAbility.ENEMY_EARNER,
+            Item.NOTHING,
+            SpecialAbility.BOUNCY,
+            Guns.SHOTGUN,
+            SpecialAbility.GUNNER,
+            Item.NOTHING,
+            SpecialAbility.RANDOMER
+        };
     }
 
     void Start() {
