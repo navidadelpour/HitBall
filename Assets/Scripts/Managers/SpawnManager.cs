@@ -20,7 +20,7 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject last_ground;
 	private float ground_limit_scale = 1.5f;
 	private int ground_limit;
-	private Vector3 on_ground_offset;
+	private float ground_size_y;
 	private float ground_size_x;
 
 	private Things last_item_spawned;
@@ -36,6 +36,7 @@ public class SpawnManager : MonoBehaviour {
 	private int item_chance = 10;
 	private int arrow_chance = 5;
 	private int[] coins_range = {1, 3};
+	private int[] obstacles_range = {1, 3};
 	public bool has_portal;
 
 	void Awake() {
@@ -53,8 +54,8 @@ public class SpawnManager : MonoBehaviour {
 
 		grounds = GameObject.Find ("Grounds");
 		
-		on_ground_offset = Vector3.up * ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
-		ground_size_x = ground_prefab.GetComponent<BoxCollider2D> ().size.x * grounds.transform.GetChild(0).transform.lossyScale.x;
+		ground_size_y = ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
+		ground_size_x = ground_prefab.GetComponent<BoxCollider2D> ().size.x * ground_prefab.transform.lossyScale.x;
 		last_ground = grounds.transform.GetChild(0).gameObject;
 	}
 
@@ -165,19 +166,33 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void CreateObstacle() {
-		Instantiate(
-			obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length)],
-			last_ground.transform.position + on_ground_offset,
-			Quaternion.identity,
-			last_ground.transform
-		);
-		last_item_spawned = Things.OBSTACLE;
+		GameObject obstacles_prefab = obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length)];
+		int max_i = 1;
+		float starting_point = 0;
+		float offset_x = 0;
+		float offset_y = 1;
+
+		if(obstacles_prefab.name == "Obstacle") {
+			offset_x = obstacles_prefab.GetComponent<BoxCollider2D> ().size.x * obstacles_prefab.transform.lossyScale.x;
+			offset_y = obstacles_prefab.GetComponent<BoxCollider2D> ().size.y * obstacles_prefab.transform.lossyScale.y;
+			max_i = Random.Range (obstacles_range[0], obstacles_range[1] + 1);
+			starting_point = (1 - max_i) * .5f;
+		}
+		for (int i = 0; i < max_i; i++) {
+			Instantiate(
+				obstacles_prefab,
+				last_ground.transform.position + Vector3.right * starting_point + Vector3.up * (ground_size_y / 2 + offset_y / 2) + Vector3.right * offset_x * i,
+				Quaternion.identity,
+				last_ground.transform
+			);
+			last_item_spawned = Things.OBSTACLE;
+		}
 	}
 		
 	private void CreateBlock() {
 		Instantiate(
 			block_prefab,
-			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(1f, 6f),
+			last_ground.transform.position + Vector3.up * ground_size_y / 2 + Vector3.up * Random.Range(1f, 6f),
 			Quaternion.identity,
 			last_ground.transform
 		);
@@ -189,20 +204,21 @@ public class SpawnManager : MonoBehaviour {
 		for (int i = 0; i < Random.Range (coins_range[0], coins_range[1] + 1); i++) {
 			GameObject coin_created = Instantiate (
              	coin_prefab,
-				last_ground.transform.position + Vector3.up * i + on_ground_offset,
+				last_ground.transform.position + Vector3.up * i + Vector3.up *( ground_size_y / 2 + 1),
 				Quaternion.identity,
 				last_ground.transform
           	);
 			if(ItemManager.self.actives[Item.MAGNET])
 				coin_created.AddComponent<CoinMovement>();
-		last_item_spawned = Things.COIN;
+			last_item_spawned = Things.COIN;
 		}
 	}
 
 	private void CreateCoil() {
+		float offset_y = coil_prefab.GetComponent<BoxCollider2D> ().size.y * coil_prefab.transform.lossyScale.y;
 		Instantiate(
 			coil_prefab,
-			last_ground.transform.position + on_ground_offset,
+			last_ground.transform.position + Vector3.up * (ground_size_y / 2 + offset_y / 2),
 			Quaternion.identity,
 			last_ground.transform
 		);
@@ -212,7 +228,7 @@ public class SpawnManager : MonoBehaviour {
 	private void CreatePortal() {
 		GameObject portal_created = Instantiate(
 			portal_prefab,
-			last_ground.transform.position + on_ground_offset,
+			last_ground.transform.position + Vector3.up * ground_size_y / 2,
 			Quaternion.identity,
 			last_ground.transform
 		);
@@ -225,7 +241,7 @@ public class SpawnManager : MonoBehaviour {
 	private void CreateArrow() {
 		Instantiate(
 			arrow_prefab,
-			last_ground.transform.position + on_ground_offset,
+			last_ground.transform.position + Vector3.up * ground_size_y / 2,
 			Quaternion.identity,
 			last_ground.transform
 		);
@@ -234,7 +250,7 @@ public class SpawnManager : MonoBehaviour {
 	private void CreateItem() {
 		GameObject item_created = Instantiate(
 			item_prefab,
-			last_ground.transform.position + on_ground_offset + Vector3.up * Random.Range(3f, 5f),
+			last_ground.transform.position + Vector3.up * ground_size_y / 2 + Vector3.up * Random.Range(3f, 5f),
 			Quaternion.identity,
 			last_ground.transform
 		);
