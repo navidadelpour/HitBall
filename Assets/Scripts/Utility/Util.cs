@@ -28,4 +28,16 @@ public class Util {
 		return null;
 	}
 
+	public static Transform FindDeepChild(Transform aParent, string aName){
+		Transform result = aParent.Find(aName);
+		if (result != null)
+			return result;
+		foreach(Transform child in aParent) {
+			result = FindDeepChild(child, aName);
+			if (result != null)
+				return result;
+		}
+		return null;
+	}
+
 }
