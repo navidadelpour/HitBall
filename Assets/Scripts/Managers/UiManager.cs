@@ -84,43 +84,6 @@ public class UiManager : MonoBehaviour {
 		
 	}
 
-	void SetupShopGunsPanel() {
-		Transform content = Util.FindDeepChild(guns_panel.transform, "Content").transform;
-		Guns[] enum_array = (Guns[]) Enum.GetValues(typeof(Guns));
-		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
-		int i = 0;
-		foreach (System.Enum enum_item in enum_array) {
-			GameObject shop_item_created = Instantiate(
-				shop_item,
-				content.transform.position +
-				Vector3.right * (shop_item_size.x / 2 + shop_margin) +
-				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
-				Quaternion.identity,
-				content.transform
-			);
-			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Guns/" + enum_item.ToString().ToLower());
-			i++;
-		}
-	}
-
-	void SetupShopSpecialAbilityPanel() {
-		Transform content = Util.FindDeepChild(special_abilities_panel.transform, "Content").transform;
-		SpecialAbility[] enum_array = (SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility));
-		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
-		int i = 0;
-		foreach (System.Enum enum_item in enum_array) {
-			GameObject shop_item_created = Instantiate(
-				shop_item,
-				content.transform.position +
-				Vector3.right * (shop_item_size.x / 2 + shop_margin) +
-				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
-				Quaternion.identity,
-				content.transform
-			);
-			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/SpecialAbilities/" + enum_item.ToString().ToLower());
-			i++;
-		}
-	}
 
 
 	// ================================== ui changes ==================================
@@ -186,6 +149,45 @@ public class UiManager : MonoBehaviour {
 		to.SetActive(true);
 	}
 
+	void SetupShopGunsPanel() {
+		Transform content = Util.FindDeepChild(guns_panel.transform, "Content").transform;
+		Guns[] enum_array = (Guns[]) Enum.GetValues(typeof(Guns));
+		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
+		int i = 0;
+		foreach (System.Enum enum_item in enum_array) {
+			GameObject shop_item_created = Instantiate(
+				shop_item,
+				content.transform.position +
+				Vector3.right * (shop_item_size.x / 2 + shop_margin) +
+				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
+				Quaternion.identity,
+				content.transform
+			);
+			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Guns/" + enum_item.ToString().ToLower());
+			i++;
+		}
+	}
+
+	void SetupShopSpecialAbilityPanel() {
+		Transform content = Util.FindDeepChild(special_abilities_panel.transform, "Content").transform;
+		SpecialAbility[] enum_array = (SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility));
+		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
+		int i = 0;
+		foreach (System.Enum enum_item in enum_array) {
+			GameObject shop_item_created = Instantiate(
+				shop_item,
+				content.transform.position +
+				Vector3.right * (shop_item_size.x / 2 + shop_margin) +
+				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
+				Quaternion.identity,
+				content.transform
+			);
+			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/SpecialAbilities/" + enum_item.ToString().ToLower());
+			i++;
+		}
+	}
+
+
 	// ================================== listeners ==================================
 
 	public void OnPlayButtonClick() {
@@ -198,6 +200,10 @@ public class UiManager : MonoBehaviour {
 
 	public void OnBackToMenuButtonClick() {
 		GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
+	}
+
+	public void OnBackToShopButtonClick() {
+		GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, shop_panel);
 	}
 
 	public void OnGunsPanelButtonClick() {
