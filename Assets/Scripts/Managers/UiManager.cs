@@ -23,9 +23,10 @@ public class UiManager : MonoBehaviour {
 	public GameObject menu_panel;
 	public GameObject game_panel;
 	public GameObject shop_panel;
+	public GameObject shop_general_panel;
 	public GameObject shop_items_panel;
-	public GameObject guns_panel;
-	public GameObject special_abilities_panel;
+	public GameObject shop_guns_panel;
+	public GameObject shop_special_abilities_panel;
 	public GameObject game_over_panel;
 
 	public GameObject shop_item;
@@ -47,29 +48,30 @@ public class UiManager : MonoBehaviour {
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
 
 		shop_item = Resources.Load<GameObject>("Prefabs/Ui/ShopItem");
-		shop_items_panel = GameObject.Find("ShopItemsPanel");
+		shop_general_panel = GameObject.Find("ShopGeneralPanel");
 
 		shop_panel = GameObject.Find("ShopPanel");
-		guns_panel = Instantiate(shop_items_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
-		guns_panel.name = "GunsPanel";
-		special_abilities_panel = Instantiate(shop_items_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
-		special_abilities_panel.name = "SpecialAbilitiesPanel";
+		shop_guns_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_guns_panel.name = "GunsPanel";
+		shop_items_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_items_panel.name = "ItemsPanel";
+		shop_special_abilities_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_special_abilities_panel.name = "SpecialAbilitiesPanel";
 
-		Destroy(shop_items_panel);
+		Destroy(shop_general_panel);
 
 		BringPanelsToCenter(new GameObject[]{
 			menu_panel = GameObject.Find("MenuPanel"),
 			game_panel = GameObject.Find("GamePanel"),
 			shop_panel,
-			guns_panel,
-			special_abilities_panel,
+			shop_items_panel,
+			shop_guns_panel,
+			shop_special_abilities_panel,
 			game_over_panel = GameObject.Find("GameOverPanel"),
 		});
 		menu_panel.SetActive(true);
 
 		shop_item_size = Vector3.right * shop_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_item.GetComponent<RectTransform>().rect.height;
-		SetupShopGunsPanel();
-		SetupShopSpecialAbilityPanel();
 	}
 
 	void Start () {
@@ -78,6 +80,9 @@ public class UiManager : MonoBehaviour {
 		SetCoins ();
 		SetCombo ();
         SetSpecialAbility();
+		SetupShopGunsPanel();
+		SetupShopSpecialAbilityPanel();
+		SetupShopItemsPanel();
 	}
 	
 	void Update () {
@@ -150,7 +155,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	void SetupShopGunsPanel() {
-		Transform content = Util.FindDeepChild(guns_panel.transform, "Content").transform;
+		Transform content = Util.FindDeepChild(shop_guns_panel.transform, "Content").transform;
 		Guns[] enum_array = (Guns[]) Enum.GetValues(typeof(Guns));
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
 		int i = 0;
@@ -164,12 +169,13 @@ public class UiManager : MonoBehaviour {
 				content.transform
 			);
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Guns/" + enum_item.ToString().ToLower());
+			shop_item_created.GetComponent<Button>().interactable = LevelManager.self.unlocks[enum_item];
 			i++;
 		}
 	}
 
 	void SetupShopSpecialAbilityPanel() {
-		Transform content = Util.FindDeepChild(special_abilities_panel.transform, "Content").transform;
+		Transform content = Util.FindDeepChild(shop_special_abilities_panel.transform, "Content").transform;
 		SpecialAbility[] enum_array = (SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility));
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
 		int i = 0;
@@ -183,9 +189,44 @@ public class UiManager : MonoBehaviour {
 				content.transform
 			);
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/SpecialAbilities/" + enum_item.ToString().ToLower());
+			shop_item_created.GetComponent<Button>().interactable = LevelManager.self.unlocks[enum_item];
 			i++;
 		}
 	}
+
+	void SetupShopItemsPanel() {
+		Transform content = Util.FindDeepChild(shop_items_panel.transform, "Content").transform;
+		Item[] enum_array = (Item[]) Enum.GetValues(typeof(Item));
+		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * ((enum_array.Length - 1) * (shop_margin + shop_item_size.y) + shop_margin);
+		int i = 0;
+		foreach (System.Enum enum_item in enum_array) {
+			if(enum_item.ToString() != Item.NOTHING.ToString()) {
+				GameObject shop_item_created = Instantiate(
+					shop_item,
+					content.transform.position +
+					Vector3.right * (shop_item_size.x / 2 + shop_margin) +
+					Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
+					Quaternion.identity,
+					content.transform
+				);
+				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Items/" + enum_item.ToString().ToLower());
+				i++;
+			}
+		}
+	}
+
+
+	public void CheckForLevelUp() {
+		bool[] bools = new bool[] {true, true, true}; 
+		for(int i = 0; i < 3 - LevelManager.self.item_slots_unlocks; i++) {
+			bools[i] = false;
+		}
+
+		for(int i = 0; i < 3; i++) {
+			item_buttons[i].gameObject.SetActive(bools[i]);
+		}
+	}
+
 
 
 	// ================================== listeners ==================================
@@ -207,11 +248,16 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void OnGunsPanelButtonClick() {
-		GoToPanel(shop_panel, guns_panel);
+		GoToPanel(shop_panel, shop_guns_panel);
 	}
 
+	public void OnItemsPanelButtonClick() {
+		GoToPanel(shop_panel, shop_items_panel);
+	}
+
+
 	public void OnSpecialAbilitiesPanelButtonClick() {
-		GoToPanel(shop_panel, special_abilities_panel);
+		GoToPanel(shop_panel, shop_special_abilities_panel);
 	}
 
 }

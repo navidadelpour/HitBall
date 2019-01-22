@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start () {
-
+		LevelManager.self.CheckForLevelUp(exp);
 	}
 	
 	void Update () {
@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour {
 		PlayerPrefs.SetInt("coins", coins);
 		PlayerPrefs.SetInt("exp", exp);
 
+		LevelManager.self.CheckForLevelUp(exp);
 		InputManager.self.OnPauseButtonClick();
 		UiManager.self.GameOver();
 	}

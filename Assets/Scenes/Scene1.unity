@@ -498,6 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 133496659}
+  - component: {fileID: 133496669}
   - component: {fileID: 133496665}
   - component: {fileID: 133496668}
   - component: {fileID: 133496664}
@@ -507,7 +508,6 @@ GameObject:
   - component: {fileID: 133496660}
   - component: {fileID: 133496666}
   - component: {fileID: 133496667}
-  - component: {fileID: 133496669}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -681,6 +681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844e0da8d55c4744198adabe326569f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item_slots_unlocks: 0
+  current_level: 0
 --- !u!1 &187631592
 GameObject:
   m_ObjectHideFlags: 0
