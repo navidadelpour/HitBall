@@ -263,6 +263,8 @@ public class UiManager : MonoBehaviour {
 		if(parent_panel.name == "SpecialAbilitiesPanel") {
 			active_special_ability.transform.Find("Status").GetComponent<Image>().sprite = null;
 			active_special_ability = shop_item_instance;
+			SpecialAbilityManager.self.current_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), shop_item_instance.name.ToUpper());
+			SetSpecialAbility();
 		} else {
 			active_gun.transform.Find("Status").GetComponent<Image>().sprite = null;
 			active_gun = shop_item_instance;
