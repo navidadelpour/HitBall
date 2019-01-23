@@ -14,9 +14,11 @@ public class ShopItemButtonController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 	}
 
 	public void OnClick() {
-		Debug.Log(name);
+		UiManager.self.EnableShopItem(this.gameObject);
 	}
+	
 }
