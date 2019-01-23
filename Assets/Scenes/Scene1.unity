@@ -547,6 +547,8 @@ MonoBehaviour:
   item_buttons: []
   special_ability_button: {fileID: 0}
   gun_image: {fileID: 0}
+  tick_sprite: {fileID: 0}
+  lock_sprite: {fileID: 0}
   menu_panel: {fileID: 0}
   game_panel: {fileID: 0}
   shop_panel: {fileID: 0}
@@ -556,6 +558,8 @@ MonoBehaviour:
   shop_special_abilities_panel: {fileID: 0}
   game_over_panel: {fileID: 0}
   shop_item: {fileID: 0}
+  active_special_ability: {fileID: 0}
+  active_gun: {fileID: 0}
 --- !u!114 &133496661
 MonoBehaviour:
   m_ObjectHideFlags: 0

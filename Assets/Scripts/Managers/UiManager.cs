@@ -19,6 +19,8 @@ public class UiManager : MonoBehaviour {
 	public Button special_ability_button;
 
 	public Image gun_image;
+	public Sprite tick_sprite;
+	public Sprite lock_sprite;
 
 	public GameObject menu_panel;
 	public GameObject game_panel;
@@ -33,6 +35,10 @@ public class UiManager : MonoBehaviour {
 	private Vector3 shop_item_size;
 	private float shop_margin = 30f;
 
+	public GameObject active_special_ability;
+	public GameObject active_gun;
+	
+
 	void Awake() {
 		self = this;
 
@@ -46,6 +52,8 @@ public class UiManager : MonoBehaviour {
 		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
+		tick_sprite = Resources.Load<Sprite>("Textures/UI/tick");
+		lock_sprite = Resources.Load<Sprite>("Textures/UI/lock");
 
 		shop_item = Resources.Load<GameObject>("Prefabs/Ui/ShopItem");
 		shop_general_panel = GameObject.Find("ShopGeneralPanel");
@@ -158,6 +166,10 @@ public class UiManager : MonoBehaviour {
 		Transform content = Util.FindDeepChild(shop_guns_panel.transform, "Content").transform;
 		Guns[] enum_array = (Guns[]) Enum.GetValues(typeof(Guns));
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
+		string active_gun_name = PlayerPrefs.GetString("active_gun");
+		if(active_gun_name == "")
+			active_gun_name = Guns.PISTOL.ToString();
+
 		int i = 0;
 		foreach (System.Enum enum_item in enum_array) {
 			GameObject shop_item_created = Instantiate(
@@ -170,6 +182,12 @@ public class UiManager : MonoBehaviour {
 			);
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Guns/" + enum_item.ToString().ToLower());
 			shop_item_created.GetComponent<Button>().interactable = LevelManager.self.unlocks[enum_item];
+			shop_item_created.name = enum_item.ToString();
+			LockShopItem(shop_item_created, LevelManager.self.unlocks[enum_item]);
+			if(enum_item.ToString() == active_gun_name) {
+				active_gun = shop_item_created;
+				shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+			}
 			i++;
 		}
 	}
@@ -178,6 +196,9 @@ public class UiManager : MonoBehaviour {
 		Transform content = Util.FindDeepChild(shop_special_abilities_panel.transform, "Content").transform;
 		SpecialAbility[] enum_array = (SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility));
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
+		string active_special_ability_name = PlayerPrefs.GetString("active_special_ability");
+		if(active_special_ability_name == "")
+			active_special_ability_name = SpecialAbility.LUCKY.ToString();
 		int i = 0;
 		foreach (System.Enum enum_item in enum_array) {
 			GameObject shop_item_created = Instantiate(
@@ -190,6 +211,12 @@ public class UiManager : MonoBehaviour {
 			);
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/SpecialAbilities/" + enum_item.ToString().ToLower());
 			shop_item_created.GetComponent<Button>().interactable = LevelManager.self.unlocks[enum_item];
+			shop_item_created.name = enum_item.ToString();
+			LockShopItem(shop_item_created, LevelManager.self.unlocks[enum_item]);
+			if(enum_item.ToString() == active_special_ability_name) {
+				active_special_ability = shop_item_created;
+				shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+			}
 			i++;
 		}
 	}
@@ -210,6 +237,7 @@ public class UiManager : MonoBehaviour {
 					content.transform
 				);
 				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Items/" + enum_item.ToString().ToLower());
+				shop_item_created.name = enum_item.ToString();
 				i++;
 			}
 		}
@@ -227,6 +255,27 @@ public class UiManager : MonoBehaviour {
 		}
 	}
 
+	public void EnableShopItem(GameObject shop_item_instance) {
+		if (shop_item_instance.name == active_special_ability.name || shop_item_instance.name == active_gun.name)
+			return;
+		shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+		GameObject parent_panel = GetShopItemPanel(shop_item_instance);
+		if(parent_panel.name == "SpecialAbilitiesPanel") {
+			active_special_ability.transform.Find("Status").GetComponent<Image>().sprite = null;
+			active_special_ability = shop_item_instance;
+		} else {
+			active_gun.transform.Find("Status").GetComponent<Image>().sprite = null;
+			active_gun = shop_item_instance;
+		}
+	}
+
+	public void LockShopItem(GameObject shop_item_instance, bool b) {
+		shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = b ? null : lock_sprite;
+	}
+
+	public GameObject GetShopItemPanel(GameObject shop_item_instance) {
+		return shop_item_instance.transform.parent.parent.parent.parent.gameObject;
+	}
 
 
 	// ================================== listeners ==================================
