@@ -5,20 +5,8 @@ using UnityEngine.EventSystems;
 
 public class ShopItemButtonController : MonoBehaviour {
 
-	private GameObject clicked_object;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
-
 	public void OnClick() {
 		UiManager.self.EnableShopItem(this.gameObject);
 	}
-	
+
 }
