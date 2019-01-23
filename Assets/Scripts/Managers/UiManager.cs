@@ -121,8 +121,8 @@ public class UiManager : MonoBehaviour {
 		item_buttons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
 	}
 
-	public void SetGun(Guns gun) {
-		gun_image.sprite = Resources.Load<Sprite>("textures/Guns/" + gun.ToString().ToLower());
+	public void SetGun() {
+		gun_image.sprite = Resources.Load<Sprite>("textures/Guns/" + GunController.self.active_gun.ToString().ToLower());
 	}
 
 	public void SetGunText(int current_ammo, int ammo) {
@@ -268,6 +268,8 @@ public class UiManager : MonoBehaviour {
 		} else {
 			active_gun.transform.Find("Status").GetComponent<Image>().sprite = null;
 			active_gun = shop_item_instance;
+			GunController.self.active_gun = (Guns) System.Enum.Parse(typeof(Guns), shop_item_instance.name.ToUpper());
+			SetGun();
 		}
 	}
 

@@ -7,7 +7,7 @@ public class GunController : MonoBehaviour {
     public static GunController self;
 
     public Dictionary<Guns, Gun> guns;
-    private Guns active_gun;
+    public Guns active_gun;
 
     private float start_shoting;
     private bool reloading;
@@ -26,7 +26,7 @@ public class GunController : MonoBehaviour {
 
     private void Start() {
         UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
-        UiManager.self.SetGun(active_gun);
+        UiManager.self.SetGun();
     }
 
     private void Update() {
