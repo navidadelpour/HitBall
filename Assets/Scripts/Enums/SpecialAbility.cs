@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum SpecialAbility {
-	RANDOMER,
 	LUCKY,
 	ENEMY_EARNER,
-    GUNNER,
 	BOUNCY,
+	GUNNER,
+	RANDOMER,
 }

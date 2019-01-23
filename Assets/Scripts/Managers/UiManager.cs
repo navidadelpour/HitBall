@@ -268,8 +268,10 @@ public class UiManager : MonoBehaviour {
 		} else {
 			active_gun.transform.Find("Status").GetComponent<Image>().sprite = null;
 			active_gun = shop_item_instance;
-			GunController.self.active_gun = (Guns) System.Enum.Parse(typeof(Guns), shop_item_instance.name.ToUpper());
+			Guns gun = (Guns) System.Enum.Parse(typeof(Guns), shop_item_instance.name.ToUpper());
+			GunController.self.SetGun(gun);
 			SetGun();
+			SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
 		}
 	}
 

@@ -20,13 +20,15 @@ public class GunController : MonoBehaviour {
             {Guns.RIFLE, new Gun(Guns.RIFLE, 30, .2f, 2)},
             {Guns.SHOTGUN, new Gun(Guns.SHOTGUN, 10, 1, 3)},
         };
-        active_gun = Guns.RIFLE;
-        current_ammo = guns[active_gun].ammo;
     }
 
     private void Start() {
-        UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
-        UiManager.self.SetGun();
+
+    }
+
+    public void SetGun(Guns gun) {
+        active_gun = gun;
+        current_ammo = guns[active_gun].ammo;
     }
 
     private void Update() {
