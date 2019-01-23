@@ -251,7 +251,7 @@ public class UiManager : MonoBehaviour {
 		}
 
 		for(int i = 0; i < 3; i++) {
-			item_buttons[i].gameObject.SetActive(bools[i]);
+			item_buttons[2 - i].gameObject.SetActive(bools[i]);
 		}
 	}
 

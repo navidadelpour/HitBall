@@ -7,22 +7,23 @@ public class ItemManager : MonoBehaviour {
     public static ItemManager self;
 
     public AvailableItem[] available_items;
-    public int available_items_size = 3;
+    public int available_items_size;
 	
 	public Dictionary<Item, bool> actives = new Dictionary<Item, bool>();
 	private float max_time = 5f;
 
     void Awake() {
         self = this;
+    }
+
+    void Start() {
+        available_items_size = LevelManager.self.item_slots_unlocks;
         available_items = new AvailableItem[available_items_size];
         for(int i = 0; i < available_items_size; i++)
             available_items[i] = new AvailableItem(Item.NOTHING);
 
 		foreach (Item item in (Item[]) Enum.GetValues(typeof(Item)))
 			actives.Add(item, false);
-    }
-
-    void Start() {
 
     }
 
