@@ -42,6 +42,7 @@ public class UiManager : MonoBehaviour {
 
 	public GameObject active_special_ability;
 	public GameObject active_gun;
+	public GameObject active_beard;
 	
 
 	void Awake() {
@@ -303,7 +304,21 @@ public class UiManager : MonoBehaviour {
 					string[] x = sprite_array[index].name.Split(new String[] {"_"}, StringSplitOptions.None);
 					string name = x[0];
 					string cost = x[1];
-					shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = PlayerPrefs.GetInt(name) == 1 ? null : lock_sprite;
+					Sprite sprite_to_give;
+					switch(PlayerPrefs.GetInt(name)) {
+						case 1:
+							sprite_to_give = null;
+							cost = "";
+							break;
+						case 2:
+							sprite_to_give = tick_sprite;
+							cost = "";
+							break;
+						default:
+							sprite_to_give = lock_sprite;
+							break;
+					}
+					shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
 					shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
 					shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[index];
 					shop_item_created.name = sprite_array[index].name;
@@ -329,15 +344,17 @@ public class UiManager : MonoBehaviour {
 	public void EnableShopItem(GameObject shop_item_instance) {
 		if (shop_item_instance.name == active_special_ability.name || shop_item_instance.name == active_gun.name)
 			return;
-		shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-		switch(GetShopItemPanel(shop_item_instance).name) {
+		GameObject top_parent_panel = GetShopItemPanel(shop_item_instance);
+		switch(top_parent_panel.name) {
 			case "SpecialAbilitiesPanel":
+				shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 				active_special_ability.transform.Find("Status").GetComponent<Image>().sprite = null;
 				active_special_ability = shop_item_instance;
 				SpecialAbilityManager.self.current_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), shop_item_instance.name.ToUpper());
 				SetSpecialAbility();
 				break;
 			case "GunsPanel":
+				shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 				active_gun.transform.Find("Status").GetComponent<Image>().sprite = null;
 				active_gun = shop_item_instance;
 				Guns gun = (Guns) System.Enum.Parse(typeof(Guns), shop_item_instance.name.ToUpper());
@@ -346,6 +363,42 @@ public class UiManager : MonoBehaviour {
 				SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
 				break;
 			default:
+				if(top_parent_panel.transform.parent.name == "FacesPanel") {
+					string[] x = shop_item_instance.name.Split(new String[] {"_"}, StringSplitOptions.None);
+					string name = x[0];
+					int cost = int.Parse(x[1]);
+					bool unlock = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite != lock_sprite;
+					bool active = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite == tick_sprite;
+
+					switch(shop_item_instance.transform.parent.name) {
+						case "BeardsPanel":
+							if(active_beard != null && shop_item_instance == active_beard) {
+								active_beard.transform.Find("Status").GetComponent<Image>().sprite = null;
+								active_beard.transform.Find("Cost").GetComponent<Text>().text = "";
+								active_beard = null;
+							} else {
+								if(!unlock && GameManager.self.coins >= cost) {
+									GameManager.self.coins -= cost;
+									unlock = true;
+								}
+								if(unlock) {
+									if(active_beard != null) {
+										active_beard.transform.Find("Status").GetComponent<Image>().sprite = null;
+										active_beard.transform.Find("Cost").GetComponent<Text>().text = "";
+									}
+									active_beard = shop_item_instance;
+
+									active_beard.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+									active_beard.transform.Find("Cost").GetComponent<Text>().text = "";
+								}
+							}
+							break;
+						case "HatsPanel":
+							break;
+						default:
+							break;
+					}
+				}
 				break;
 		}
 	}
