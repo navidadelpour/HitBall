@@ -29,10 +29,15 @@ public class UiManager : MonoBehaviour {
 	public GameObject shop_items_panel;
 	public GameObject shop_guns_panel;
 	public GameObject shop_special_abilities_panel;
+	public GameObject shop_faces_panel;
 	public GameObject game_over_panel;
 
+	public GameObject faces_header;
+	public GameObject faces_panel;
 	public GameObject shop_item;
+	public GameObject shop_faces_item;
 	private Vector3 shop_item_size;
+	private Vector3 shop_faces_item_size;
 	private float shop_margin = 30f;
 
 	public GameObject active_special_ability;
@@ -52,10 +57,15 @@ public class UiManager : MonoBehaviour {
 		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
+
 		tick_sprite = Resources.Load<Sprite>("Textures/UI/tick");
 		lock_sprite = Resources.Load<Sprite>("Textures/UI/lock");
 
+		faces_header = Resources.Load<GameObject>("Prefabs/Ui/FacesHeader");
+		faces_panel = Resources.Load<GameObject>("Prefabs/Ui/Panel");
 		shop_item = Resources.Load<GameObject>("Prefabs/Ui/ShopItem");
+		shop_faces_item = Resources.Load<GameObject>("Prefabs/Ui/ShopFacesItem");
+
 		shop_general_panel = GameObject.Find("ShopGeneralPanel");
 
 		shop_panel = GameObject.Find("ShopPanel");
@@ -65,6 +75,8 @@ public class UiManager : MonoBehaviour {
 		shop_items_panel.name = "ItemsPanel";
 		shop_special_abilities_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
 		shop_special_abilities_panel.name = "SpecialAbilitiesPanel";
+		shop_faces_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_faces_panel.name = "FacesPanel";
 
 		Destroy(shop_general_panel);
 
@@ -75,11 +87,13 @@ public class UiManager : MonoBehaviour {
 			shop_items_panel,
 			shop_guns_panel,
 			shop_special_abilities_panel,
+			shop_faces_panel,
 			game_over_panel = GameObject.Find("GameOverPanel"),
 		});
-		menu_panel.SetActive(true);
+		shop_faces_panel .SetActive(true);
 
 		shop_item_size = Vector3.right * shop_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_item.GetComponent<RectTransform>().rect.height;
+		shop_faces_item_size = Vector3.right * shop_faces_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_faces_item.GetComponent<RectTransform>().rect.height;
 	}
 
 	void Start () {
@@ -91,6 +105,7 @@ public class UiManager : MonoBehaviour {
 		SetupShopGunsPanel();
 		SetupShopSpecialAbilityPanel();
 		SetupShopItemsPanel();
+		SetupShopFacesPanel();
 	}
 	
 	void Update () {
@@ -241,6 +256,57 @@ public class UiManager : MonoBehaviour {
 				i++;
 			}
 		}
+	}
+
+	void SetupShopFacesPanel() {
+		Transform content = Util.FindDeepChild(shop_faces_panel.transform, "Content").transform;
+		float content_size = 0f;
+		string[] postfixes = {"Beards", "Hats"};
+		for(int k = 0; k < postfixes.Length; k++) {
+			Sprite[] sprite_array = Resources.LoadAll<Sprite>("Textures/Faces/" + postfixes[k]);
+
+			Vector2 faces_header_size = Vector3.right * faces_header.GetComponent<RectTransform>().rect.width + Vector3.up * faces_header.GetComponent<RectTransform>().rect.height;
+
+			GameObject panel = Instantiate(
+				faces_panel,
+				content.transform.position,
+				Quaternion.identity,
+				content.transform
+			);
+			panel.GetComponent<RectTransform>().sizeDelta = Vector2.up * ((sprite_array.Length / 3 + 1) * (shop_margin + shop_faces_item_size.y) + shop_margin + faces_header_size.y);
+			panel.name = postfixes[k] + "Panel";
+
+			GameObject header = Instantiate(
+				faces_header,
+				panel.transform.position +
+				Vector3.right * faces_header_size.x / 2 +
+				Vector3.down * (faces_header_size.y / 2 + content_size),
+				Quaternion.identity,
+				panel.transform
+			);
+			header.GetComponent<Text>().text = postfixes[k];
+
+			for(int i = 0; i < sprite_array.Length / 3 + 1; i++) {
+				for(int j = 0; j < 3; j++) {
+					int index = i * 3 + j;
+					if(index > sprite_array.Length - 1)
+						break;
+
+					GameObject shop_item_created = Instantiate(
+						shop_faces_item,
+						panel.transform.position +
+						Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x + shop_margin) * j + shop_margin) +
+						Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin + faces_header_size.y + content_size),
+						Quaternion.identity,
+						panel.transform
+					);
+					shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[index];
+					shop_item_created.name = sprite_array[index].name;
+				}
+			}
+			content_size += panel.GetComponent<RectTransform>().sizeDelta.y;
+		}
+		content.GetComponent<RectTransform>().sizeDelta = Vector3.up * content_size;
 	}
 
 

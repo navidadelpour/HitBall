@@ -556,8 +556,11 @@ MonoBehaviour:
   shop_items_panel: {fileID: 0}
   shop_guns_panel: {fileID: 0}
   shop_special_abilities_panel: {fileID: 0}
+  shop_faces_panel: {fileID: 0}
   game_over_panel: {fileID: 0}
+  faces_header: {fileID: 0}
   shop_item: {fileID: 0}
+  shop_faces_item: {fileID: 0}
   active_special_ability: {fileID: 0}
   active_gun: {fileID: 0}
 --- !u!114 &133496661
@@ -5767,6 +5770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1039e84d363af8a4f92d467d883ef32e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active_gun: 0
 --- !u!114 &2144826134
 MonoBehaviour:
   m_ObjectHideFlags: 0
