@@ -31,6 +31,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject shop_special_abilities_panel;
 	public GameObject shop_faces_panel;
 	public GameObject shop_themes_panel;
+	public GameObject shop_colors_panel;
 	public GameObject game_over_panel;
 
 	public GameObject faces_header;
@@ -41,6 +42,7 @@ public class UiManager : MonoBehaviour {
 	private Vector3 shop_item_size;
 	private Vector3 shop_faces_item_size;
 	private float shop_margin = 30f;
+	private int colors_cost = 10;
 
 	public Dictionary<string, GameObject> actives = new Dictionary<string, GameObject>();
 
@@ -80,6 +82,8 @@ public class UiManager : MonoBehaviour {
 		shop_faces_panel.name = "FacesPanel";
 		shop_themes_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
 		shop_themes_panel.name = "ThemesPanel";
+		shop_colors_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_colors_panel.name = "ColorsPanel";
 
 		Destroy(shop_general_panel);
 
@@ -92,6 +96,7 @@ public class UiManager : MonoBehaviour {
 			shop_special_abilities_panel,
 			shop_faces_panel,
 			shop_themes_panel,
+			shop_colors_panel,
 			game_over_panel = GameObject.Find("GameOverPanel"),
 		});
 		menu_panel.SetActive(true);
@@ -99,11 +104,12 @@ public class UiManager : MonoBehaviour {
 		shop_item_size = Vector3.right * shop_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_item.GetComponent<RectTransform>().rect.height;
 		shop_faces_item_size = Vector3.right * shop_faces_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_faces_item.GetComponent<RectTransform>().rect.height;
 
-		foreach (string s in new string[] {"SpecialAbilities", "Guns", "Beards", "Hats", "Themes"}) {
+		foreach (string s in new string[] {"SpecialAbilities", "Guns", "Beards", "Hats", "Themes", "Colors"}) {
 			actives.Add(s, PlayerPrefs.GetInt(s) == 1 ? GameObject.Find(s) : null);
 		}
 
 		PlayerPrefs.SetInt("DefaultTheme", 2);
+		PlayerPrefs.SetInt("RGBA(0, 0, 0, 0)", 2);
 	}
 
 	void Start () {
@@ -117,6 +123,7 @@ public class UiManager : MonoBehaviour {
 		SetupShopItemsPanel();
 		SetupShopFacesPanel();
 		SetupShopThemesPanel();
+		SetupShopColorsPanel();
 	}
 	
 	void Update () {
@@ -312,6 +319,50 @@ public class UiManager : MonoBehaviour {
 
 	}
 
+	void SetupShopColorsPanel() {
+		Transform content = Util.FindDeepChild(shop_colors_panel.transform, "Content").transform;
+		Color32[] color_array = new Color32[] {Color.clear, Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
+		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * ((color_array.Length - 1) * (shop_margin + shop_item_size.y) + shop_margin);
+
+		for(int i = 0; i < color_array.Length / 3 + 1; i++) {
+			for(int j = 0; j < 3; j++) {
+				int index = i * 3 + j;
+				if(index > color_array.Length - 1)
+					break;
+
+				GameObject shop_item_created = Instantiate(
+					shop_faces_item,
+					content.transform.position +
+					Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x + shop_margin) * j + shop_margin) +
+					Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin),
+					Quaternion.identity,
+					content.transform
+				);
+				string name = color_array[index].ToString();
+				string cost = colors_cost + "";
+				Sprite sprite_to_give;
+				switch(PlayerPrefs.GetInt(name)) {
+					case 1:
+						sprite_to_give = null;
+						cost = "";
+						break;
+					case 2:
+						sprite_to_give = tick_sprite;
+						cost = "";
+						actives["Colors"] = shop_item_created;
+						break;
+					default:
+						sprite_to_give = lock_sprite;
+						break;
+				}
+				shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
+				shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
+				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().color = color_array[index];
+				shop_item_created.name = color_array[index].ToString() + "_" + (cost == "" ? "0" : cost);
+				// SetPlayerColor(color_array[index]);
+			}
+		}
+	}
 
 
 	void SetupShopFacesPanel() {
@@ -445,6 +496,32 @@ public class UiManager : MonoBehaviour {
 					}
 				}
 				break;
+				case "ColorsPanel":
+					if(actives["Colors"] != null && shop_item_instance == actives["Colors"])
+						return;
+					else {
+						string[] x = shop_item_instance.name.Split(new String[] {"_"}, StringSplitOptions.None);
+						string name = x[0];
+						int cost = int.Parse(x[1]);	
+						bool unlock = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite != lock_sprite;
+						bool active = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite == tick_sprite;
+
+						if(!unlock && GameManager.self.coins >= cost) {
+							GameManager.self.coins -= cost;
+							unlock = true;
+						}
+						if(unlock) {
+							actives["Colors"].transform.Find("Status").GetComponent<Image>().sprite = null;
+							actives["Colors"].transform.Find("Cost").GetComponent<Text>().text = "";
+
+							actives["Colors"] = shop_item_instance;
+
+							actives["Colors"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+							actives["Colors"].transform.Find("Cost").GetComponent<Text>().text = "";
+							// SetTheme(name);
+						}
+					}
+					break;
 			default:
 				if(top_parent_panel.transform.parent.name == "FacesPanel") {
 					string key = shop_item_instance.transform.parent.name;
@@ -528,6 +605,10 @@ public class UiManager : MonoBehaviour {
 
 	public void OnThemesPanelButtonClick() {
 		GoToPanel(shop_panel, shop_themes_panel);
+	}
+
+	public void OnColorsPanelButtonClick() {
+		GoToPanel(shop_panel, shop_colors_panel);
 	}
 
 }

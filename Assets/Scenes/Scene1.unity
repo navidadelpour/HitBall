@@ -179,7 +179,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: 146}
+  m_AnchoredPosition: {x: -250, y: 146}
   m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &103509249
@@ -558,6 +558,7 @@ MonoBehaviour:
   shop_special_abilities_panel: {fileID: 0}
   shop_faces_panel: {fileID: 0}
   shop_themes_panel: {fileID: 0}
+  shop_colors_panel: {fileID: 0}
   game_over_panel: {fileID: 0}
   faces_header: {fileID: 0}
   faces_panel: {fileID: 0}
@@ -1467,7 +1468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: 0}
+  m_AnchoredPosition: {x: 250, y: -152}
   m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &516830022
@@ -1806,7 +1807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: -152}
+  m_AnchoredPosition: {x: -300, y: 0}
   m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &580983200
@@ -2380,7 +2381,7 @@ GameObject:
   - component: {fileID: 861068693}
   - component: {fileID: 861068692}
   m_Layer: 5
-  m_Name: ItemsPanelButton
+  m_Name: ColorsPanelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2445,7 +2446,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 133496660}
-        m_MethodName: OnItemsPanelButtonClick
+        m_MethodName: OnColorsPanelButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5341,7 +5342,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Items
+  m_Text: Colors
 --- !u!222 &1773903650
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5454,7 +5455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: 146}
+  m_AnchoredPosition: {x: 250, y: 146}
   m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1884638408
