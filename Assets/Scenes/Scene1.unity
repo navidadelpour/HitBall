@@ -559,6 +559,7 @@ MonoBehaviour:
   shop_faces_panel: {fileID: 0}
   game_over_panel: {fileID: 0}
   faces_header: {fileID: 0}
+  faces_panel: {fileID: 0}
   shop_item: {fileID: 0}
   shop_faces_item: {fileID: 0}
   active_special_ability: {fileID: 0}
@@ -635,6 +636,7 @@ MonoBehaviour:
   enemies_killed_in_combo: 0
   high_score: 0
   coins: 0
+  set_player_prefs: 0
   player_initial_position: {x: 0, y: 0, z: 0}
 --- !u!114 &133496666
 MonoBehaviour:

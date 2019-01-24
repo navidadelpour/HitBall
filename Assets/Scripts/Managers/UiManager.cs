@@ -300,6 +300,11 @@ public class UiManager : MonoBehaviour {
 						Quaternion.identity,
 						panel.transform
 					);
+					string[] x = sprite_array[index].name.Split(new String[] {"_"}, StringSplitOptions.None);
+					string name = x[0];
+					string cost = x[1];
+					shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = PlayerPrefs.GetInt(name) == 1 ? null : lock_sprite;
+					shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
 					shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[index];
 					shop_item_created.name = sprite_array[index].name;
 				}
