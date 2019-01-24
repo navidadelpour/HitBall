@@ -259,19 +259,23 @@ public class UiManager : MonoBehaviour {
 		if (shop_item_instance.name == active_special_ability.name || shop_item_instance.name == active_gun.name)
 			return;
 		shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-		GameObject parent_panel = GetShopItemPanel(shop_item_instance);
-		if(parent_panel.name == "SpecialAbilitiesPanel") {
-			active_special_ability.transform.Find("Status").GetComponent<Image>().sprite = null;
-			active_special_ability = shop_item_instance;
-			SpecialAbilityManager.self.current_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), shop_item_instance.name.ToUpper());
-			SetSpecialAbility();
-		} else {
-			active_gun.transform.Find("Status").GetComponent<Image>().sprite = null;
-			active_gun = shop_item_instance;
-			Guns gun = (Guns) System.Enum.Parse(typeof(Guns), shop_item_instance.name.ToUpper());
-			GunController.self.SetGun(gun);
-			SetGun();
-			SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
+		switch(GetShopItemPanel(shop_item_instance).name) {
+			case "SpecialAbilitiesPanel":
+				active_special_ability.transform.Find("Status").GetComponent<Image>().sprite = null;
+				active_special_ability = shop_item_instance;
+				SpecialAbilityManager.self.current_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), shop_item_instance.name.ToUpper());
+				SetSpecialAbility();
+				break;
+			case "GunsPanel":
+				active_gun.transform.Find("Status").GetComponent<Image>().sprite = null;
+				active_gun = shop_item_instance;
+				Guns gun = (Guns) System.Enum.Parse(typeof(Guns), shop_item_instance.name.ToUpper());
+				GunController.self.SetGun(gun);
+				SetGun();
+				SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
+				break;
+			default:
+				break;
 		}
 	}
 
