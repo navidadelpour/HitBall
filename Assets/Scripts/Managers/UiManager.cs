@@ -30,12 +30,14 @@ public class UiManager : MonoBehaviour {
 	public GameObject shop_guns_panel;
 	public GameObject shop_special_abilities_panel;
 	public GameObject shop_faces_panel;
+	public GameObject shop_themes_panel;
 	public GameObject game_over_panel;
 
 	public GameObject faces_header;
 	public GameObject faces_panel;
 	public GameObject shop_item;
 	public GameObject shop_faces_item;
+	public GameObject shop_themes_item;
 	private Vector3 shop_item_size;
 	private Vector3 shop_faces_item_size;
 	private float shop_margin = 30f;
@@ -63,6 +65,7 @@ public class UiManager : MonoBehaviour {
 		faces_panel = Resources.Load<GameObject>("Prefabs/Ui/Panel");
 		shop_item = Resources.Load<GameObject>("Prefabs/Ui/ShopItem");
 		shop_faces_item = Resources.Load<GameObject>("Prefabs/Ui/ShopFacesItem");
+		shop_themes_item = Resources.Load<GameObject>("Prefabs/Ui/ShopThemesItem");
 
 		shop_general_panel = GameObject.Find("ShopGeneralPanel");
 
@@ -75,6 +78,8 @@ public class UiManager : MonoBehaviour {
 		shop_special_abilities_panel.name = "SpecialAbilitiesPanel";
 		shop_faces_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
 		shop_faces_panel.name = "FacesPanel";
+		shop_themes_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_themes_panel.name = "ThemesPanel";
 
 		Destroy(shop_general_panel);
 
@@ -86,6 +91,7 @@ public class UiManager : MonoBehaviour {
 			shop_guns_panel,
 			shop_special_abilities_panel,
 			shop_faces_panel,
+			shop_themes_panel,
 			game_over_panel = GameObject.Find("GameOverPanel"),
 		});
 		menu_panel.SetActive(true);
@@ -93,9 +99,11 @@ public class UiManager : MonoBehaviour {
 		shop_item_size = Vector3.right * shop_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_item.GetComponent<RectTransform>().rect.height;
 		shop_faces_item_size = Vector3.right * shop_faces_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_faces_item.GetComponent<RectTransform>().rect.height;
 
-		foreach (string s in new string[] {"SpecialAbilities", "Guns", "Beards", "Hats"}) {
+		foreach (string s in new string[] {"SpecialAbilities", "Guns", "Beards", "Hats", "Themes"}) {
 			actives.Add(s, PlayerPrefs.GetInt(s) == 1 ? GameObject.Find(s) : null);
 		}
+
+		PlayerPrefs.SetInt("DefaultTheme", 2);
 	}
 
 	void Start () {
@@ -108,6 +116,7 @@ public class UiManager : MonoBehaviour {
 		SetupShopSpecialAbilityPanel();
 		SetupShopItemsPanel();
 		SetupShopFacesPanel();
+		SetupShopThemesPanel();
 	}
 	
 	void Update () {
@@ -260,6 +269,51 @@ public class UiManager : MonoBehaviour {
 		}
 	}
 
+	public void SetupShopThemesPanel() {
+		Transform content = Util.FindDeepChild(shop_themes_panel.transform, "Content").transform;
+		Sprite[] sprite_array = Resources.LoadAll<Sprite>("Textures/ThemesIcons");
+		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (sprite_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
+
+		int i = 0;
+		foreach (Sprite sprite in sprite_array) {
+			GameObject shop_item_created = Instantiate(
+				shop_themes_item,
+				content.transform.position +
+				Vector3.right * (shop_item_size.x / 2 + shop_margin) +
+				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
+				Quaternion.identity,
+				content.transform
+			);
+			string[] x = sprite.name.Split(new String[] {"_"}, StringSplitOptions.None);
+			string name = x[0];
+			string cost = x[1];
+			Sprite sprite_to_give;
+			switch(PlayerPrefs.GetInt(name)) {
+				case 1:
+					sprite_to_give = null;
+					cost = "";
+					break;
+				case 2:
+					sprite_to_give = tick_sprite;
+					cost = "";
+					actives["Themes"] = shop_item_created;
+					break;
+				default:
+					sprite_to_give = lock_sprite;
+					break;
+			}
+
+			shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
+			shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
+			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite;
+			shop_item_created.name = sprite.name;
+			i++;
+		}
+
+	}
+
+
+
 	void SetupShopFacesPanel() {
 		Transform content = Util.FindDeepChild(shop_faces_panel.transform, "Content").transform;
 		float content_size = 0f;
@@ -365,6 +419,32 @@ public class UiManager : MonoBehaviour {
 				SetGun();
 				SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
 				break;
+			case "ThemesPanel":
+				if(actives["Themes"] != null && shop_item_instance == actives["Themes"])
+					return;
+				else {
+					string[] x = shop_item_instance.name.Split(new String[] {"_"}, StringSplitOptions.None);
+					string name = x[0];
+					int cost = int.Parse(x[1]);
+					bool unlock = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite != lock_sprite;
+					bool active = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite == tick_sprite;
+
+					if(!unlock && GameManager.self.coins >= cost) {
+						GameManager.self.coins -= cost;
+						unlock = true;
+					}
+					if(unlock) {
+						actives["Themes"].transform.Find("Status").GetComponent<Image>().sprite = null;
+						actives["Themes"].transform.Find("Cost").GetComponent<Text>().text = "";
+
+						actives["Themes"] = shop_item_instance;
+
+						actives["Themes"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+						actives["Themes"].transform.Find("Cost").GetComponent<Text>().text = "";
+						// SetTheme(name);
+					}
+				}
+				break;
 			default:
 				if(top_parent_panel.transform.parent.name == "FacesPanel") {
 					string key = shop_item_instance.transform.parent.name;
@@ -444,6 +524,10 @@ public class UiManager : MonoBehaviour {
 	
 	public void OnFacesPanelButtonClick() {
 		GoToPanel(shop_panel, shop_faces_panel);
+	}
+
+	public void OnThemesPanelButtonClick() {
+		GoToPanel(shop_panel, shop_themes_panel);
 	}
 
 }
