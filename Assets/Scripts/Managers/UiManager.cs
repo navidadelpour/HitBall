@@ -40,10 +40,7 @@ public class UiManager : MonoBehaviour {
 	private Vector3 shop_faces_item_size;
 	private float shop_margin = 30f;
 
-	public GameObject active_special_ability;
-	public GameObject active_gun;
-	public GameObject active_beard;
-	
+	public Dictionary<string, GameObject> actives = new Dictionary<string, GameObject>();
 
 	void Awake() {
 		self = this;
@@ -95,6 +92,10 @@ public class UiManager : MonoBehaviour {
 
 		shop_item_size = Vector3.right * shop_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_item.GetComponent<RectTransform>().rect.height;
 		shop_faces_item_size = Vector3.right * shop_faces_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_faces_item.GetComponent<RectTransform>().rect.height;
+
+		foreach (string s in new string[] {"SpecialAbilities", "Guns", "Beards", "Hats"}) {
+			actives.Add(s, PlayerPrefs.GetInt(s) == 1 ? GameObject.Find(s) : null);
+		}
 	}
 
 	void Start () {
@@ -201,7 +202,7 @@ public class UiManager : MonoBehaviour {
 			shop_item_created.name = enum_item.ToString();
 			LockShopItem(shop_item_created, LevelManager.self.unlocks[enum_item]);
 			if(enum_item.ToString() == active_gun_name) {
-				active_gun = shop_item_created;
+				actives["Guns"] = shop_item_created;
 				shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 			}
 			i++;
@@ -230,7 +231,7 @@ public class UiManager : MonoBehaviour {
 			shop_item_created.name = enum_item.ToString();
 			LockShopItem(shop_item_created, LevelManager.self.unlocks[enum_item]);
 			if(enum_item.ToString() == active_special_ability_name) {
-				active_special_ability = shop_item_created;
+				actives["SpecialAbilities"] = shop_item_created;
 				shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 			}
 			i++;
@@ -275,7 +276,7 @@ public class UiManager : MonoBehaviour {
 				content.transform
 			);
 			panel.GetComponent<RectTransform>().sizeDelta = Vector2.up * ((sprite_array.Length / 3 + 1) * (shop_margin + shop_faces_item_size.y) + shop_margin + faces_header_size.y);
-			panel.name = postfixes[k] + "Panel";
+			panel.name = postfixes[k];
 
 			GameObject header = Instantiate(
 				faces_header,
@@ -342,21 +343,23 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void EnableShopItem(GameObject shop_item_instance) {
-		if (shop_item_instance.name == active_special_ability.name || shop_item_instance.name == active_gun.name)
-			return;
 		GameObject top_parent_panel = GetShopItemPanel(shop_item_instance);
 		switch(top_parent_panel.name) {
 			case "SpecialAbilitiesPanel":
+				if(shop_item_instance.name == actives["SpecialAbilities"].name)
+					return;
 				shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-				active_special_ability.transform.Find("Status").GetComponent<Image>().sprite = null;
-				active_special_ability = shop_item_instance;
+				actives["SpecialAbilities"].transform.Find("Status").GetComponent<Image>().sprite = null;
+				actives["SpecialAbilities"] = shop_item_instance;
 				SpecialAbilityManager.self.current_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), shop_item_instance.name.ToUpper());
 				SetSpecialAbility();
 				break;
 			case "GunsPanel":
+				if(shop_item_instance.name == actives["Guns"].name)
+					return;
 				shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-				active_gun.transform.Find("Status").GetComponent<Image>().sprite = null;
-				active_gun = shop_item_instance;
+				actives["Guns"].transform.Find("Status").GetComponent<Image>().sprite = null;
+				actives["Guns"] = shop_item_instance;
 				Guns gun = (Guns) System.Enum.Parse(typeof(Guns), shop_item_instance.name.ToUpper());
 				GunController.self.SetGun(gun);
 				SetGun();
@@ -364,39 +367,32 @@ public class UiManager : MonoBehaviour {
 				break;
 			default:
 				if(top_parent_panel.transform.parent.name == "FacesPanel") {
+					string key = shop_item_instance.transform.parent.name;
 					string[] x = shop_item_instance.name.Split(new String[] {"_"}, StringSplitOptions.None);
 					string name = x[0];
 					int cost = int.Parse(x[1]);
 					bool unlock = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite != lock_sprite;
 					bool active = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite == tick_sprite;
 
-					switch(shop_item_instance.transform.parent.name) {
-						case "BeardsPanel":
-							if(active_beard != null && shop_item_instance == active_beard) {
-								active_beard.transform.Find("Status").GetComponent<Image>().sprite = null;
-								active_beard.transform.Find("Cost").GetComponent<Text>().text = "";
-								active_beard = null;
-							} else {
-								if(!unlock && GameManager.self.coins >= cost) {
-									GameManager.self.coins -= cost;
-									unlock = true;
-								}
-								if(unlock) {
-									if(active_beard != null) {
-										active_beard.transform.Find("Status").GetComponent<Image>().sprite = null;
-										active_beard.transform.Find("Cost").GetComponent<Text>().text = "";
-									}
-									active_beard = shop_item_instance;
-
-									active_beard.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-									active_beard.transform.Find("Cost").GetComponent<Text>().text = "";
-								}
+					if(actives[key] != null && shop_item_instance == actives[key]) {
+						actives[key].transform.Find("Status").GetComponent<Image>().sprite = null;
+						actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
+						actives[key] = null;
+					} else {
+						if(!unlock && GameManager.self.coins >= cost) {
+							GameManager.self.coins -= cost;
+							unlock = true;
+						}
+						if(unlock) {
+							if(actives[key] != null) {
+								actives[key].transform.Find("Status").GetComponent<Image>().sprite = null;
+								actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
 							}
-							break;
-						case "HatsPanel":
-							break;
-						default:
-							break;
+							actives[key] = shop_item_instance;
+
+							actives[key].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+							actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
+						}
 					}
 				}
 				break;
