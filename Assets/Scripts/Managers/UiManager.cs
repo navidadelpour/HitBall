@@ -373,8 +373,9 @@ public class UiManager : MonoBehaviour {
 					int cost = int.Parse(x[1]);
 					bool unlock = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite != lock_sprite;
 					bool active = shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite == tick_sprite;
-
+					SpriteRenderer key_on_player = GameObject.Find("Player").transform.Find(key).gameObject.GetComponent<SpriteRenderer>();
 					if(actives[key] != null && shop_item_instance == actives[key]) {
+						key_on_player.sprite = null;
 						actives[key].transform.Find("Status").GetComponent<Image>().sprite = null;
 						actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
 						actives[key] = null;
@@ -392,6 +393,8 @@ public class UiManager : MonoBehaviour {
 
 							actives[key].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 							actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
+
+							key_on_player.sprite = shop_item_instance.transform.Find("Image").GetComponent<Image>().sprite;
 						}
 					}
 				}
