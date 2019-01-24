@@ -88,7 +88,7 @@ public class UiManager : MonoBehaviour {
 			shop_faces_panel,
 			game_over_panel = GameObject.Find("GameOverPanel"),
 		});
-		shop_faces_panel .SetActive(true);
+		menu_panel.SetActive(true);
 
 		shop_item_size = Vector3.right * shop_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_item.GetComponent<RectTransform>().rect.height;
 		shop_faces_item_size = Vector3.right * shop_faces_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_faces_item.GetComponent<RectTransform>().rect.height;
@@ -440,6 +440,10 @@ public class UiManager : MonoBehaviour {
 
 	public void OnSpecialAbilitiesPanelButtonClick() {
 		GoToPanel(shop_panel, shop_special_abilities_panel);
+	}
+	
+	public void OnFacesPanelButtonClick() {
+		GoToPanel(shop_panel, shop_faces_panel);
 	}
 
 }
