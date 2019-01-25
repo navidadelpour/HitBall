@@ -9,11 +9,11 @@ public class PlayerPrefsManager : MonoBehaviour {
     public int unlock = 1;
     public int active = 2;
 
-    public Dictionary<string, int> prefs = new Dictionary<string, int>();
+    public bool should_reset;
 
     void Awake() {
         self = this;
-        ResetPrefs();
+        Initialize();
     }
 
     void Start() {
@@ -21,31 +21,29 @@ public class PlayerPrefsManager : MonoBehaviour {
     }
 
     void Update() {
-
-    }
-
-    public void Load() {
-        ArrayList types = new ArrayList();
-        types.AddRange((Guns[]) Enum.GetValues(typeof(Guns)));
-        types.AddRange((SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility)));
-        foreach(System.Enum type in types) {
-            prefs.Add(type.ToString(), PlayerPrefs.GetInt(type.ToString()));
+        if(should_reset) {
+            ResetPrefs();
+            should_reset = false;
         }
-
-
-        // default values for first level of game
-        prefs.Add(SpecialAbility.LUCKY.ToString(), active);
-        prefs.Add(Guns.PISTOL.ToString(), active);
-
-        prefs.Add("DefaultTheme", unlock);
-        prefs.Add("RGBA(0, 0, 0, 0)", unlock);
     }
 
-    public void Save() {
+    public void Initialize() {
+        if(PlayerPrefs.GetInt("Initialized") == 0) {
+            ResetPrefs();
 
+            PlayerPrefs.SetInt(SpecialAbility.LUCKY.ToString(), active);
+            PlayerPrefs.SetInt(Guns.PISTOL.ToString(), active);
+
+            PlayerPrefs.SetInt("DefaultTheme", active);
+            PlayerPrefs.SetInt("RGBA(0, 0, 0, 0)", active);
+
+            PlayerPrefs.SetInt("Initialized", 1);
+        }
     }
 
     public void ResetPrefs() {
+        PlayerPrefs.SetInt("Initialized", 0);
+
         ArrayList types = new ArrayList();
         types.AddRange((Guns[]) Enum.GetValues(typeof(Guns)));
         types.AddRange((SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility)));
