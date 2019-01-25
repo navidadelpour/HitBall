@@ -40,4 +40,9 @@ public class Util {
 		return null;
 	}
 
+	public static void GoToPanel(GameObject from, GameObject to) {
+		from.SetActive(false);
+		to.SetActive(true);
+	}
+
 }
