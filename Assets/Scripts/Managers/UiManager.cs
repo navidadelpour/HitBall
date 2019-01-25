@@ -71,15 +71,15 @@ public class UiManager : MonoBehaviour {
 		shop_general_panel = GameObject.Find("ShopGeneralPanel");
 
 		shop_panel = GameObject.Find("ShopPanel");
-		shop_guns_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_guns_panel = Instantiate(shop_general_panel, GameObject.Find("Canvas").transform);
 		shop_guns_panel.name = "GunsPanel";
-		shop_special_abilities_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_special_abilities_panel = Instantiate(shop_general_panel, GameObject.Find("Canvas").transform);
 		shop_special_abilities_panel.name = "SpecialAbilitiesPanel";
-		shop_faces_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_faces_panel = Instantiate(shop_general_panel, GameObject.Find("Canvas").transform);
 		shop_faces_panel.name = "FacesPanel";
-		shop_themes_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_themes_panel = Instantiate(shop_general_panel, GameObject.Find("Canvas").transform);
 		shop_themes_panel.name = "ThemesPanel";
-		shop_colors_panel = Instantiate(shop_general_panel, Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+		shop_colors_panel = Instantiate(shop_general_panel, GameObject.Find("Canvas").transform);
 		shop_colors_panel.name = "ColorsPanel";
 
 		Destroy(shop_general_panel);
@@ -100,25 +100,25 @@ public class UiManager : MonoBehaviour {
 		shop_item_size = Vector3.right * shop_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_item.GetComponent<RectTransform>().rect.height;
 		shop_faces_item_size = Vector3.right * shop_faces_item.GetComponent<RectTransform>().rect.width + Vector3.up * shop_faces_item.GetComponent<RectTransform>().rect.height;
 
-		foreach (string s in new string[] {"SpecialAbilities", "Guns", "Beards", "Hats", "Themes", "Colors"}) {
-			actives.Add(s, PlayerPrefs.GetInt(s) == 1 ? GameObject.Find(s) : null);
-		}
+		// foreach (string s in new string[] {"SpecialAbilities", "Guns", "Beards", "Hats", "Themes", "Colors"}) {
+		// 	actives.Add(s, PlayerPrefs.GetInt(s) == PlayerPrefsManager.self.active ? GameObject.Find(s) : null);
+		// }
 
-		PlayerPrefs.SetInt("DefaultTheme", 2);
-		PlayerPrefs.SetInt("RGBA(0, 0, 0, 0)", 2);
+		// PlayerPrefs.SetInt("DefaultTheme", 2);
+		// PlayerPrefs.SetInt("RGBA(0, 0, 0, 0)", 2);
 	}
 
 	void Start () {
-		SetScore ();
-		SetHighScore();
-		SetCoins ();
-		SetCombo ();
         SetSpecialAbility();
 		SetupShopGunsPanel();
 		SetupShopSpecialAbilityPanel();
 		SetupShopFacesPanel();
 		SetupShopThemesPanel();
 		SetupShopColorsPanel();
+		SetScore ();
+		SetHighScore();
+		SetCoins ();
+		SetCombo ();
 	}
 	
 	void Update () {
@@ -191,15 +191,12 @@ public class UiManager : MonoBehaviour {
 	}
 
 	void SetupShopGunsPanel() {
-		Transform content = Util.FindDeepChild(shop_guns_panel.transform, "Content").transform;
 		Guns[] enum_array = (Guns[]) Enum.GetValues(typeof(Guns));
-		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
-		string active_gun_name = PlayerPrefs.GetString("active_gun");
-		if(active_gun_name == "")
-			active_gun_name = Guns.PISTOL.ToString();
 
-		int i = 0;
-		foreach (System.Enum enum_item in enum_array) {
+		Transform content = Util.FindDeepChild(shop_guns_panel.transform, "Content").transform;
+		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
+
+		for(int i = 0; i < enum_array.Length; i++) {
 			GameObject shop_item_created = Instantiate(
 				shop_item,
 				content.transform.position +
@@ -208,27 +205,37 @@ public class UiManager : MonoBehaviour {
 				Quaternion.identity,
 				content.transform
 			);
-			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Guns/" + enum_item.ToString().ToLower());
-			shop_item_created.GetComponent<Button>().interactable = LevelManager.self.unlocks[enum_item];
-			shop_item_created.name = enum_item.ToString();
-			LockShopItem(shop_item_created, LevelManager.self.unlocks[enum_item]);
-			if(enum_item.ToString() == active_gun_name) {
-				actives["Guns"] = shop_item_created;
-				shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+			
+			Sprite sprite_to_give = null;
+			bool interactable = true;
+			switch(PlayerPrefs.GetInt(enum_array[i].ToString())) {
+				case 0:
+					sprite_to_give = null;
+					break;
+				case 1:
+					sprite_to_give = lock_sprite;
+					interactable = false;
+					break;
+				case 2:
+					sprite_to_give = tick_sprite;
+					actives["SpecialAbilities"] = shop_item_created;
+					break;
 			}
-			i++;
+
+			shop_item_created.name = enum_array[i].ToString();
+			shop_item_created.GetComponent<Button>().interactable = interactable;
+			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Guns/" + enum_array[i].ToString().ToLower());
+			shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = sprite_to_give;
 		}
 	}
 
 	void SetupShopSpecialAbilityPanel() {
-		Transform content = Util.FindDeepChild(shop_special_abilities_panel.transform, "Content").transform;
 		SpecialAbility[] enum_array = (SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility));
+
+		Transform content = Util.FindDeepChild(shop_special_abilities_panel.transform, "Content").transform;
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
-		string active_special_ability_name = PlayerPrefs.GetString("active_special_ability");
-		if(active_special_ability_name == "")
-			active_special_ability_name = SpecialAbility.LUCKY.ToString();
-		int i = 0;
-		foreach (System.Enum enum_item in enum_array) {
+
+		for(int i = 0; i < enum_array.Length; i++) {
 			GameObject shop_item_created = Instantiate(
 				shop_item,
 				content.transform.position +
@@ -237,25 +244,37 @@ public class UiManager : MonoBehaviour {
 				Quaternion.identity,
 				content.transform
 			);
-			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/SpecialAbilities/" + enum_item.ToString().ToLower());
-			shop_item_created.GetComponent<Button>().interactable = LevelManager.self.unlocks[enum_item];
-			shop_item_created.name = enum_item.ToString();
-			LockShopItem(shop_item_created, LevelManager.self.unlocks[enum_item]);
-			if(enum_item.ToString() == active_special_ability_name) {
-				actives["SpecialAbilities"] = shop_item_created;
-				shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+			
+			Sprite sprite_to_give = null;
+			bool interactable = true;
+			switch(PlayerPrefs.GetInt(enum_array[i].ToString())) {
+				case 0:
+					sprite_to_give = null;
+					break;
+				case 1:
+					sprite_to_give = lock_sprite;
+					interactable = false;
+					break;
+				case 2:
+					sprite_to_give = tick_sprite;
+					actives["SpecialAbilities"] = shop_item_created;
+					break;
 			}
-			i++;
+
+			shop_item_created.name = enum_array[i].ToString();
+			shop_item_created.GetComponent<Button>().interactable = interactable;
+			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/SpecialAbilities/" + enum_array[i].ToString().ToLower());
+			shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = sprite_to_give;
 		}
 	}
 
 	public void SetupShopThemesPanel() {
-		Transform content = Util.FindDeepChild(shop_themes_panel.transform, "Content").transform;
 		Sprite[] sprite_array = Resources.LoadAll<Sprite>("Textures/ThemesIcons");
+
+		Transform content = Util.FindDeepChild(shop_themes_panel.transform, "Content").transform;
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (sprite_array.Length * (shop_margin + shop_item_size.y) + shop_margin);
 
-		int i = 0;
-		foreach (Sprite sprite in sprite_array) {
+		for(int i = 0; i < sprite_array.Length; i++) {
 			GameObject shop_item_created = Instantiate(
 				shop_themes_item,
 				content.transform.position +
@@ -264,37 +283,38 @@ public class UiManager : MonoBehaviour {
 				Quaternion.identity,
 				content.transform
 			);
-			string[] x = sprite.name.Split(new String[] {"_"}, StringSplitOptions.None);
+
+			string[] x = sprite_array[i].name.Split(new String[] {"_"}, StringSplitOptions.None);
 			string name = x[0];
 			string cost = x[1];
-			Sprite sprite_to_give;
+			Sprite sprite_to_give = null;
 			switch(PlayerPrefs.GetInt(name)) {
-				case 1:
+				case 0:
 					sprite_to_give = null;
 					cost = "";
+					break;
+				case 1:
+					sprite_to_give = lock_sprite;
 					break;
 				case 2:
 					sprite_to_give = tick_sprite;
 					cost = "";
 					actives["Themes"] = shop_item_created;
 					break;
-				default:
-					sprite_to_give = lock_sprite;
-					break;
 			}
 
+			shop_item_created.name = sprite_array[i].name;
+			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[i];
 			shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
 			shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
-			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite;
-			shop_item_created.name = sprite.name;
-			i++;
 		}
 
 	}
 
 	void SetupShopColorsPanel() {
-		Transform content = Util.FindDeepChild(shop_colors_panel.transform, "Content").transform;
 		Color32[] color_array = new Color32[] {Color.clear, Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
+
+		Transform content = Util.FindDeepChild(shop_colors_panel.transform, "Content").transform;
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * ((color_array.Length - 1) * (shop_margin + shop_item_size.y) + shop_margin);
 
 		for(int i = 0; i < color_array.Length / 3 + 1; i++) {
@@ -311,27 +331,28 @@ public class UiManager : MonoBehaviour {
 					Quaternion.identity,
 					content.transform
 				);
+
 				string name = color_array[index].ToString();
 				string cost = colors_cost + "";
-				Sprite sprite_to_give;
+				Sprite sprite_to_give = null;
 				switch(PlayerPrefs.GetInt(name)) {
-					case 1:
+					case 0:
 						sprite_to_give = null;
 						cost = "";
+						break;
+					case 1:
+						sprite_to_give = lock_sprite;
 						break;
 					case 2:
 						sprite_to_give = tick_sprite;
 						cost = "";
 						actives["Colors"] = shop_item_created;
 						break;
-					default:
-						sprite_to_give = lock_sprite;
-						break;
 				}
+				shop_item_created.name = color_array[index].ToString() + "_" + (cost == "" ? "0" : cost);
+				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().color = color_array[index];
 				shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
 				shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
-				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().color = color_array[index];
-				shop_item_created.name = color_array[index].ToString() + "_" + (cost == "" ? "0" : cost);
 				// SetPlayerColor(color_array[index]);
 			}
 		}
@@ -380,27 +401,30 @@ public class UiManager : MonoBehaviour {
 						Quaternion.identity,
 						panel.transform
 					);
+
 					string[] x = sprite_array[index].name.Split(new String[] {"_"}, StringSplitOptions.None);
 					string name = x[0];
 					string cost = x[1];
-					Sprite sprite_to_give;
+					Sprite sprite_to_give = null;
 					switch(PlayerPrefs.GetInt(name)) {
-						case 1:
+						case 0:
 							sprite_to_give = null;
 							cost = "";
+							break;
+						case 1:
+							sprite_to_give = lock_sprite;
 							break;
 						case 2:
 							sprite_to_give = tick_sprite;
 							cost = "";
-							break;
-						default:
-							sprite_to_give = lock_sprite;
+							actives[postfixes[k]] = shop_item_created;
 							break;
 					}
+					
+					shop_item_created.name = sprite_array[index].name;
+					shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[index];
 					shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
 					shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
-					shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[index];
-					shop_item_created.name = sprite_array[index].name;
 				}
 			}
 			content_size += panel.GetComponent<RectTransform>().sizeDelta.y;
@@ -408,20 +432,8 @@ public class UiManager : MonoBehaviour {
 		content.GetComponent<RectTransform>().sizeDelta = Vector3.up * content_size;
 	}
 
-
-	public void CheckForLevelUp() {
-		bool[] bools = new bool[] {true, true, true}; 
-		for(int i = 0; i < 3 - LevelManager.self.item_slots_unlocks; i++) {
-			bools[i] = false;
-		}
-
-		for(int i = 0; i < 3; i++) {
-			item_buttons[2 - i].gameObject.SetActive(bools[i]);
-		}
-	}
-
 	public void EnableShopItem(GameObject shop_item_instance) {
-		GameObject top_parent_panel = GetShopItemPanel(shop_item_instance);
+		GameObject top_parent_panel = shop_item_instance.transform.parent.parent.parent.parent.gameObject;
 		switch(top_parent_panel.name) {
 			case "SpecialAbilitiesPanel":
 				if(shop_item_instance.name == actives["SpecialAbilities"].name)
@@ -532,13 +544,17 @@ public class UiManager : MonoBehaviour {
 		}
 	}
 
-	public void LockShopItem(GameObject shop_item_instance, bool b) {
-		shop_item_instance.transform.Find("Status").GetComponent<Image>().sprite = b ? null : lock_sprite;
+	public void CheckForLevelUp() {
+		bool[] bools = new bool[] {true, true, true}; 
+		for(int i = 0; i < 3 - LevelManager.self.item_slots_unlocks; i++) {
+			bools[i] = false;
+		}
+
+		for(int i = 0; i < 3; i++) {
+			item_buttons[2 - i].gameObject.SetActive(bools[i]);
+		}
 	}
 
-	public GameObject GetShopItemPanel(GameObject shop_item_instance) {
-		return shop_item_instance.transform.parent.parent.parent.parent.gameObject;
-	}
 
 
 	// ================================== listeners ==================================
