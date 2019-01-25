@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class ShopItemButtonController : MonoBehaviour {
 
 	public void OnClick() {
-		UiManager.self.EnableShopItem(this.gameObject);
+		ShopManager.self.EnableShopItem(this.gameObject);
 	}
 
 }
