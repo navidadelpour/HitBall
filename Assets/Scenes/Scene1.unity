@@ -221,7 +221,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 133496660}
+      - m_Target: {fileID: 133496671}
         m_MethodName: OnSpecialAbilitiesPanelButtonClick
         m_Mode: 1
         m_Arguments:
@@ -508,6 +508,8 @@ GameObject:
   - component: {fileID: 133496660}
   - component: {fileID: 133496666}
   - component: {fileID: 133496667}
+  - component: {fileID: 133496670}
+  - component: {fileID: 133496671}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -547,24 +549,9 @@ MonoBehaviour:
   item_buttons: []
   special_ability_button: {fileID: 0}
   gun_image: {fileID: 0}
-  tick_sprite: {fileID: 0}
-  lock_sprite: {fileID: 0}
   menu_panel: {fileID: 0}
   game_panel: {fileID: 0}
-  shop_panel: {fileID: 0}
-  shop_general_panel: {fileID: 0}
-  shop_items_panel: {fileID: 0}
-  shop_guns_panel: {fileID: 0}
-  shop_special_abilities_panel: {fileID: 0}
-  shop_faces_panel: {fileID: 0}
-  shop_themes_panel: {fileID: 0}
-  shop_colors_panel: {fileID: 0}
   game_over_panel: {fileID: 0}
-  faces_header: {fileID: 0}
-  faces_panel: {fileID: 0}
-  shop_item: {fileID: 0}
-  shop_faces_item: {fileID: 0}
-  shop_themes_item: {fileID: 0}
 --- !u!114 &133496661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,6 +681,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item_slots_unlocks: 0
   current_level: 0
+--- !u!114 &133496670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 133496658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba034cc89bf445c41904707055827d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locked: 0
+  unlock: 1
+  active: 2
+--- !u!114 &133496671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 133496658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9b7ea9841726d408816bee5a66f42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shop_panel: {fileID: 0}
 --- !u!1 &187631592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,7 +1523,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 133496660}
+      - m_Target: {fileID: 133496671}
         m_MethodName: OnFacesPanelButtonClick
         m_Mode: 1
         m_Arguments:
@@ -1849,7 +1862,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 133496660}
+      - m_Target: {fileID: 133496671}
         m_MethodName: OnGunsPanelButtonClick
         m_Mode: 1
         m_Arguments:
@@ -2445,7 +2458,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 133496660}
+      - m_Target: {fileID: 133496671}
         m_MethodName: OnColorsPanelButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4589,7 +4602,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 133496660}
+      - m_Target: {fileID: 133496671}
         m_MethodName: OnShopButtonClick
         m_Mode: 1
         m_Arguments:
@@ -5497,7 +5510,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 133496660}
+      - m_Target: {fileID: 133496671}
         m_MethodName: OnThemesPanelButtonClick
         m_Mode: 1
         m_Arguments:
