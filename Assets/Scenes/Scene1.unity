@@ -601,7 +601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_jump_height: 0
-  player_coil_jump_height: 12
+  player_coil_jump_height: 0
   has_coil: 0
   should_remove_coil: 0
 --- !u!114 &133496665
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   available_items: []
-  available_items_size: 3
+  available_items_size: 0
 --- !u!114 &133496668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,8 +679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844e0da8d55c4744198adabe326569f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_slots_unlocks: 0
-  current_level: 0
+  item_slots_unlocks: 1
+  current_level: 1
 --- !u!114 &133496670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,6 +695,7 @@ MonoBehaviour:
   locked: 0
   unlock: 1
   active: 2
+  should_reset: 0
 --- !u!114 &133496671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2331,7 +2332,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: de93053ca6bc277469a29c3be66ffcd2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c1616353e17880144b3898ca002ecec9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

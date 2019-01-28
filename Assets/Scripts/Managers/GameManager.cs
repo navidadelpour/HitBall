@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour {
 		PlayerPrefs.SetInt("coins", coins);
 		PlayerPrefs.SetInt("exp", exp);
 
-		LevelManager.self.CheckForLevelUp();
+		// LevelManager.self.CheckForLevelUp();
 		InputManager.self.OnPauseButtonClick();
 		UiManager.self.GameOver();
 	}

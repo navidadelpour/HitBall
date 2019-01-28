@@ -37,14 +37,15 @@ public class LevelManager : MonoBehaviour {
 
     public void CheckForLevelUp() {
         if(GameManager.self.exp > Mathf.Pow(5, current_level)) {
-            current_level ++;
             if(levels[current_level - 1].ToString() == Item.NOTHING.ToString()) {
                 item_slots_unlocks ++;
-                UiManager.self.CheckForLevelUp();
             } else {
                 PlayerPrefs.SetInt(levels[current_level - 1].ToString(), 0);
             }
+            current_level ++;
             CheckForLevelUp();
+        } else {
+            UiManager.self.CheckForLevelUp();
         }
     }
 
