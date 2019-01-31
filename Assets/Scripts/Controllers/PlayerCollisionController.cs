@@ -59,11 +59,13 @@ public class PlayerCollisionController : MonoBehaviour {
 					else
 						GameManager.self.GameOver();
 				}
+				AudioManager.self.Play("player_die");
 				break;
 
 			case "Coin":
 				Destroy (other.gameObject);
 				GameManager.self.IncreamentCoins();
+				AudioManager.self.Play("coin");
 				break;
 
 			case "Hole":

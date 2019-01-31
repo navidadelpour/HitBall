@@ -55,6 +55,7 @@ public class GunController : MonoBehaviour {
 
             current_ammo--;
             UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
+            AudioManager.self.Play("gun_shot");
         }
     }
 
