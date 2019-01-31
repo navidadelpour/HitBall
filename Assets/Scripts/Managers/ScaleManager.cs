@@ -41,11 +41,11 @@ public class ScaleManager : MonoBehaviour {
         // setting background height and width to match the area that camera showes
         height = main_camera.orthographicSize;
         width = height * Screen.width / Screen.height;
-        background.transform.localScale = new Vector3(width * 2.0f / 10, 1, height * 2.0f / 10);
+        // background.transform.localScale = new Vector3(width * 2.0f / 10, 1, height * 2.0f / 10);
 
         // setting the position
         Vector3 offset = -ground_offset + grounds.transform.position + new Vector3 (width, height, 0);
-        background.transform.position = offset;
+        // background.transform.position = offset;
         main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z;
 
         // adding an amount to size as the time goes by...
