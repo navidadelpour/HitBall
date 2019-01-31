@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour {
 			PlayerPrefs.SetInt("high_score", high_score);
 
 			LevelManager.self.CheckForLevelUp();
+			SettingManager.self.Save();
 		}
 		InputManager.self.OnPauseButtonClick();
 		UiManager.self.GameOver();

@@ -5,12 +5,16 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour {
 
 	public static AudioManager self;
+
+    private AudioSource main_music;
     private AudioSource coin;
     private AudioSource player_die;
     private AudioSource gun_shot;
 	
 	void Awake() {
 		self = this;
+
+        main_music = GameObject.Find("MainMusic").GetComponent<AudioSource>();
 
         coin = GameObject.Find("Coin").GetComponent<AudioSource>();
         player_die = GameObject.Find("PlayerDie").GetComponent<AudioSource>();
@@ -22,10 +26,12 @@ public class AudioManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		
+        main_music.mute = !SettingManager.self.has_music;
 	}
 
     public void Play(string name) {
+        if(!SettingManager.self.has_sfx)
+            return;
         AudioSource to_play = null;
         switch(name) {
             case "coin":

@@ -75,6 +75,9 @@ public class PlayerPrefsManager : MonoBehaviour {
 		PlayerPrefs.SetInt("exp", 0);
         PlayerPrefs.SetInt("high_score", 0);
 
+        PlayerPrefs.SetInt("has_music", 1);
+        PlayerPrefs.SetInt("has_sfx", 1);
+        PlayerPrefs.SetInt("night_mode", 0);
     }
 
 }
