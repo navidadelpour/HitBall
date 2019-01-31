@@ -73,7 +73,7 @@ public class UiManager : MonoBehaviour {
 	// ================================== ui changes ==================================
 
 	public void SetHighScore() {
-		high_score_text.text = "HIGH SCORE: " + GameManager.self.high_score; 
+		high_score_text.text = GameManager.self.high_score + ""; 
 	}
 		
 	public void SetScore() {
