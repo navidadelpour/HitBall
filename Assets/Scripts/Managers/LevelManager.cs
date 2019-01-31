@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     public int item_slots_unlocks;
     public System.Enum[] levels;
     public int current_level;
+    private int[] item_slot_levels = new int[] {2, };
 
     void Awake() {
         self = this;
@@ -46,6 +47,7 @@ public class LevelManager : MonoBehaviour {
                 PlayerPrefs.SetInt(levels[current_level - 1].ToString(), 0);
             }
             current_level ++;
+            PlayerPrefs.SetInt("current_level", current_level);
             CheckForLevelUp();
         } else {
             UiManager.self.HandleItemSlots();
