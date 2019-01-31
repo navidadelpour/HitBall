@@ -7,9 +7,9 @@ public class LevelManager : MonoBehaviour {
     public static LevelManager self;
 
     public Dictionary<System.Enum, bool> unlocks;
-    public int item_slots_unlocks = 1;
+    public int item_slots_unlocks;
     public System.Enum[] levels;
-    public int current_level = 1;
+    public int current_level;
 
     void Awake() {
         self = this;
@@ -25,10 +25,12 @@ public class LevelManager : MonoBehaviour {
             SpecialAbility.RANDOMER,
         };
 
+        current_level = PlayerPrefs.GetInt("current_level");
+        item_slots_unlocks = PlayerPrefs.GetInt("item_slots_unlocks");
     }
 
     void Start() {
-        CheckForLevelUp();
+
     }
 
     void Update() {
@@ -39,13 +41,14 @@ public class LevelManager : MonoBehaviour {
         if(GameManager.self.exp > Mathf.Pow(5, current_level)) {
             if(levels[current_level - 1].ToString() == Item.NOTHING.ToString()) {
                 item_slots_unlocks ++;
+                PlayerPrefs.SetInt("item_slots_unlocks", item_slots_unlocks);
             } else {
                 PlayerPrefs.SetInt(levels[current_level - 1].ToString(), 0);
             }
             current_level ++;
             CheckForLevelUp();
         } else {
-            UiManager.self.CheckForLevelUp();
+            UiManager.self.HandleItemSlots();
         }
     }
 

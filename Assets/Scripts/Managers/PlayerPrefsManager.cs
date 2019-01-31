@@ -10,6 +10,7 @@ public class PlayerPrefsManager : MonoBehaviour {
     public int active = 2;
 
     public bool should_reset;
+    public bool reseted;
 
     void Awake() {
         self = this;
@@ -24,6 +25,7 @@ public class PlayerPrefsManager : MonoBehaviour {
         if(should_reset) {
             ResetPrefs();
             should_reset = false;
+            reseted = true;
         }
     }
 
@@ -66,6 +68,12 @@ public class PlayerPrefsManager : MonoBehaviour {
         foreach(Color32 color in color_array) {
             PlayerPrefs.SetInt(color.ToString(), unlock);
         }
+
+        PlayerPrefs.SetInt("current_level", 1);
+        PlayerPrefs.SetInt("item_slots_unlocks", 1);
+        PlayerPrefs.SetInt("coins", 0);
+		PlayerPrefs.SetInt("exp", 0);
+        PlayerPrefs.SetInt("high_score", 0);
 
     }
 

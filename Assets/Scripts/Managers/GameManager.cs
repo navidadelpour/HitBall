@@ -16,8 +16,6 @@ public class GameManager : MonoBehaviour {
 	public int high_score;
 	public int coins;
 
-	public bool set_player_prefs;
-
 	public Vector3 player_initial_position;
 
 	void Awake() {
@@ -34,19 +32,20 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(set_player_prefs) {
-			ResetPlayerPrefs();
-		}
+
 	}
 
 	public void GameOver() {
 		SetHighScore();
 		IncreamentExp();
 
-		PlayerPrefs.SetInt("coins", coins);
-		PlayerPrefs.SetInt("exp", exp);
+		if(!PlayerPrefsManager.self.reseted) {
+			PlayerPrefs.SetInt("coins", coins);
+			PlayerPrefs.SetInt("exp", exp);
+			PlayerPrefs.SetInt("high_score", high_score);
 
-		// LevelManager.self.CheckForLevelUp();
+			LevelManager.self.CheckForLevelUp();
+		}
 		InputManager.self.OnPauseButtonClick();
 		UiManager.self.GameOver();
 	}
@@ -54,7 +53,6 @@ public class GameManager : MonoBehaviour {
 	public void SetHighScore() {
 		if(score > high_score) {
 			high_score = score;
-			PlayerPrefs.SetInt("high_score", high_score);
 			UiManager.self.SetHighScore();
 		}
 	}
@@ -92,21 +90,8 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void ResetPlayerPrefs() {
-		PlayerPrefs.SetInt("high_score", 0);
-		PlayerPrefs.SetInt("coins", 0);
-		PlayerPrefs.SetInt("exp", 0);
-
-		ArrayList types = new ArrayList();
-        types.AddRange((Guns[]) System.Enum.GetValues(typeof(Guns)));
-        types.AddRange((SpecialAbility[]) System.Enum.GetValues(typeof(SpecialAbility)));
-        foreach(System.Enum type in types) {
-			PlayerPrefs.SetInt(type.ToString() + "_unlocks", 0);
-        }
-
-
-		PlayerPrefs.SetString("active_gun", Guns.PISTOL.ToString());
-		PlayerPrefs.SetString("active_special_ability", Guns.PISTOL.ToString());
+	private void OnApplicationQuit() {
+		GameOver();
 	}
 
 }

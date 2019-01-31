@@ -61,6 +61,7 @@ public class UiManager : MonoBehaviour {
 		SetHighScore();
 		SetCoins ();
 		SetCombo ();
+		HandleItemSlots();
 	}
 	
 	void Update () {
@@ -128,7 +129,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 
-	public void CheckForLevelUp() {
+	public void HandleItemSlots() {
 		bool[] bools = new bool[] {true, true, true}; 
 		for(int i = 0; i < 3 - LevelManager.self.item_slots_unlocks; i++) {
 			bools[i] = false;
