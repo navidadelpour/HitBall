@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		if(ItemManager.self.actives[Item.TELEPORT]) {
-			transform.position += Vector3.down * 10f;
+			transform.position += Vector3.down * 20f;
 			enabled = false;
 		}
 	}

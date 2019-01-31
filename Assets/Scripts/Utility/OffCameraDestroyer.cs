@@ -6,7 +6,7 @@ public class OffCameraDestroyer : MonoBehaviour {
 
 	private BoxCollider2D box_collider;
 	private float grounds_position_x;
-	private int offset = 2;
+	private int offset = 1;
 
 	void Awake() {
 		box_collider = transform.GetComponent<BoxCollider2D> ();

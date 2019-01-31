@@ -5,7 +5,7 @@ using UnityEngine;
 public class PortalController : MonoBehaviour {
 
     private GameObject player;
-    private float threshold = .2f;
+    private float threshold = .5f;
     
 	void Awake() {
         player = GameObject.Find("Player");
