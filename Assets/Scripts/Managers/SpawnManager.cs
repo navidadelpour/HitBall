@@ -192,9 +192,8 @@ public class SpawnManager : MonoBehaviour {
 	private void CreateBlock() {
 		Instantiate(
 			block_prefab,
-			last_ground.transform.position + Vector3.up * ground_size_y / 2 + Vector3.up * Random.Range(1f, 6f),
-			Quaternion.identity,
-			last_ground.transform
+			last_ground.transform.position + Vector3.up * ground_size_y / 2 + Vector3.up * Random.Range(2f, 5f),
+			Quaternion.identity
 		);
 		last_item_spawned = Things.BLOCK;
 	}

@@ -17,7 +17,7 @@ public class OppositeMovement : MonoBehaviour {
 	
 	void FixedUpdate () {
 		if(GameManager.self.started)
-			body.velocity = Vector2.left * SpeedManager.self.game_speed;
+			body.velocity = Vector2.left * SpeedManager.self.game_speed * (this.tag == "Block" ? .5f : 1);
 	}
 
 }

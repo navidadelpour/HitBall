@@ -6,6 +6,7 @@ public class OffCameraDestroyer : MonoBehaviour {
 
 	private BoxCollider2D box_collider;
 	private float grounds_position_x;
+	private int offset = 2;
 
 	void Awake() {
 		box_collider = transform.GetComponent<BoxCollider2D> ();
@@ -17,7 +18,7 @@ public class OffCameraDestroyer : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (transform.position.x < -box_collider.size.x * transform.lossyScale.x + grounds_position_x) {
+		if (transform.position.x < -box_collider.size.x * transform.lossyScale.x + grounds_position_x - offset) {
 			this.name = "DestroyedObject";
 			Destroy (this.gameObject);
 			switch (this.tag) {
@@ -26,9 +27,10 @@ public class OffCameraDestroyer : MonoBehaviour {
 				GameManager.self.IncreamentScore ();
 				SpawnManager.self.Spawn();
 				break;
-			}
-			if(this.transform.childCount > 0 && this.transform.GetChild(0).tag == "Block")
+			case "Block":
 				GameManager.self.ResetCombo();
+				break;
+			}
 		}
 	}
 
