@@ -21,6 +21,8 @@ public class ScaleManager : MonoBehaviour {
 	private GameObject ground_prefab;
     private Vector3 ground_offset;
 
+    private GameObject player;
+
 	void Awake() {
 		self = this;
 
@@ -31,6 +33,8 @@ public class ScaleManager : MonoBehaviour {
         ground_offset = ground_prefab.GetComponent<BoxCollider2D> ().size * (Vector2) ground_prefab.transform.lossyScale / 2;
         camera_normal_size = main_camera.orthographicSize;
         camera_size = camera_normal_size;
+
+        player = GameObject.Find("Player");
 	}
 
 	void Start () {
@@ -51,6 +55,13 @@ public class ScaleManager : MonoBehaviour {
         // adding an amount to size as the time goes by...
         if(camera_normal_size < camera_max_size && GameManager.self.started) 
             camera_normal_size += size_increase_amount;
+
+        // player position
+        player.transform.position = new Vector3(
+            offset.x * 2 / 6,
+            player.transform.position.y,
+            player.transform.position.z
+        );
 
 		if(!ItemManager.self.actives[Item.WINGS]) {
             bool has_zoom = ItemManager.self.actives[Item.ZOOM];
