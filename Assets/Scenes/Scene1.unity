@@ -135,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 696718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 291305304}
@@ -660,6 +660,7 @@ GameObject:
   - component: {fileID: 133496667}
   - component: {fileID: 133496670}
   - component: {fileID: 133496671}
+  - component: {fileID: 133496672}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -858,6 +859,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shop_panel: {fileID: 0}
+--- !u!114 &133496672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 133496658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a408b8424308d144a97afcb0b03ba48e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dust: {fileID: 1073048122223482, guid: 0c8340e0fa421904e88ccd0fcafd864f, type: 2}
 --- !u!1 &187631592
 GameObject:
   m_ObjectHideFlags: 0
@@ -6327,4 +6340,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7913f4f8d355c854faf2671333053fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collided: 0

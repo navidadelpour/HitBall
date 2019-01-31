@@ -6,7 +6,7 @@ public class PlayerCollisionController : MonoBehaviour {
 
 	public static PlayerCollisionController self;
 	private bool is_collided;
-	public int collided = 0;
+
 	void Awake() {
 		self = this;
 	}
@@ -20,24 +20,23 @@ public class PlayerCollisionController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		if(!is_collided)
-			if (other.gameObject.tag == "Ground") {
-				ItemManager.self.actives[Item.WINGS] = false;
-				ItemManager.self.actives[Item.WEB] = false;
-				HeightManager.self.SetHeight ();
-				PlayerMovement.self.Jump ();
-				if(ItemManager.self.actives[Item.HIGH_JUMP]) {
-					HeightManager.self.has_coil = true;
-					HeightManager.self.should_remove_coil = false;
-					ItemManager.self.actives[Item.HIGH_JUMP] = false;
-				}
-				if(ItemManager.self.actives[Item.GROUND_DIGGER]) {
-					transform.position += Vector3.down * 10f;
-					PlayerMovement.self.enabled = false;
-				}
-				collided += 1;
-				is_collided = true;
+		if (!is_collided && other.gameObject.tag == "Ground") {
+			ItemManager.self.actives[Item.WINGS] = false;
+			ItemManager.self.actives[Item.WEB] = false;
+			HeightManager.self.SetHeight ();
+			PlayerMovement.self.Jump ();
+			ParticleManager.self.Spawn("dust", this.transform.position);
+			if(ItemManager.self.actives[Item.HIGH_JUMP]) {
+				HeightManager.self.has_coil = true;
+				HeightManager.self.should_remove_coil = false;
+				ItemManager.self.actives[Item.HIGH_JUMP] = false;
 			}
+			if(ItemManager.self.actives[Item.GROUND_DIGGER]) {
+				transform.position += Vector3.down * 10f;
+				PlayerMovement.self.enabled = false;
+			}
+			is_collided = true;
+		}
 	}
 
 	void CheckForCollision() {
