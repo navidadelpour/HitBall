@@ -996,6 +996,19 @@ MonoBehaviour:
   active: 2
   should_reset: 0
   reseted: 0
+  colors:
+  - serializedVersion: 2
+    rgba: 4294967295
+  - serializedVersion: 2
+    rgba: 4278190335
+  - serializedVersion: 2
+    rgba: 4294901760
+  - serializedVersion: 2
+    rgba: 4278255360
+  - serializedVersion: 2
+    rgba: 4278512639
+  - serializedVersion: 2
+    rgba: 4294902015
 --- !u!114 &133496671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1045,6 +1058,7 @@ MonoBehaviour:
   setting_panel: {fileID: 0}
   has_music: 0
   has_sfx: 0
+  has_night_mode: 0
 --- !u!1 &187631592
 GameObject:
   m_ObjectHideFlags: 0
@@ -4469,7 +4483,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0 / 7
+  m_Text: 0 / 0
 --- !u!222 &1043004896
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4722,7 +4736,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1de3e28c7d3dbcd4da9e6f887d88a8ef, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

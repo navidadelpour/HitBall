@@ -56,7 +56,6 @@ public class UiManager : MonoBehaviour {
 		});
 		menu_panel.SetActive(true);
 
-        SetSpecialAbility();
 		SetScore ();
 		SetHighScore();
 		SetCoins ();

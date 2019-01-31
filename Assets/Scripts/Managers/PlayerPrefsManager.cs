@@ -11,6 +11,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
     public bool should_reset;
     public bool reseted;
+	public Color32[] colors = new Color32[] {Color.white, Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
 
     void Awake() {
         self = this;
@@ -37,7 +38,7 @@ public class PlayerPrefsManager : MonoBehaviour {
             PlayerPrefs.SetInt(Guns.PISTOL.ToString(), active);
 
             PlayerPrefs.SetInt("DefaultTheme", active);
-            PlayerPrefs.SetInt("RGBA(0, 0, 0, 0)", active);
+            PlayerPrefs.SetInt("0.Color", active);
 
             PlayerPrefs.SetInt("Initialized", 1);
         }
@@ -64,9 +65,8 @@ public class PlayerPrefsManager : MonoBehaviour {
             }
         }
 
-        Color32[] color_array = new Color32[] {Color.clear, Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
-        foreach(Color32 color in color_array) {
-            PlayerPrefs.SetInt(color.ToString(), unlock);
+        for(int i = 0; i < colors.Length; i++) {
+            PlayerPrefs.SetInt(i + ".Color", unlock);
         }
 
         PlayerPrefs.SetInt("current_level", 1);

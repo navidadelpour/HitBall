@@ -112,7 +112,8 @@ public class ShopManager : MonoBehaviour {
 					break;
 				case 2:
 					sprite_to_give = tick_sprite;
-					actives["SpecialAbilities"] = shop_item_created;
+					actives["Guns"] = shop_item_created;
+					SetGun(enum_array[i].ToString());
 					break;
 			}
 
@@ -152,6 +153,7 @@ public class ShopManager : MonoBehaviour {
 				case 2:
 					sprite_to_give = tick_sprite;
 					actives["SpecialAbilities"] = shop_item_created;
+					SetSpecialAbility(enum_array[i].ToString());
 					break;
 			}
 
@@ -194,6 +196,7 @@ public class ShopManager : MonoBehaviour {
 					sprite_to_give = tick_sprite;
 					cost = "";
 					actives["Themes"] = shop_item_created;
+					SetTheme(name);
 					break;
 			}
 
@@ -206,7 +209,7 @@ public class ShopManager : MonoBehaviour {
 	}
 
 	void SetupShopColorsPanel() {
-		Color32[] color_array = new Color32[] {Color.clear, Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
+		Color32[] color_array = PlayerPrefsManager.self.colors;
 
 		Transform content = Util.FindDeepChild(shop_colors_panel.transform, "Content").transform;
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * ((color_array.Length - 1) * (shop_margin + shop_item_size.y) + shop_margin);
@@ -226,7 +229,7 @@ public class ShopManager : MonoBehaviour {
 					content.transform
 				);
 
-				string name = color_array[index].ToString();
+				string name = index + ".Color";
 				string cost = colors_cost + "";
 				Sprite sprite_to_give = null;
 				switch(PlayerPrefs.GetInt(name)) {
@@ -241,13 +244,13 @@ public class ShopManager : MonoBehaviour {
 						sprite_to_give = tick_sprite;
 						cost = "";
 						actives["Colors"] = shop_item_created;
+						SetColor(index);
 						break;
 				}
-				shop_item_created.name = color_array[index].ToString() + "_" + (cost == "" ? "0" : cost);
+				shop_item_created.name = name + "_" + (cost == "" ? "0" : cost);
 				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().color = color_array[index];
 				shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
 				shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
-				// SetPlayerColor(color_array[index]);
 			}
 		}
 	}
@@ -312,6 +315,7 @@ public class ShopManager : MonoBehaviour {
 							sprite_to_give = tick_sprite;
 							cost = "";
 							actives[postfixes[k]] = shop_item_created;
+							SetFace(postfixes[k], sprite_array[index].name);
 							break;
 					}
 					
@@ -326,28 +330,59 @@ public class ShopManager : MonoBehaviour {
 		content.GetComponent<RectTransform>().sizeDelta = Vector3.up * content_size;
 	}
 
+	private void SetSpecialAbility(string name) {
+		SpecialAbility special_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), name.ToUpper());
+		SpecialAbilityManager.self.current_ability = special_ability;
+		UiManager.self.SetSpecialAbility();
+	}
+
+	private void SetGun(string name) {
+		Guns gun = (Guns) System.Enum.Parse(typeof(Guns), name.ToUpper());
+		GunController.self.SetGun(gun);
+		UiManager.self.SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
+		UiManager.self.SetGun();
+	}
+
+	private void SetTheme(string name) {
+
+	}
+
+	private void SetColor(int index) {
+		SpriteRenderer player_renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+		player_renderer.color = PlayerPrefsManager.self.colors[index];
+	}
+
+	private void SetFace(string key, string name) {
+		SpriteRenderer key_on_player = GameObject.Find("Player").transform.Find(key).GetComponent<SpriteRenderer>();
+		if(name == null)
+			key_on_player.sprite = null;
+		else
+			key_on_player.sprite = Resources.Load<Sprite>("Textures/Faces/" + key + "/" + name);
+
+	}
+
 	public void EnableShopItem(GameObject shop_item_instance) {
 		GameObject top_parent_panel = shop_item_instance.transform.parent.parent.parent.parent.gameObject;
 		switch(top_parent_panel.name) {
 			case "SpecialAbilitiesPanel":
 				if(shop_item_instance == actives["SpecialAbilities"])
 					return;
+				PlayerPrefs.SetInt(actives["SpecialAbilities"].name, 0);
 				actives["SpecialAbilities"].transform.Find("Status").GetComponent<Image>().sprite = null;
 				actives["SpecialAbilities"] = shop_item_instance;
 				actives["SpecialAbilities"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-				// SpecialAbilityManager.self.current_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), shop_item_instance.name.ToUpper());
-				// SetSpecialAbility();
+				PlayerPrefs.SetInt(actives["SpecialAbilities"].name, 2);
+				SetSpecialAbility(actives["SpecialAbilities"].name);
 				break;
 			case "GunsPanel":
 				if(shop_item_instance == actives["Guns"])
 					return;
+				PlayerPrefs.SetInt(actives["Guns"].name, 0);
 				actives["Guns"].transform.Find("Status").GetComponent<Image>().sprite = null;
 				actives["Guns"] = shop_item_instance;
 				actives["Guns"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-				// Guns gun = (Guns) System.Enum.Parse(typeof(Guns), shop_item_instance.name.ToUpper());
-				// GunController.self.SetGun(gun);
-				// SetGun();
-				// SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
+				PlayerPrefs.SetInt(actives["Guns"].name, 2);
+				SetGun(actives["Guns"].name);
 				break;
 			case "ThemesPanel":
 				if(shop_item_instance == actives["Themes"])
@@ -363,12 +398,14 @@ public class ShopManager : MonoBehaviour {
                         unlock = true;
 					}
                     if(unlock) {
+						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
 						actives["Themes"].transform.Find("Status").GetComponent<Image>().sprite = null;
 						actives["Themes"].transform.Find("Cost").GetComponent<Text>().text = "";
 						actives["Themes"] = shop_item_instance;
 						actives["Themes"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 						actives["Themes"].transform.Find("Cost").GetComponent<Text>().text = "";
-						// SetTheme(name);
+						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
+						SetTheme(name);
                     }
 				}
 				break;
@@ -386,12 +423,14 @@ public class ShopManager : MonoBehaviour {
 							unlock = true;
 						}
 						if(unlock) {
+							PlayerPrefs.SetInt(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
 							actives["Colors"].transform.Find("Status").GetComponent<Image>().sprite = null;
 							actives["Colors"].transform.Find("Cost").GetComponent<Text>().text = "";
 							actives["Colors"] = shop_item_instance;
 							actives["Colors"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 							actives["Colors"].transform.Find("Cost").GetComponent<Text>().text = "";
-							// SetTheme(name);
+							PlayerPrefs.SetInt(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
+							SetColor(int.Parse(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0].Split(new String[] {"."}, StringSplitOptions.None)[0]));
 						}
 					}
 					break;
@@ -404,27 +443,28 @@ public class ShopManager : MonoBehaviour {
 					int cost = int.Parse(x[1]);
 					bool unlock = PlayerPrefs.GetInt(name) != 1;
 
-					// SpriteRenderer key_on_player = GameObject.Find("Player").transform.Find(key).gameObject.GetComponent<SpriteRenderer>();
-
-					if(actives[key] != null && shop_item_instance == actives[key]) {
+					if(actives.ContainsKey(key) && shop_item_instance == actives[key]) {
+						PlayerPrefs.SetInt(actives[key].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
 						actives[key].transform.Find("Status").GetComponent<Image>().sprite = null;
 						actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
 						actives[key] = null;
+						SetFace(key, null);
 					} else {
 						if(!unlock && GameManager.self.coins >= cost) {
 							GameManager.self.coins -= cost;
 							unlock = true;
 						}
 						if(unlock) {
-							if(actives[key] != null) {
+							if(actives.ContainsKey(key) && actives[key] != null) {
+								PlayerPrefs.SetInt(actives[key].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
 								actives[key].transform.Find("Status").GetComponent<Image>().sprite = null;
 								actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
 							}
 							actives[key] = shop_item_instance;
 							actives[key].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 							actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
-
-							// key_on_player.sprite = shop_item_instance.transform.Find("Image").GetComponent<Image>().sprite;
+							PlayerPrefs.SetInt(actives[key].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
+							SetFace(key, actives[key].name);
 						}
 					}
 				}
