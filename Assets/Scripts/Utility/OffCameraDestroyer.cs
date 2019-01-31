@@ -27,6 +27,8 @@ public class OffCameraDestroyer : MonoBehaviour {
 				SpawnManager.self.Spawn();
 				break;
 			}
+			if(this.transform.childCount > 0 && this.transform.GetChild(0).tag == "Block")
+				GameManager.self.ResetCombo();
 		}
 	}
 

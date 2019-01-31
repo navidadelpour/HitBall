@@ -34,11 +34,6 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(((int) Mathf.Floor(Mathf.Log(enemies_killed_in_combo / 2 < 1 ? 1 : enemies_killed_in_combo / 2, 2))) + 1 > combo) {
-			combo += 1;
-			UiManager.self.SetCombo();
-		}
-
 		if(set_player_prefs) {
 			ResetPlayerPrefs();
 		}
@@ -86,6 +81,15 @@ public class GameManager : MonoBehaviour {
 	public void ResetCombo() {
 		enemies_killed_in_combo = 0;
 		combo = 1;
+		UiManager.self.SetCombo();
+	}
+
+	public void HandleEnemyKill() {
+		enemies_killed_in_combo++;
+		if(((int) Mathf.Floor(Mathf.Log(enemies_killed_in_combo / 2 < 1 ? 1 : enemies_killed_in_combo / 2, 2))) + 1 > combo) {
+			combo += 1;
+			UiManager.self.SetCombo();
+		}
 	}
 
 	public void ResetPlayerPrefs() {

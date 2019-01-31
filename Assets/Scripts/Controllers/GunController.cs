@@ -48,7 +48,7 @@ public class GunController : MonoBehaviour {
             if(hit.collider != null && !killed) {
                 if(hit.collider.tag == "Block" || hit.collider.tag == "Arrow"){
                     Destroy(hit.collider.gameObject);
-                    GameManager.self.enemies_killed_in_combo ++;
+                    GameManager.self.HandleEnemyKill();
                     killed = true;
                 }
             }
