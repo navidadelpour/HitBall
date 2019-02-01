@@ -145,14 +145,17 @@ public class UiManager : MonoBehaviour {
 
 	public void OnPlayButtonClick() {
 		Util.GoToPanel(menu_panel, game_panel);
+		AudioManager.self.Play("button");
 	}
 
 	public void OnBackToMenuButtonClick() {
 		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
+		AudioManager.self.Play("button");
 	}
 
 	public void OnBackToShopButtonClick() {
 		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, ShopManager.self.shop_panel);
+		AudioManager.self.Play("button");
 	}
 
 }

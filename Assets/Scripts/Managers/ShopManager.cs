@@ -474,26 +474,32 @@ public class ShopManager : MonoBehaviour {
 
     public void OnShopButtonClick() {
 		Util.GoToPanel(UiManager.self.menu_panel, shop_panel);
+		AudioManager.self.Play("button");
 	}
 
 	public void OnGunsPanelButtonClick() {
 		Util.GoToPanel(shop_panel, shop_guns_panel);
+		AudioManager.self.Play("button");
 	}
 
 	public void OnSpecialAbilitiesPanelButtonClick() {
 		Util.GoToPanel(shop_panel, shop_special_abilities_panel);
+		AudioManager.self.Play("button");
 	}
 	
 	public void OnFacesPanelButtonClick() {
 		Util.GoToPanel(shop_panel, shop_faces_panel);
+		AudioManager.self.Play("button");
 	}
 
 	public void OnThemesPanelButtonClick() {
 		Util.GoToPanel(shop_panel, shop_themes_panel);
+		AudioManager.self.Play("button");
 	}
 
 	public void OnColorsPanelButtonClick() {
 		Util.GoToPanel(shop_panel, shop_colors_panel);
+		AudioManager.self.Play("button");
 	}
 
 }

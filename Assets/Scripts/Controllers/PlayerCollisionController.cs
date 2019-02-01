@@ -26,6 +26,7 @@ public class PlayerCollisionController : MonoBehaviour {
 			HeightManager.self.SetHeight ();
 			PlayerMovement.self.Jump ();
 			ParticleManager.self.Spawn("dust", this.transform.position);
+			AudioManager.self.Play("player_jump");
 			if(ItemManager.self.actives[Item.HIGH_JUMP]) {
 				HeightManager.self.has_coil = true;
 				HeightManager.self.should_remove_coil = false;
@@ -77,11 +78,13 @@ public class PlayerCollisionController : MonoBehaviour {
 				PlayerMovement.self.Jump ();
 				HeightManager.self.has_coil = true;
 				HeightManager.self.should_remove_coil = false;
+				AudioManager.self.Play("coil");
 				break;
 			case "Item":
 				Destroy (other.gameObject);
 				Item item = (Item)System.Enum.Parse(typeof(Item), other.name.ToUpper());
 				ItemManager.self.AddItem(item);
+        		AudioManager.self.Play("item_get");
 				break;
 		}
 	}

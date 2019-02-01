@@ -31,10 +31,8 @@ public class GunController : MonoBehaviour {
         current_ammo = guns[active_gun].ammo;
     }
 
-    private void Update() {
-        if(current_ammo == 0 && !reloading) {
-            StartCoroutine(Reload());
-        }
+    void Update() {
+
     }
 
     public void Shot() {
@@ -56,12 +54,16 @@ public class GunController : MonoBehaviour {
             current_ammo--;
             UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
             AudioManager.self.Play("gun_shot");
+            if(current_ammo == 0 && !reloading) {
+                StartCoroutine(Reload());
+            }
         }
     }
 
     IEnumerator Reload() {
         reloading = true;
         float time = guns[active_gun].reload_time * (SpecialAbilityManager.self.Has(SpecialAbility.GUNNER) ? .5f : 1);
+        AudioManager.self.Play("reloading");
         yield return new WaitForSeconds(time);
         current_ammo = guns[active_gun].ammo;
         reloading = false;

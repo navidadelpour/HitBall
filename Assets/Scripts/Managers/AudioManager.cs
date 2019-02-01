@@ -7,9 +7,14 @@ public class AudioManager : MonoBehaviour {
 	public static AudioManager self;
 
     private AudioSource main_music;
+    private AudioSource coil;
     private AudioSource coin;
+    private AudioSource item_get;
     private AudioSource player_die;
+    private AudioSource player_jump;
     private AudioSource gun_shot;
+    private AudioSource reloading;
+    private AudioSource button;
 	
 	void Awake() {
 		self = this;
@@ -43,8 +48,22 @@ public class AudioManager : MonoBehaviour {
             case "gun_shot":
                 to_play = gun_shot;
                 break;
+            case "item_get":
+                to_play = item_get;
+                break;
+            case "player_jump":
+                to_play = player_jump;
+                break;
+            case "reloading":
+                to_play = reloading;
+                break;
+            case "button":
+                to_play = button;
+                break;
         }
-       to_play.Play();
+        if(to_play == null)
+            return;
+        to_play.Play();
     }
 
 }

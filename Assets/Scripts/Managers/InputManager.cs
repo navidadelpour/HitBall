@@ -36,6 +36,7 @@ public class InputManager : MonoBehaviour {
 
 	public void OnPlayButtonClick() {
 		GameManager.self.started = true;
+		AudioManager.self.Play("button");
 	}
 
 	public void OnPauseButtonClick() {
@@ -44,27 +45,33 @@ public class InputManager : MonoBehaviour {
 		else
 			Time.timeScale = 0;
 		GameManager.self.paused = !GameManager.self.paused;
+		AudioManager.self.Play("button");
 	}
 
 	public void OnResetButtonClick() {
 		OnPauseButtonClick();
 		SceneManager.LoadScene("Scene1");
+		AudioManager.self.Play("button");
 	}
 
 	public void OnGunbuttonHold() {
 		gun_button_pressed = !gun_button_pressed;
+		AudioManager.self.Play("button");
 	}
 
 	public void OnSpecialAbilitybuttonClick() {
 		SpecialAbilityManager.self.Active();
+		AudioManager.self.Play("button");
 	}
 
 	public void OnJumpMaxButtonHold() {
 		jump_max_button_pressed = !jump_max_button_pressed;
+		AudioManager.self.Play("button");
 	}
 
 	public void OnJumpMinButtonHold() {
 		jump_min_button_pressed = !jump_min_button_pressed;
+		AudioManager.self.Play("button");
 	}
 
 	public void OnItemButtonClick() {
@@ -72,6 +79,7 @@ public class InputManager : MonoBehaviour {
 		if(ItemManager.self.available_items[index].item != Item.NOTHING) {
 			ItemManager.self.ActiveItem(index);
 		}
+		AudioManager.self.Play("button");
 	}
 
 }

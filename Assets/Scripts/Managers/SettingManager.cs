@@ -47,6 +47,7 @@ public class SettingManager : MonoBehaviour {
 
     public void OnSettingButtonClick() {
 		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, setting_panel);
+		AudioManager.self.Play("button");
     }
 
     public void Save() {
