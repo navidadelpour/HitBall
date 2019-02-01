@@ -16,7 +16,7 @@ public class PortalController : MonoBehaviour {
 	}
 	
 	void Update () {
-        if(Mathf.Abs(GameManager.self.player_initial_position.x - transform.position.x) < threshold) {
+        if(Mathf.Abs(PlayerMovement.self.gameObject.transform.position.x - transform.position.x) < threshold) {
             ItemManager.self.actives[Item.TELEPORT] = false;
             ItemManager.self.actives[Item.GROUND_DIGGER] = false;
             PlayerMovement.self.enabled = true;

@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour {
 	public float gift_time;
 	public float max_gift_time;
 	public bool has_gift;
-	public Vector3 player_initial_position;
 
 	void Awake() {
 		self = this;
@@ -33,7 +32,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start () {
-		player_initial_position = GameObject.Find ("Player").transform.position;
+
 	}
 	
 	void Update () {
