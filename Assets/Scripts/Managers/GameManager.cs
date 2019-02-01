@@ -16,23 +16,28 @@ public class GameManager : MonoBehaviour {
 	public int high_score;
 	public int coins;
 
+	public float gift_time;
+	public float max_gift_time;
+	public bool has_gift;
 	public Vector3 player_initial_position;
 
 	void Awake() {
 		self = this;
 
-		player_initial_position = GameObject.Find ("Player").transform.position;
 		high_score = PlayerPrefs.GetInt("high_score");
 		coins = PlayerPrefs.GetInt("coins");
 		exp = PlayerPrefs.GetInt("exp");
+
+		gift_time = PlayerPrefs.GetFloat("gift_time");
+		max_gift_time = PlayerPrefs.GetFloat("max_gift_time");
 	}
 
 	void Start () {
-
+		player_initial_position = GameObject.Find ("Player").transform.position;
 	}
 	
 	void Update () {
-
+		CheckGift();
 	}
 
 	public void GameOver() {
@@ -43,6 +48,8 @@ public class GameManager : MonoBehaviour {
 			PlayerPrefs.SetInt("coins", coins);
 			PlayerPrefs.SetInt("exp", exp);
 			PlayerPrefs.SetInt("high_score", high_score);
+
+			PlayerPrefs.SetFloat("gift_time", gift_time);
 
 			LevelManager.self.CheckForLevelUp();
 			SettingManager.self.Save();
@@ -55,6 +62,24 @@ public class GameManager : MonoBehaviour {
 		if(score > high_score) {
 			high_score = score;
 			UiManager.self.SetHighScore();
+		}
+	}
+
+	public void SetGift() {
+		has_gift = false;
+		gift_time = 0;
+		max_gift_time = Random.Range(.1f, 1) * 60;
+		PlayerPrefs.SetFloat("max_gift_time", max_gift_time);
+	}
+
+	public void CheckGift() {
+		if(!has_gift) {
+			if(gift_time < max_gift_time) {
+				gift_time += Time.deltaTime;
+			} else {
+				has_gift = true;
+				UiManager.self.EnableGift();
+			}
 		}
 	}
 
@@ -93,6 +118,13 @@ public class GameManager : MonoBehaviour {
 
 	private void OnApplicationQuit() {
 		GameOver();
+	}
+
+	public void OnGiftButtonClick() {
+		int gift_coin = Random.Range(1, 21) * 5;
+		coins += gift_coin;
+		SetGift();
+		UiManager.self.DisableGift();
 	}
 
 }

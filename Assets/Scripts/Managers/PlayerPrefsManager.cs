@@ -41,6 +41,10 @@ public class PlayerPrefsManager : MonoBehaviour {
             PlayerPrefs.SetInt("0.Color", active);
 
             PlayerPrefs.SetInt("Initialized", 1);
+
+			PlayerPrefs.SetFloat("gift_time", 0);
+			PlayerPrefs.SetFloat("max_gift_time", 0);
+            GameManager.self.SetGift();
         }
     }
 

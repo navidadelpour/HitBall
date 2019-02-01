@@ -17,6 +17,7 @@ public class UiManager : MonoBehaviour {
 
 	public Button[] item_buttons;
 	public Button special_ability_button;
+	public Button gift_button;
 
 	public Image gun_image;
 
@@ -36,16 +37,10 @@ public class UiManager : MonoBehaviour {
 
 		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
 		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
+		gift_button = GameObject.Find ("GiftButton").GetComponent<Button>();
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
 
-
-		// foreach (string s in new string[] {"SpecialAbilities", "Guns", "Beards", "Hats", "Themes", "Colors"}) {
-		// 	actives.Add(s, PlayerPrefs.GetInt(s) == PlayerPrefsManager.self.active ? GameObject.Find(s) : null);
-		// }
-
-		// PlayerPrefs.SetInt("DefaultTheme", 2);
-		// PlayerPrefs.SetInt("RGBA(0, 0, 0, 0)", 2);
 	}
 
 	void Start () {
@@ -61,6 +56,7 @@ public class UiManager : MonoBehaviour {
 		SetCoins ();
 		SetCombo ();
 		HandleItemSlots();
+		DisableGift();
 	}
 	
 	void Update () {
@@ -110,6 +106,15 @@ public class UiManager : MonoBehaviour {
 
 	public void DisableSpecialAbility() {
 		special_ability_button.interactable = false;
+	}
+
+	public void EnableGift() {
+		gift_button.interactable = true;
+	}
+
+	public void DisableGift() {
+		gift_button.interactable = false;
+		Debug.Log(gift_button.name);
 	}
 
 	// ================================== utility functions ==================================
