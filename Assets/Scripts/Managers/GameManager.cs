@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour {
 
 
 	public void IncreamentScore() {
+		if(!started)
+			return;
 		score += combo;
 		UiManager.self.SetScore ();
 	}

@@ -114,7 +114,6 @@ public class UiManager : MonoBehaviour {
 
 	public void DisableGift() {
 		gift_button.interactable = false;
-		Debug.Log(gift_button.name);
 	}
 
 	// ================================== utility functions ==================================

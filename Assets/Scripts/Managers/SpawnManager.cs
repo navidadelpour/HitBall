@@ -24,6 +24,8 @@ public class SpawnManager : MonoBehaviour {
 	private float ground_size_x;
 
 	private Things last_item_spawned;
+
+	public float obstacle_offset;
 	
 	private Dictionary<System.Enum, int> chances = new Dictionary<System.Enum, int>() {
 		{Things.COIL, 1},
@@ -85,6 +87,10 @@ public class SpawnManager : MonoBehaviour {
 			return;
 
 		CreateGround ();
+
+		if(!GameManager.self.started)
+			return;
+			
 		switch(
 			(ItemManager.self.actives[Item.TELEPORT] || ItemManager.self.actives[Item.GROUND_DIGGER]) && !has_portal ?
 			Things.PORTAL :
@@ -181,7 +187,7 @@ public class SpawnManager : MonoBehaviour {
 		for (int i = 0; i < max_i; i++) {
 			Instantiate(
 				obstacles_prefab,
-				last_ground.transform.position + Vector3.right * starting_point + Vector3.up * (ground_size_y / 2 + offset_y / 2) + Vector3.right * offset_x * i,
+				Vector3.up * obstacle_offset + last_ground.transform.position + Vector3.right * starting_point + Vector3.up * (ground_size_y / 2 + offset_y / 2) + Vector3.right * offset_x * i,
 				Quaternion.identity,
 				last_ground.transform
 			);

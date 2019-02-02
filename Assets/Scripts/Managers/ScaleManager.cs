@@ -17,6 +17,7 @@ public class ScaleManager : MonoBehaviour {
     private float height;
     private float width;
     private GameObject background;
+    private GameObject fixed_background;
     private GameObject grounds;
 	private GameObject ground_prefab;
     private Vector3 ground_offset;
@@ -28,6 +29,7 @@ public class ScaleManager : MonoBehaviour {
 
 		ground_prefab = Resources.Load <GameObject>("prefabs/Ground");
         background = GameObject.Find("Background");
+        fixed_background = GameObject.Find("FixedBackground");
         grounds = GameObject.Find ("Grounds");
         main_camera = Camera.main;
         ground_offset = ground_prefab.GetComponent<BoxCollider2D> ().size * (Vector2) ground_prefab.transform.lossyScale / 2;
@@ -45,11 +47,11 @@ public class ScaleManager : MonoBehaviour {
         // setting background height and width to match the area that camera showes
         height = main_camera.orthographicSize;
         width = height * Screen.width / Screen.height;
-        // background.transform.localScale = new Vector3(width * 2.0f / 10, 1, height * 2.0f / 10);
+        fixed_background.transform.localScale = new Vector3(width * 2.0f / 10, 1, height * 2.0f / 10);
 
         // setting the position
         Vector3 offset = -ground_offset + grounds.transform.position + new Vector3 (width, height, 0);
-        // background.transform.position = offset;
+        fixed_background.transform.position = offset;
         main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z;
 
         // adding an amount to size as the time goes by...
