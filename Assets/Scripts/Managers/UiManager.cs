@@ -82,7 +82,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetCombo() {
-		combo_text.text = "COMBO: " + GameManager.self.combo; 
+		combo_text.text = "x" + GameManager.self.combo; 
 	}
 
 	public void SetNextGoal(int value) {

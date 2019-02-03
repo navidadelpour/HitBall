@@ -15,15 +15,18 @@ public class AudioManager : MonoBehaviour {
     private AudioSource gun_shot;
     private AudioSource reloading;
     private AudioSource button;
+    private Dictionary<string, AudioSource> audio_sources;
 	
 	void Awake() {
 		self = this;
 
         main_music = GameObject.Find("MainMusic").GetComponent<AudioSource>();
 
-        coin = GameObject.Find("Coin").GetComponent<AudioSource>();
-        player_die = GameObject.Find("PlayerDie").GetComponent<AudioSource>();
-        gun_shot = GameObject.Find("GunShot").GetComponent<AudioSource>();
+        audio_sources = new Dictionary<string, AudioSource>() {
+            {"coin", coin = GameObject.Find("Coin").GetComponent<AudioSource>()},
+            {"player_die", player_die = GameObject.Find("PlayerDie").GetComponent<AudioSource>()},
+            {"gun_shot", gun_shot = GameObject.Find("GunShot").GetComponent<AudioSource>()},
+        };
 	}
 
 	void Start () {
@@ -37,33 +40,12 @@ public class AudioManager : MonoBehaviour {
     public void Play(string name) {
         if(!SettingManager.self.has_sfx)
             return;
-        AudioSource to_play = null;
-        switch(name) {
-            case "coin":
-                to_play = coin;
-                break;
-            case "player_die":
-                to_play = player_die;
-                break;
-            case "gun_shot":
-                to_play = gun_shot;
-                break;
-            case "item_get":
-                to_play = item_get;
-                break;
-            case "player_jump":
-                to_play = player_jump;
-                break;
-            case "reloading":
-                to_play = reloading;
-                break;
-            case "button":
-                to_play = button;
-                break;
+        try {
+            AudioSource to_play = audio_sources[name];
+            to_play.Play();
+        } catch(System.Exception e) {
+            
         }
-        if(to_play == null)
-            return;
-        to_play.Play();
     }
 
 }
