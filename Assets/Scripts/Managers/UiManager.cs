@@ -122,6 +122,37 @@ public class UiManager : MonoBehaviour {
 		gift_button.interactable = false;
 	}
 
+	public void SetSpecialAbility(string name) {
+		SpecialAbility special_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), name.ToUpper());
+		SpecialAbilityManager.self.current_ability = special_ability;
+		SetSpecialAbility();
+	}
+
+	public void SetGun(string name) {
+		Guns gun = (Guns) System.Enum.Parse(typeof(Guns), name.ToUpper());
+		GunController.self.SetGun(gun);
+		SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
+		SetGun();
+	}
+
+	public void SetTheme(string name) {
+		Debug.Log(name);
+	}
+
+	public void SetColor(int index) {
+		SpriteRenderer player_renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+		player_renderer.color = PlayerPrefsManager.self.colors[index];
+	}
+
+	public void SetFace(string key, string name) {
+		SpriteRenderer key_on_player = GameObject.Find("Player").transform.Find(key).GetComponent<SpriteRenderer>();
+		if(name == null)
+			key_on_player.sprite = null;
+		else
+			key_on_player.sprite = Resources.Load<Sprite>("Textures/Faces/" + key + "/" + name);
+	}
+
+
 	// ================================== utility functions ==================================
 
 	public void GameOver() {

@@ -37,7 +37,7 @@ public class PlayerPrefsManager : MonoBehaviour {
             PlayerPrefs.SetInt(SpecialAbility.LUCKY.ToString(), active);
             PlayerPrefs.SetInt(Guns.PISTOL.ToString(), active);
 
-            PlayerPrefs.SetInt("DefaultTheme", active);
+            PlayerPrefs.SetInt("default", active);
             PlayerPrefs.SetInt("0.Color", active);
 
             PlayerPrefs.SetInt("Initialized", 1);

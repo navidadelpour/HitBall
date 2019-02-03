@@ -113,7 +113,7 @@ public class ShopManager : MonoBehaviour {
 				case 2:
 					sprite_to_give = tick_sprite;
 					actives["Guns"] = shop_item_created;
-					SetGun(enum_array[i].ToString());
+					UiManager.self.SetGun(enum_array[i].ToString());
 					break;
 			}
 
@@ -153,7 +153,7 @@ public class ShopManager : MonoBehaviour {
 				case 2:
 					sprite_to_give = tick_sprite;
 					actives["SpecialAbilities"] = shop_item_created;
-					SetSpecialAbility(enum_array[i].ToString());
+					UiManager.self.SetSpecialAbility(enum_array[i].ToString());
 					break;
 			}
 
@@ -196,7 +196,7 @@ public class ShopManager : MonoBehaviour {
 					sprite_to_give = tick_sprite;
 					cost = "";
 					actives["Themes"] = shop_item_created;
-					SetTheme(name);
+					UiManager.self.SetTheme(name);
 					break;
 			}
 
@@ -244,7 +244,7 @@ public class ShopManager : MonoBehaviour {
 						sprite_to_give = tick_sprite;
 						cost = "";
 						actives["Colors"] = shop_item_created;
-						SetColor(index);
+						UiManager.self.SetColor(index);
 						break;
 				}
 				shop_item_created.name = name + "_" + (cost == "" ? "0" : cost);
@@ -315,7 +315,7 @@ public class ShopManager : MonoBehaviour {
 							sprite_to_give = tick_sprite;
 							cost = "";
 							actives[postfixes[k]] = shop_item_created;
-							SetFace(postfixes[k], sprite_array[index].name);
+							UiManager.self.SetFace(postfixes[k], sprite_array[index].name);
 							break;
 					}
 					
@@ -330,37 +330,6 @@ public class ShopManager : MonoBehaviour {
 		content.GetComponent<RectTransform>().sizeDelta = Vector3.up * content_size;
 	}
 
-	private void SetSpecialAbility(string name) {
-		SpecialAbility special_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), name.ToUpper());
-		SpecialAbilityManager.self.current_ability = special_ability;
-		UiManager.self.SetSpecialAbility();
-	}
-
-	private void SetGun(string name) {
-		Guns gun = (Guns) System.Enum.Parse(typeof(Guns), name.ToUpper());
-		GunController.self.SetGun(gun);
-		UiManager.self.SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
-		UiManager.self.SetGun();
-	}
-
-	private void SetTheme(string name) {
-
-	}
-
-	private void SetColor(int index) {
-		SpriteRenderer player_renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
-		player_renderer.color = PlayerPrefsManager.self.colors[index];
-	}
-
-	private void SetFace(string key, string name) {
-		SpriteRenderer key_on_player = GameObject.Find("Player").transform.Find(key).GetComponent<SpriteRenderer>();
-		if(name == null)
-			key_on_player.sprite = null;
-		else
-			key_on_player.sprite = Resources.Load<Sprite>("Textures/Faces/" + key + "/" + name);
-
-	}
-
 	public void EnableShopItem(GameObject shop_item_instance) {
 		GameObject top_parent_panel = shop_item_instance.transform.parent.parent.parent.parent.gameObject;
 		switch(top_parent_panel.name) {
@@ -372,7 +341,7 @@ public class ShopManager : MonoBehaviour {
 				actives["SpecialAbilities"] = shop_item_instance;
 				actives["SpecialAbilities"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 				PlayerPrefs.SetInt(actives["SpecialAbilities"].name, 2);
-				SetSpecialAbility(actives["SpecialAbilities"].name);
+				UiManager.self.SetSpecialAbility(actives["SpecialAbilities"].name);
 				break;
 			case "GunsPanel":
 				if(shop_item_instance == actives["Guns"])
@@ -382,7 +351,7 @@ public class ShopManager : MonoBehaviour {
 				actives["Guns"] = shop_item_instance;
 				actives["Guns"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 				PlayerPrefs.SetInt(actives["Guns"].name, 2);
-				SetGun(actives["Guns"].name);
+				UiManager.self.SetGun(actives["Guns"].name);
 				break;
 			case "ThemesPanel":
 				if(shop_item_instance == actives["Themes"])
@@ -405,7 +374,7 @@ public class ShopManager : MonoBehaviour {
 						actives["Themes"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 						actives["Themes"].transform.Find("Cost").GetComponent<Text>().text = "";
 						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
-						SetTheme(name);
+						UiManager.self.SetTheme(name);
                     }
 				}
 				break;
@@ -430,7 +399,7 @@ public class ShopManager : MonoBehaviour {
 							actives["Colors"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 							actives["Colors"].transform.Find("Cost").GetComponent<Text>().text = "";
 							PlayerPrefs.SetInt(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
-							SetColor(int.Parse(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0].Split(new String[] {"."}, StringSplitOptions.None)[0]));
+							UiManager.self.SetColor(int.Parse(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0].Split(new String[] {"."}, StringSplitOptions.None)[0]));
 						}
 					}
 					break;
@@ -448,7 +417,7 @@ public class ShopManager : MonoBehaviour {
 						actives[key].transform.Find("Status").GetComponent<Image>().sprite = null;
 						actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
 						actives[key] = null;
-						SetFace(key, null);
+						UiManager.self.SetFace(key, null);
 					} else {
 						if(!unlock && GameManager.self.coins >= cost) {
 							GameManager.self.coins -= cost;
@@ -464,7 +433,7 @@ public class ShopManager : MonoBehaviour {
 							actives[key].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 							actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
 							PlayerPrefs.SetInt(actives[key].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
-							SetFace(key, actives[key].name);
+							UiManager.self.SetFace(key, actives[key].name);
 						}
 					}
 				}
