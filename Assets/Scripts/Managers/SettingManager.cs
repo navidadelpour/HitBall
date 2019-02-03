@@ -45,15 +45,19 @@ public class SettingManager : MonoBehaviour {
         has_sfx = sfx.isOn;
 	}
 
-    public void OnSettingButtonClick() {
-		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, setting_panel);
-		AudioManager.self.Play("button");
-    }
-
     public void Save() {
         PlayerPrefs.SetInt("has_music", has_music ? 1 : 0);
         PlayerPrefs.SetInt("has_sfx", has_sfx ? 1 : 0);
         PlayerPrefs.SetInt("night_mode", has_night_mode ? 1 : 0);
     }
 
+
+    public void OnSettingButtonClick() {
+		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, setting_panel);
+		AudioManager.self.Play("button");
+    }
+
+    public void OnLinkButtonClick(string link) {
+        Application.OpenURL(link);
+    }
 }
