@@ -27,6 +27,7 @@ public class PlayerCollisionController : MonoBehaviour {
 			PlayerMovement.self.Jump ();
 			ParticleManager.self.Spawn("dust", this.transform.position);
 			AudioManager.self.Play("player_jump");
+			ScreenShake.self.Shake(.15f);
 			if(ItemManager.self.actives[Item.HIGH_JUMP]) {
 				HeightManager.self.has_coil = true;
 				HeightManager.self.should_remove_coil = false;
@@ -61,6 +62,7 @@ public class PlayerCollisionController : MonoBehaviour {
 						GameManager.self.GameOver();
 				}
 				AudioManager.self.Play("player_die");
+				ScreenShake.self.Shake(.3f);
 				break;
 
 			case "Coin":

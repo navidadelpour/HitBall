@@ -47,12 +47,12 @@ public class ScaleManager : MonoBehaviour {
         // setting background height and width to match the area that camera showes
         height = main_camera.orthographicSize;
         width = height * Screen.width / Screen.height;
-        fixed_background.transform.localScale = new Vector3(width * 2.0f / 10, 1, height * 2.0f / 10);
+        fixed_background.transform.localScale = new Vector3(width * 2.0f / 10 + .05f, 1, height * 2.0f / 10 + .05f);
 
         // setting the position
         Vector3 offset = -ground_offset + grounds.transform.position + new Vector3 (width, height, 0);
         fixed_background.transform.position = offset;
-        main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z;
+        main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z + ScreenShake.self.amount;
 
         // adding an amount to size as the time goes by...
         if(camera_normal_size < camera_max_size && GameManager.self.started) 
