@@ -16,7 +16,7 @@ public class ScaleManager : MonoBehaviour {
     private Camera main_camera;
     private float height;
     private float width;
-    private GameObject background;
+    private GameObject texture;
     private GameObject fixed_background;
     private GameObject grounds;
 	private GameObject ground_prefab;
@@ -28,7 +28,7 @@ public class ScaleManager : MonoBehaviour {
 		self = this;
 
 		ground_prefab = Resources.Load <GameObject>("prefabs/Ground");
-        background = GameObject.Find("Background");
+        texture = GameObject.Find("Texture");
         fixed_background = GameObject.Find("FixedBackground");
         grounds = GameObject.Find ("Grounds");
         main_camera = Camera.main;
