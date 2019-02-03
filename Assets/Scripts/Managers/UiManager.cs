@@ -26,6 +26,9 @@ public class UiManager : MonoBehaviour {
 	public GameObject game_panel;
 	public GameObject game_over_panel;
 
+	public GameObject texture;
+	public GameObject fixed_background;
+
 
 	void Awake() {
 		self = this;
@@ -43,6 +46,8 @@ public class UiManager : MonoBehaviour {
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
 
+		texture = GameObject.Find("Texture");
+        fixed_background = GameObject.Find("FixedBackground");
 	}
 
 	void Start () {
@@ -135,8 +140,12 @@ public class UiManager : MonoBehaviour {
 		SetGun();
 	}
 
-	public void SetTheme(string name) {
-		Debug.Log(name);
+	public void SetTheme() {
+		string theme_name = ShopManager.self.actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0];
+		string night_mode_state = SettingManager.self.has_night_mode ? "dark" : "light";
+		string name = theme_name + "_" + night_mode_state + "_";
+		texture.GetComponent<Renderer>().material.SetTexture("_MainTex", Resources.Load<Texture>("Textures/Backgrounds/" + name + "texture"));
+		fixed_background.GetComponent<Renderer>().material.SetTexture("_MainTex", Resources.Load<Texture>("Textures/Backgrounds/" + name + "fixed_background"));
 	}
 
 	public void SetColor(int index) {
