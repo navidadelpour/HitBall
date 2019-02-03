@@ -14,6 +14,7 @@ public class UiManager : MonoBehaviour {
 	public Text coins_text;
 	public Text combo_text;
 	public Text gun_text;
+	public Text next_goal_text;
 
 	public Button[] item_buttons;
 	public Button special_ability_button;
@@ -34,6 +35,7 @@ public class UiManager : MonoBehaviour {
 		coins_text = GameObject.Find ("CoinsText").GetComponent<Text>();
 		combo_text = GameObject.Find ("ComboText").GetComponent<Text>();
 		gun_text = GameObject.Find ("GunText").GetComponent<Text>();
+		next_goal_text = GameObject.Find ("NextGoalText").GetComponent<Text>();
 
 		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
 		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
@@ -81,6 +83,10 @@ public class UiManager : MonoBehaviour {
 
 	public void SetCombo() {
 		combo_text.text = "COMBO: " + GameManager.self.combo; 
+	}
+
+	public void SetNextGoal(int value) {
+		next_goal_text.text = "NEXT GOAL: " + value;
 	}
 
 	public void SetItem(int i, Item item) {

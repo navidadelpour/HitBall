@@ -54,4 +54,8 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
+    public int GetNextGoal() {
+        return (int) Mathf.Pow(5, current_level + 1);
+    }
+
 }

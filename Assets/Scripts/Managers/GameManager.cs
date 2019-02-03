@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver() {
 		SetHighScore();
-		IncreamentExp();
 
 		if(!PlayerPrefsManager.self.reseted) {
 			PlayerPrefs.SetInt("coins", coins);
@@ -87,7 +86,9 @@ public class GameManager : MonoBehaviour {
 		if(!started)
 			return;
 		score += combo;
+		exp += combo;
 		UiManager.self.SetScore ();
+		UiManager.self.SetNextGoal(LevelManager.self.GetNextGoal() - exp);
 	}
 
 	public void EnemyEarn() {
@@ -97,10 +98,6 @@ public class GameManager : MonoBehaviour {
 	public void IncreamentCoins() {
 		coins++;
 		UiManager.self.SetCoins ();
-	}
-
-	private void IncreamentExp() {
-		exp += score;
 	}
 
 	public void ResetCombo() {
