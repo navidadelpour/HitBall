@@ -91,7 +91,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetNextGoal(int value) {
-		next_goal_text.text = "NEXT GOAL: " + value;
+		next_goal_text.text = "NEXT GOAL: " + (value > 0 ? value + "" : "REACHED!");
 	}
 
 	public void SetItem(int i, Item item) {
