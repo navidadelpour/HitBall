@@ -33,8 +33,8 @@ public class ShopManager : MonoBehaviour {
     void Awake() {
         self = this;
 
-		tick_sprite = Resources.Load<Sprite>("Textures/UI/tick");
-		lock_sprite = Resources.Load<Sprite>("Textures/UI/lock");
+		tick_sprite = Resources.Load<Sprite>("Textures/UI/Main/tick");
+		lock_sprite = Resources.Load<Sprite>("Textures/UI/Main/lock");
 
         faces_header = Resources.Load<GameObject>("Prefabs/Ui/FacesHeader");
         faces_panel = Resources.Load<GameObject>("Prefabs/Ui/Panel");
@@ -184,6 +184,7 @@ public class ShopManager : MonoBehaviour {
 			string name = x[0];
 			string cost = x[1];
 			Sprite sprite_to_give = null;
+			shop_item_created.name = sprite_array[i].name;
 			switch(PlayerPrefs.GetInt(name)) {
 				case 0:
 					sprite_to_give = null;
@@ -196,11 +197,9 @@ public class ShopManager : MonoBehaviour {
 					sprite_to_give = tick_sprite;
 					cost = "";
 					actives["Themes"] = shop_item_created;
-					UiManager.self.SetTheme(name);
 					break;
 			}
 
-			shop_item_created.name = sprite_array[i].name;
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[i];
 			shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
 			shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
@@ -374,7 +373,7 @@ public class ShopManager : MonoBehaviour {
 						actives["Themes"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
 						actives["Themes"].transform.Find("Cost").GetComponent<Text>().text = "";
 						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
-						UiManager.self.SetTheme(name);
+						UiManager.self.SetTheme();
                     }
 				}
 				break;

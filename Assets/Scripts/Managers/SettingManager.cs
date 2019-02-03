@@ -30,19 +30,19 @@ public class SettingManager : MonoBehaviour {
         has_sfx = PlayerPrefs.GetInt("has_sfx") == 1;
         has_night_mode = PlayerPrefs.GetInt("has_night_mode") == 1;
 
-        music.isOn = has_music;
-        sfx.isOn = has_sfx;
 	}
 
 	void Start () {
         UiManager.self.BringPanelsToCenter(new GameObject[]{
 			setting_panel,
 		});
+        music.isOn = has_music;
+        sfx.isOn = has_sfx;
+        night_mode.isOn = has_night_mode;
 	}
 	
 	void Update () {
-        has_music = music.isOn;
-        has_sfx = sfx.isOn;
+
 	}
 
     public void Save() {
@@ -59,5 +59,23 @@ public class SettingManager : MonoBehaviour {
 
     public void OnLinkButtonClick(string link) {
         Application.OpenURL(link);
+    }
+
+    public void OnToggleButtonClick(string name) {
+        Debug.Log("x");
+        switch(name) {
+            case "has_music":
+                has_music = music.isOn;
+                AudioManager.self.main_music.mute = !has_music;
+                break;
+            case "has_sfx":
+                has_sfx = sfx.isOn;
+                break;
+            case "has_night_mode": 
+            has_night_mode = night_mode.isOn;
+            UiManager.self.SetTheme();
+            break;
+
+        }
     }
 }

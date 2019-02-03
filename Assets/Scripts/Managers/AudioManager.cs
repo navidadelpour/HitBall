@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour {
 
 	public static AudioManager self;
 
-    private AudioSource main_music;
+    public AudioSource main_music;
     private AudioSource coil;
     private AudioSource coin;
     private AudioSource item_get;
@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour {
 	}
 	
 	void Update () {
-        main_music.mute = !SettingManager.self.has_music;
+
 	}
 
     public void Play(string name) {
