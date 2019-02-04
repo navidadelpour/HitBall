@@ -29,9 +29,21 @@ public class ShopManager : MonoBehaviour {
 	private int colors_cost = 10;
 
 	public Dictionary<string, GameObject> actives = new Dictionary<string, GameObject>();
+	private Dictionary<System.Enum, string[]> metas;
 
     void Awake() {
         self = this;
+
+		metas = new Dictionary<Enum, string[]>() {
+			{SpecialAbility.BOUNCY, new string[]{SpecialAbility.BOUNCY.ToString(), SpecialAbility.BOUNCY.ToString() + "description"}},
+			{SpecialAbility.ENEMY_EARNER, new string[]{SpecialAbility.ENEMY_EARNER.ToString(), SpecialAbility.ENEMY_EARNER.ToString() + "description"}},
+			{SpecialAbility.GUNNER, new string[]{SpecialAbility.GUNNER.ToString(), SpecialAbility.GUNNER.ToString() + "description"}},
+			{SpecialAbility.LUCKY, new string[]{SpecialAbility.LUCKY.ToString(), SpecialAbility.LUCKY.ToString() + "description"}},
+			{SpecialAbility.RANDOMER, new string[]{SpecialAbility.RANDOMER.ToString(), SpecialAbility.RANDOMER.ToString() + "description"}},
+			{Guns.PISTOL, new string[]{Guns.PISTOL.ToString(), Guns.PISTOL.ToString() + "description"}},
+			{Guns.SHOTGUN, new string[]{Guns.SHOTGUN.ToString(), Guns.SHOTGUN.ToString() + "description"}},
+			{Guns.RIFLE, new string[]{Guns.RIFLE.ToString(), Guns.RIFLE.ToString() + "description"}},
+		};
 
 		tick_sprite = Resources.Load<Sprite>("Textures/UI/Main/tick");
 		lock_sprite = Resources.Load<Sprite>("Textures/UI/Main/lock");
@@ -121,6 +133,9 @@ public class ShopManager : MonoBehaviour {
 			shop_item_created.GetComponent<Button>().interactable = interactable;
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Guns/" + enum_array[i].ToString().ToLower());
 			shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = sprite_to_give;
+			shop_item_created.transform.Find("Header").GetComponent<Text>().text = metas[enum_array[i]][0];
+			shop_item_created.transform.Find("Description").GetComponent<Text>().text = metas[enum_array[i]][1];
+
 		}
 	}
 
@@ -161,6 +176,8 @@ public class ShopManager : MonoBehaviour {
 			shop_item_created.GetComponent<Button>().interactable = interactable;
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/SpecialAbilities/" + enum_array[i].ToString().ToLower());
 			shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = sprite_to_give;
+			shop_item_created.transform.Find("Header").GetComponent<Text>().text = metas[enum_array[i]][0];
+			shop_item_created.transform.Find("Description").GetComponent<Text>().text = metas[enum_array[i]][1];
 		}
 	}
 
