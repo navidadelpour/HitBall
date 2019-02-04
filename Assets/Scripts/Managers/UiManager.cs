@@ -29,6 +29,9 @@ public class UiManager : MonoBehaviour {
 	public GameObject texture;
 	public GameObject fixed_background;
 
+	public SpriteRenderer obstacle_prefab;
+	public SpriteRenderer ground_prefab;
+
 
 	void Awake() {
 		self = this;
@@ -48,6 +51,9 @@ public class UiManager : MonoBehaviour {
 
 		texture = GameObject.Find("Texture");
         fixed_background = GameObject.Find("FixedBackground");
+
+        obstacle_prefab = Resources.Load<GameObject>("Prefabs/Obstacles/Obstacle").GetComponent<SpriteRenderer>();
+        ground_prefab = Resources.Load<GameObject>("Prefabs/Ground").GetComponent<SpriteRenderer>();
 	}
 
 	void Start () {
@@ -144,8 +150,16 @@ public class UiManager : MonoBehaviour {
 		string theme_name = ShopManager.self.actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0];
 		string night_mode_state = SettingManager.self.has_night_mode ? "dark" : "light";
 		string name = theme_name + "_" + night_mode_state + "_";
+
 		texture.GetComponent<Renderer>().material.SetTexture("_MainTex", Resources.Load<Texture>("Textures/Backgrounds/" + name + "texture"));
 		fixed_background.GetComponent<Renderer>().material.SetTexture("_MainTex", Resources.Load<Texture>("Textures/Backgrounds/" + name + "fixed_background"));
+
+		obstacle_prefab.sprite = Resources.Load<Sprite>("Textures/Objects/Obstacles/" + theme_name + "_" + "obstacle");
+		ground_prefab.sprite = Resources.Load<Sprite>("Textures/Objects/Grounds/" + theme_name + "_" + "ground");
+		Transform Grounds_on_scene = GameObject.Find("Grounds").transform;
+		for(int i = 0; i < Grounds_on_scene.childCount; gii++) {
+			Grounds_on_scene.GetChild(i).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Objects/Grounds/" + theme_name + "_" + "ground");
+		}
 	}
 
 	public void SetColor(int index) {
