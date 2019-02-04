@@ -157,11 +157,7 @@ public class UiManager : MonoBehaviour {
 		obstacle_prefab.sprite = Resources.Load<Sprite>("Textures/Objects/Obstacles/" + theme_name + "_" + "obstacle");
 		ground_prefab.sprite = Resources.Load<Sprite>("Textures/Objects/Grounds/" + theme_name + "_" + "ground");
 		Transform Grounds_on_scene = GameObject.Find("Grounds").transform;
-<<<<<<< HEAD
 		for(int i = 0; i < Grounds_on_scene.childCount; i++) {
-=======
-		for(int i = 0; i < Grounds_on_scene.childCount; gii++) {
->>>>>>> 22943b1b477772d3c42bfd59abd92bbe258ba968
 			Grounds_on_scene.GetChild(i).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Objects/Grounds/" + theme_name + "_" + "ground");
 		}
 	}
