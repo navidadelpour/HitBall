@@ -10,7 +10,6 @@ public class UiManager : MonoBehaviour {
 	public static UiManager self;
 
 	public Text score_text;
-	public Text high_score_text;
 	public Text coins_text;
 	public Text combo_text;
 	public Text gun_text;
@@ -37,7 +36,6 @@ public class UiManager : MonoBehaviour {
 		self = this;
 
 		score_text = GameObject.Find ("ScoreText").GetComponent<Text>();
-		high_score_text = GameObject.Find("HighScoreText").GetComponent<Text>();
 		coins_text = GameObject.Find ("CoinsText").GetComponent<Text>();
 		combo_text = GameObject.Find ("ComboText").GetComponent<Text>();
 		gun_text = GameObject.Find ("GunText").GetComponent<Text>();
@@ -81,7 +79,7 @@ public class UiManager : MonoBehaviour {
 	// ================================== ui changes ==================================
 
 	public void SetHighScore() {
-		high_score_text.text = GameManager.self.high_score + ""; 
+		score_text.text = GameManager.self.high_score + ""; 
 	}
 		
 	public void SetScore() {
@@ -215,6 +213,7 @@ public class UiManager : MonoBehaviour {
 	public void OnBackToMenuButtonClick() {
 		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
 		AudioManager.self.Play("button");
+		ShopManager.self.player_overview_panel.SetActive(false);
 	}
 
 	public void OnBackToShopButtonClick() {

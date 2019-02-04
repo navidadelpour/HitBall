@@ -17,6 +17,7 @@ public class ShopManager : MonoBehaviour {
 	private GameObject shop_faces_panel;
 	private GameObject shop_themes_panel;
 	private GameObject shop_colors_panel;
+	public GameObject player_overview_panel;
 
 	private GameObject faces_header;
 	private GameObject faces_panel;
@@ -83,13 +84,16 @@ public class ShopManager : MonoBehaviour {
 			shop_faces_panel,
 			shop_themes_panel,
 			shop_colors_panel,
+			player_overview_panel = GameObject.Find("PlayerOverviewPanel")
 		});
+		player_overview_panel.SetActive(false);
 
 		SetupShopGunsPanel();
 		SetupShopSpecialAbilityPanel();
 		SetupShopFacesPanel();
 		SetupShopThemesPanel();
 		SetupShopColorsPanel();
+		player_overview_panel.transform.SetAsLastSibling();
     }
 
     void Update() {
@@ -459,6 +463,7 @@ public class ShopManager : MonoBehaviour {
 
     public void OnShopButtonClick() {
 		Util.GoToPanel(UiManager.self.menu_panel, shop_panel);
+		player_overview_panel.SetActive(true);
 		AudioManager.self.Play("button");
 	}
 
