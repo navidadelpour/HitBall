@@ -51,7 +51,7 @@ public class ScaleManager : MonoBehaviour {
 
         // setting the position
         Vector3 offset = -ground_offset + grounds.transform.position + new Vector3 (width, height, 0);
-        fixed_background.transform.position = offset;
+        fixed_background.transform.position = offset + Vector3.forward;
         main_camera.transform.position = offset + Vector3.forward * main_camera.transform.position.z + ScreenShake.self.amount;
 
         // adding an amount to size as the time goes by...
