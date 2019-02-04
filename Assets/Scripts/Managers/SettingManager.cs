@@ -62,7 +62,6 @@ public class SettingManager : MonoBehaviour {
     }
 
     public void OnToggleButtonClick(string name) {
-        Debug.Log("x");
         switch(name) {
             case "has_music":
                 has_music = music.isOn;
