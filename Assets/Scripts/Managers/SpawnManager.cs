@@ -185,13 +185,14 @@ public class SpawnManager : MonoBehaviour {
 			starting_point = (1 - max_i) * .5f;
 		}
 		for (int i = 0; i < max_i; i++) {
-			Instantiate(
+			GameObject obstacle_created = Instantiate(
 				obstacles_prefab,
 				Vector3.up * obstacle_offset + last_ground.transform.position + Vector3.right * starting_point + Vector3.up * (ground_size_y / 2 + offset_y / 2) + Vector3.right * offset_x * i,
 				Quaternion.identity,
 				last_ground.transform
 			);
 			last_item_spawned = Things.OBSTACLE;
+			obstacle_created.transform.position += Vector3.back;
 		}
 	}
 		
