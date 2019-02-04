@@ -102,8 +102,10 @@ public class UiManager : MonoBehaviour {
 		item_buttons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
 	}
 
-	public void SetGun() {
-		gun_image.sprite = Resources.Load<Sprite>("textures/Guns/" + GunController.self.active_gun.ToString().ToLower());
+	public void SetGunTexture() {
+		Sprite sprite = Resources.Load<Sprite>("textures/Guns/" + GunController.self.active_gun.ToString().ToLower());
+		gun_image.sprite = sprite;
+		PlayerMovement.self.transform.Find("Gun").GetComponent<SpriteRenderer>().sprite = sprite;
 	}
 
 	public void SetGunText(int current_ammo, int ammo) {
@@ -138,10 +140,20 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetGun(string name) {
+		Dictionary<Enum, Vector3[]> transforms = new Dictionary<Enum, Vector3[]>() {
+			{Guns.PISTOL, new Vector3[] {new Vector3(0.95f, -0.25f, 1), new Vector3(0, 0, -21.079f), new Vector3(.1f, .1f, .1f)}},
+			{Guns.SHOTGUN, new Vector3[] {new Vector3(1.06f, -0.22f, 1), new Vector3(0, 0, -45), new Vector3(.2f, .2f, .2f)}},
+			{Guns.RIFLE, new Vector3[] {new Vector3(0.9f, -0.22f, 1), new Vector3(0, 0, -45f), new Vector3(.2f, .2f, .2f)}},
+		};
 		Guns gun = (Guns) System.Enum.Parse(typeof(Guns), name.ToUpper());
 		GunController.self.SetGun(gun);
 		SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
-		SetGun();
+		SetGunTexture();
+
+		Transform gun_transform = PlayerMovement.self.transform.Find("Gun").transform;
+		gun_transform.localPosition = transforms[gun][0];
+		gun_transform.localEulerAngles = transforms[gun][1];
+		gun_transform.localScale = transforms[gun][2];
 	}
 
 	public void SetTheme() {
