@@ -24,6 +24,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject menu_panel;
 	public GameObject game_panel;
 	public GameObject game_over_panel;
+	public GameObject level_panel;
 
 	public GameObject texture;
 	public GameObject fixed_background;
@@ -59,6 +60,7 @@ public class UiManager : MonoBehaviour {
 			menu_panel = GameObject.Find("MenuPanel"),
 			game_panel = GameObject.Find("GamePanel"),
 			game_over_panel = GameObject.Find("GameOverPanel"),
+			level_panel = GameObject.Find("LevelPanel"),
 		});
 		menu_panel.SetActive(true);
 
@@ -68,6 +70,8 @@ public class UiManager : MonoBehaviour {
 		SetCombo ();
 		HandleItemSlots();
 		DisableGift();
+
+		StartCoroutine(Unlock());
 	}
 	
 	void Update () {
@@ -185,6 +189,36 @@ public class UiManager : MonoBehaviour {
 			key_on_player.sprite = Resources.Load<Sprite>("Textures/Faces/" + key + "/" + name);
 	}
 
+	IEnumerator Unlock() {
+		string[] indexes = PlayerPrefs.GetString("indexes").Split(new String[] {"_"}, StringSplitOptions.None);
+
+		if(!indexes.Equals("")) {
+			level_panel.SetActive(true);
+			Image image = level_panel.transform.GetChild(0).Find("Image").GetComponent<Image>();
+			Text name_text = level_panel.transform.GetChild(0).Find("Name").GetComponent<Text>();
+
+			foreach(string index in indexes) {
+				if(!index.Equals("")) {
+					int i = int.Parse(index);
+					Enum item = LevelManager.self.levels[i];
+
+					string path = "Textures/";
+					string name = item.ToString().ToLower();
+
+					switch(item.GetType().ToString()) {
+						case "SpecialAbility": path += "SpecialAbilities/"; break;
+						case "Guns": path += "Guns/"; break;
+						case "Item": path += "Items/"; name = "ITEM SLOT"; break;
+					}
+
+					name_text.text = name;
+					image.sprite = Resources.Load<Sprite>(path + item.ToString().ToLower());
+					yield return new WaitForSeconds(.5f);
+				}
+			}
+			level_panel.SetActive(false);
+		}
+	}
 
 	// ================================== utility functions ==================================
 

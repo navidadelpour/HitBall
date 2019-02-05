@@ -634,6 +634,7 @@ MonoBehaviour:
   menu_panel: {fileID: 0}
   game_panel: {fileID: 0}
   game_over_panel: {fileID: 0}
+  level_panel: {fileID: 0}
   texture: {fileID: 0}
   fixed_background: {fileID: 0}
   obstacle_prefab: {fileID: 0}
@@ -1971,7 +1972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &421302466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1988,7 +1989,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -854, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &421302467

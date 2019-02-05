@@ -15,6 +15,7 @@ public class ScreenShake : MonoBehaviour {
     }
 
 	void Update () {
+		// FIXME : screen shake should be end in gameover state
 		if(range > 0) {
 			amount = new Vector3(Random.Range(-range, range), Random.Range(-range, range), 0f);
 			range -= Time.deltaTime * decay;

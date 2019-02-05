@@ -10,11 +10,12 @@ public class LevelManager : MonoBehaviour {
     public int item_slots_unlocks;
     public System.Enum[] levels;
     public int current_level;
-    private int[] item_slot_levels = new int[] {2, };
+    private int level_factor;
 
     void Awake() {
         self = this;
 
+        level_factor = 2;
         levels = new System.Enum[] {
             Item.NOTHING,
             SpecialAbility.ENEMY_EARNER,
@@ -38,24 +39,29 @@ public class LevelManager : MonoBehaviour {
 
     }
 
-    public void CheckForLevelUp() {
-        if(GameManager.self.exp > Mathf.Pow(5, current_level)) {
+    public void CheckForLevelUp(string indexes = "") {
+        if(GameManager.self.exp > Mathf.Pow(level_factor, current_level)) {
+            indexes += (current_level - 1) + "_";
             if(levels[current_level - 1].ToString() == Item.NOTHING.ToString()) {
                 item_slots_unlocks ++;
                 PlayerPrefs.SetInt("item_slots_unlocks", item_slots_unlocks);
+                Debug.Log("item slot unlocked");
             } else {
                 PlayerPrefs.SetInt(levels[current_level - 1].ToString(), 0);
+                Debug.Log(levels[current_level - 1].ToString() + " unlocked");
             }
             current_level ++;
             PlayerPrefs.SetInt("current_level", current_level);
-            CheckForLevelUp();
+            CheckForLevelUp(indexes);
         } else {
             UiManager.self.HandleItemSlots();
+            PlayerPrefs.SetString("indexes", indexes);
+            Debug.Log(indexes);
         }
     }
 
     public int GetNextGoal() {
-        return (int) Mathf.Pow(5, current_level + 1);
+        return (int) Mathf.Pow(level_factor, current_level + 1);
     }
 
 }
