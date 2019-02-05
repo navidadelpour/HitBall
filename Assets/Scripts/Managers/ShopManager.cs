@@ -36,11 +36,11 @@ public class ShopManager : MonoBehaviour {
         self = this;
 
 		metas = new Dictionary<Enum, string[]>() {
-			{SpecialAbility.BOUNCY, new string[]{SpecialAbility.BOUNCY.ToString(), SpecialAbility.BOUNCY.ToString() + "description"}},
-			{SpecialAbility.ENEMY_EARNER, new string[]{SpecialAbility.ENEMY_EARNER.ToString(), SpecialAbility.ENEMY_EARNER.ToString() + "description"}},
-			{SpecialAbility.GUNNER, new string[]{SpecialAbility.GUNNER.ToString(), SpecialAbility.GUNNER.ToString() + "description"}},
-			{SpecialAbility.LUCKY, new string[]{SpecialAbility.LUCKY.ToString(), SpecialAbility.LUCKY.ToString() + "description"}},
-			{SpecialAbility.RANDOMER, new string[]{SpecialAbility.RANDOMER.ToString(), SpecialAbility.RANDOMER.ToString() + "description"}},
+			{SpecialAbilities.BOUNCY, new string[]{SpecialAbilities.BOUNCY.ToString(), SpecialAbilities.BOUNCY.ToString() + "description"}},
+			{SpecialAbilities.ENEMY_EARNER, new string[]{SpecialAbilities.ENEMY_EARNER.ToString(), SpecialAbilities.ENEMY_EARNER.ToString() + "description"}},
+			{SpecialAbilities.GUNNER, new string[]{SpecialAbilities.GUNNER.ToString(), SpecialAbilities.GUNNER.ToString() + "description"}},
+			{SpecialAbilities.LUCKY, new string[]{SpecialAbilities.LUCKY.ToString(), SpecialAbilities.LUCKY.ToString() + "description"}},
+			{SpecialAbilities.RANDOMER, new string[]{SpecialAbilities.RANDOMER.ToString(), SpecialAbilities.RANDOMER.ToString() + "description"}},
 			{Guns.PISTOL, new string[]{Guns.PISTOL.ToString(), Guns.PISTOL.ToString() + "description"}},
 			{Guns.SHOTGUN, new string[]{Guns.SHOTGUN.ToString(), Guns.SHOTGUN.ToString() + "description"}},
 			{Guns.RIFLE, new string[]{Guns.RIFLE.ToString(), Guns.RIFLE.ToString() + "description"}},
@@ -144,7 +144,7 @@ public class ShopManager : MonoBehaviour {
 	}
 
 	void SetupShopSpecialAbilityPanel() {
-		SpecialAbility[] enum_array = (SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility));
+		SpecialAbilities[] enum_array = (SpecialAbilities[]) Enum.GetValues(typeof(SpecialAbilities));
 
 		Transform content = Util.FindDeepChild(shop_special_abilities_panel.transform, "Content").transform;
 		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (enum_array.Length * (shop_margin + shop_item_size.y) + shop_margin);

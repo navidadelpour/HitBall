@@ -48,7 +48,7 @@ public class PlayerCollisionController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		switch (other.gameObject.tag) {
 			case "Block":
-				if(SpecialAbilityManager.self.Has(SpecialAbility.ENEMY_EARNER)) {
+				if(SpecialAbilitiesManager.self.Has(SpecialAbilities.ENEMY_EARNER)) {
 					Destroy(other.gameObject);
 					GameManager.self.EnemyEarn();
 				}

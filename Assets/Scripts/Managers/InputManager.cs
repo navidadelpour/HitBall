@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public void OnSpecialAbilitybuttonClick() {
-		SpecialAbilityManager.self.Active();
+		SpecialAbilitiesManager.self.Active();
 		AudioManager.self.Play("button");
 	}
 

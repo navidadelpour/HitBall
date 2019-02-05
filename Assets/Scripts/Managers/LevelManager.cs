@@ -18,13 +18,13 @@ public class LevelManager : MonoBehaviour {
         level_factor = 2;
         levels = new System.Enum[] {
             Item.NOTHING,
-            SpecialAbility.ENEMY_EARNER,
+            SpecialAbilities.ENEMY_EARNER,
             Guns.RIFLE,
-            SpecialAbility.BOUNCY,
+            SpecialAbilities.BOUNCY,
             Item.NOTHING,
-            SpecialAbility.GUNNER,
+            SpecialAbilities.GUNNER,
             Guns.SHOTGUN,
-            SpecialAbility.RANDOMER,
+            SpecialAbilities.RANDOMER,
         };
 
         current_level = PlayerPrefs.GetInt("current_level");

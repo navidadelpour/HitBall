@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpecialAbilityManager : MonoBehaviour {
+public class SpecialAbilitiesManager : MonoBehaviour {
 
-	public static SpecialAbilityManager self;
-    public SpecialAbility current_ability;
+	public static SpecialAbilitiesManager self;
+    public SpecialAbilities current_ability;
     public float time = 10f;
     public float range = .5f;
     public bool has = false;
@@ -17,7 +17,7 @@ public class SpecialAbilityManager : MonoBehaviour {
 	void Awake() {
 		self = this;
 
-        current_ability = SpecialAbility.GUNNER;
+        current_ability = SpecialAbilities.GUNNER;
 	}
 
 	void Start () {
@@ -51,7 +51,7 @@ public class SpecialAbilityManager : MonoBehaviour {
         StartCoroutine(Give());
     }
 
-    public bool Has(SpecialAbility special_ability) {
+    public bool Has(SpecialAbilities special_ability) {
         return current_ability == special_ability && active;
     }
 

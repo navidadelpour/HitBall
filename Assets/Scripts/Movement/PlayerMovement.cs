@@ -83,8 +83,8 @@ public class PlayerMovement : MonoBehaviour {
 				HeightManager.self.has_coil = false;
 			}
 		}
-		float speed_scale = SpecialAbilityManager.self.Has(SpecialAbility.BOUNCY) ? 2 : 1;
-		float height_scale = SpecialAbilityManager.self.Has(SpecialAbility.BOUNCY) ? 1.5f : 1;
+		float speed_scale = SpecialAbilitiesManager.self.Has(SpecialAbilities.BOUNCY) ? 2 : 1;
+		float height_scale = SpecialAbilitiesManager.self.Has(SpecialAbilities.BOUNCY) ? 1.5f : 1;
 		body.velocity = Vector2.Lerp (
 			Vector2.up * SpeedManager.self.player_speed * speed_scale,
 			Vector2.zero,
@@ -98,8 +98,8 @@ public class PlayerMovement : MonoBehaviour {
 			jump_time = Time.time;
 			jumping = false;
 		}
-		float speed_scale = SpecialAbilityManager.self.Has(SpecialAbility.BOUNCY) ? 2 : 1;
-		float height_scale = SpecialAbilityManager.self.Has(SpecialAbility.BOUNCY) ? 1.5f : 1;
+		float speed_scale = SpecialAbilitiesManager.self.Has(SpecialAbilities.BOUNCY) ? 2 : 1;
+		float height_scale = SpecialAbilitiesManager.self.Has(SpecialAbilities.BOUNCY) ? 1.5f : 1;
 		body.velocity = Vector2.Lerp (
 			Vector2.zero,
 			Vector2.down * SpeedManager.self.player_speed * speed_scale,

@@ -118,7 +118,7 @@ public class UiManager : MonoBehaviour {
 
 	public void SetSpecialAbility() {
 		special_ability_button.gameObject.GetComponent<Image>().sprite =
-			Resources.Load<Sprite>("textures/SpecialAbilities/" + SpecialAbilityManager.self.current_ability.ToString().ToLower());
+			Resources.Load<Sprite>("textures/SpecialAbilities/" + SpecialAbilitiesManager.self.current_ability.ToString().ToLower());
 	}
 
 	public void EnableSpecialAbility() {
@@ -138,8 +138,8 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetSpecialAbility(string name) {
-		SpecialAbility special_ability = (SpecialAbility) System.Enum.Parse(typeof(SpecialAbility), name.ToUpper());
-		SpecialAbilityManager.self.current_ability = special_ability;
+		SpecialAbilities special_ability = (SpecialAbilities) System.Enum.Parse(typeof(SpecialAbilities), name.ToUpper());
+		SpecialAbilitiesManager.self.current_ability = special_ability;
 		SetSpecialAbility();
 	}
 

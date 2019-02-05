@@ -34,7 +34,7 @@ public class PlayerPrefsManager : MonoBehaviour {
         if(PlayerPrefs.GetInt("Initialized") == 0) {
             ResetPrefs();
 
-            PlayerPrefs.SetInt(SpecialAbility.LUCKY.ToString(), active);
+            PlayerPrefs.SetInt(SpecialAbilities.LUCKY.ToString(), active);
             PlayerPrefs.SetInt(Guns.PISTOL.ToString(), active);
 
             PlayerPrefs.SetInt("default", active);
@@ -53,7 +53,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
         ArrayList types = new ArrayList();
         types.AddRange((Guns[]) Enum.GetValues(typeof(Guns)));
-        types.AddRange((SpecialAbility[]) Enum.GetValues(typeof(SpecialAbility)));
+        types.AddRange((SpecialAbilities[]) Enum.GetValues(typeof(SpecialAbilities)));
         foreach(System.Enum type in types) {
             PlayerPrefs.SetInt(type.ToString(), unlock);
         }

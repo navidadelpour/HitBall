@@ -28,7 +28,7 @@ public class ItemManager : MonoBehaviour {
     }
 
     void Update() {
-        if(SpecialAbilityManager.self.Has(SpecialAbility.RANDOMER)) {
+        if(SpecialAbilitiesManager.self.Has(SpecialAbilities.RANDOMER)) {
             Array items = Enum.GetValues(typeof(Item));
             foreach(AvailableItem available_item in available_items) {
                 if(available_item.item == Item.NOTHING) {
@@ -63,7 +63,7 @@ public class ItemManager : MonoBehaviour {
 
 		RemoveItem(index);
 
-        if(SpecialAbilityManager.self.Has(SpecialAbility.RANDOMER)) {
+        if(SpecialAbilitiesManager.self.Has(SpecialAbilities.RANDOMER)) {
             Array items = Enum.GetValues(typeof(Item));
             AddItem((Item) items.GetValue(UnityEngine.Random.Range(0, items.Length - 1)));
         }
