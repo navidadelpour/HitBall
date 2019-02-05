@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Item {
+public enum Items {
     NOTHING,
     HIGH_JUMP,
     DOUBLE_JUMP,

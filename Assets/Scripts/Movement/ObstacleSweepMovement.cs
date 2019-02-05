@@ -21,7 +21,7 @@ public class ObstacleSweepMovement : MonoBehaviour {
 	}
 	
 	void Update () {
-		bool disabled = ItemManager.self.actives[Item.DISABLER];	
+		bool disabled = ItemManager.self.actives[Items.DISABLER];	
 		if(should_go_right) {
 			if(parameter < 1)
 				parameter += disabled ? 0 : Time.deltaTime / time_should_take;

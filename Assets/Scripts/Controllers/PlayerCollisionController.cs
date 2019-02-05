@@ -21,19 +21,19 @@ public class PlayerCollisionController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (!is_collided && other.gameObject.tag == "Ground") {
-			ItemManager.self.actives[Item.WINGS] = false;
-			ItemManager.self.actives[Item.WEB] = false;
+			ItemManager.self.actives[Items.WINGS] = false;
+			ItemManager.self.actives[Items.WEB] = false;
 			HeightManager.self.SetHeight ();
 			PlayerMovement.self.Jump ();
 			ParticleManager.self.Spawn("dust", this.transform.position);
 			AudioManager.self.Play("player_jump");
 			ScreenShake.self.Shake(.15f);
-			if(ItemManager.self.actives[Item.HIGH_JUMP]) {
+			if(ItemManager.self.actives[Items.HIGH_JUMP]) {
 				HeightManager.self.has_coil = true;
 				HeightManager.self.should_remove_coil = false;
-				ItemManager.self.actives[Item.HIGH_JUMP] = false;
+				ItemManager.self.actives[Items.HIGH_JUMP] = false;
 			}
-			if(ItemManager.self.actives[Item.GROUND_DIGGER]) {
+			if(ItemManager.self.actives[Items.GROUND_DIGGER]) {
 				transform.position += Vector3.down * 10f;
 				PlayerMovement.self.enabled = false;
 			}
@@ -56,8 +56,8 @@ public class PlayerCollisionController : MonoBehaviour {
 			// case "Arrow":
 			case "Obstacle":
 				if(!GameManager.self.safe_mode) {
-					if(ItemManager.self.actives[Item.SHIELD])
-						ItemManager.self.actives[Item.SHIELD] = false;
+					if(ItemManager.self.actives[Items.SHIELD])
+						ItemManager.self.actives[Items.SHIELD] = false;
 					else
 						GameManager.self.GameOver();
 				}
@@ -84,7 +84,7 @@ public class PlayerCollisionController : MonoBehaviour {
 				break;
 			case "Item":
 				Destroy (other.gameObject);
-				Item item = (Item)System.Enum.Parse(typeof(Item), other.name.ToUpper());
+				Items item = (Items)System.Enum.Parse(typeof(Items), other.name.ToUpper());
 				ItemManager.self.AddItem(item);
         		AudioManager.self.Play("item_get");
 				break;

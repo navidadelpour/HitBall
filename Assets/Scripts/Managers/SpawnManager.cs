@@ -92,7 +92,7 @@ public class SpawnManager : MonoBehaviour {
 			return;
 			
 		switch(
-			(ItemManager.self.actives[Item.TELEPORT] || ItemManager.self.actives[Item.GROUND_DIGGER]) && !has_portal ?
+			(ItemManager.self.actives[Items.TELEPORT] || ItemManager.self.actives[Items.GROUND_DIGGER]) && !has_portal ?
 			Things.PORTAL :
 			ShouldSpawn((Things)Util.GetKeyByChance(chances))
 		) {
@@ -214,7 +214,7 @@ public class SpawnManager : MonoBehaviour {
 				Quaternion.identity,
 				last_ground.transform
           	);
-			if(ItemManager.self.actives[Item.MAGNET])
+			if(ItemManager.self.actives[Items.MAGNET])
 				coin_created.AddComponent<CoinMovement>();
 			last_item_spawned = Things.COIN;
 		}
@@ -238,7 +238,7 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
-		if(ItemManager.self.actives[Item.GROUND_DIGGER])
+		if(ItemManager.self.actives[Items.GROUND_DIGGER])
 			portal_created.GetComponent<Renderer> ().enabled = false;
 		last_item_spawned = Things.PORTAL;
 		has_portal = true;

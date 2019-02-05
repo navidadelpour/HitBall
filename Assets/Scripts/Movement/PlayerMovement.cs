@@ -35,9 +35,9 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		if(ItemManager.self.actives[Item.WINGS]) {
+		if(ItemManager.self.actives[Items.WINGS]) {
 			Wings();
-		} else if(ItemManager.self.actives[Item.WEB]) {
+		} else if(ItemManager.self.actives[Items.WEB]) {
 			Web();
 		} else {
 			stoped = false;
@@ -56,19 +56,19 @@ public class PlayerMovement : MonoBehaviour {
 				Fall ();
 			}
 
-			if(ItemManager.self.actives[Item.DOUBLE_JUMP]) {
+			if(ItemManager.self.actives[Items.DOUBLE_JUMP]) {
 				Jump();
-				ItemManager.self.actives[Item.DOUBLE_JUMP] = false;
+				ItemManager.self.actives[Items.DOUBLE_JUMP] = false;
 			}
 
-			if(ItemManager.self.actives[Item.FORCE_FALL]) {
+			if(ItemManager.self.actives[Items.FORCE_FALL]) {
 				Fall();
-				ItemManager.self.actives[Item.FORCE_FALL] = false;
+				ItemManager.self.actives[Items.FORCE_FALL] = false;
 			}
 
 		}
 
-		if(ItemManager.self.actives[Item.TELEPORT]) {
+		if(ItemManager.self.actives[Items.TELEPORT]) {
 			transform.position += Vector3.down * 20f;
 			enabled = false;
 		}
@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void Scale() {
-		if(ItemManager.self.actives[Item.SCALER])
+		if(ItemManager.self.actives[Items.SCALER])
 			Util.Ease(ref scale_amount, min_scale, 2f);
 		else
 			Util.Ease(ref scale_amount, 1, 2f);
@@ -194,7 +194,7 @@ public class PlayerMovement : MonoBehaviour {
 		} else {
 			jumping = false;
 			Jump();
-			ItemManager.self.actives[Item.WEB] = false;
+			ItemManager.self.actives[Items.WEB] = false;
 		}
 	}
 

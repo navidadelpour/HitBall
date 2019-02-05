@@ -44,11 +44,11 @@ public class SpeedManager : MonoBehaviour {
 	void Update () {
 		if(GameManager.self.started)
 			MakeHard();
-		bool has_slow_motion = ItemManager.self.actives[Item.SLOW_MOTION];
-		if(!ItemManager.self.actives[Item.WINGS]) {
+		bool has_slow_motion = ItemManager.self.actives[Items.SLOW_MOTION];
+		if(!ItemManager.self.actives[Items.WINGS]) {
 			switch (state) {
 			case SpeedStates.INCREASE:
-				if(ItemManager.self.actives[Item.JUMP_POWER]) {
+				if(ItemManager.self.actives[Items.JUMP_POWER]) {
 					game_speed = game_max_speed["min"];
 					player_speed = player_min_speed["min"];
 				} else {
@@ -59,7 +59,7 @@ public class SpeedManager : MonoBehaviour {
 				}
 				break;
 			case SpeedStates.NORMALIZE:
-				if(ItemManager.self.actives[Item.JUMP_POWER]) {
+				if(ItemManager.self.actives[Items.JUMP_POWER]) {
 					game_speed = game_normal_speed;
 					player_speed = player_normal_speed;
 				} else {
@@ -75,7 +75,7 @@ public class SpeedManager : MonoBehaviour {
 				}
 				break;
 			case SpeedStates.DECREASE:
-				if(ItemManager.self.actives[Item.JUMP_POWER]) {
+				if(ItemManager.self.actives[Items.JUMP_POWER]) {
 					game_speed = game_min_speed["min"];
 					player_speed = player_max_speed["min"];
 				} else {

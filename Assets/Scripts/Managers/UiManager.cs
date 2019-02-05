@@ -102,7 +102,7 @@ public class UiManager : MonoBehaviour {
 		next_goal_text.text = "NEXT GOAL: " + (value > 0 ? value + "" : "REACHED!");
 	}
 
-	public void SetItem(int i, Item item) {
+	public void SetItem(int i, Items item) {
 		item_buttons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
 	}
 
@@ -203,7 +203,7 @@ public class UiManager : MonoBehaviour {
 
 				string path = "Textures";
 				string header = item.ToString().Replace('_', ' ');
-				if(item.ToString() == Item.NOTHING.ToString())
+				if(item.ToString() == Items.NOTHING.ToString())
 					header = "ITEM SLOT";
 
 				name_text.text = header;

@@ -17,11 +17,11 @@ public class LevelManager : MonoBehaviour {
 
         level_factor = 2;
         levels = new System.Enum[] {
-            Item.NOTHING,
+            Items.NOTHING,
             SpecialAbilities.ENEMY_EARNER,
             Guns.RIFLE,
             SpecialAbilities.BOUNCY,
-            Item.NOTHING,
+            Items.NOTHING,
             SpecialAbilities.GUNNER,
             Guns.SHOTGUN,
             SpecialAbilities.RANDOMER,
@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour {
     public void CheckForLevelUp(string indexes = "") {
         if(GameManager.self.exp > Mathf.Pow(level_factor, current_level)) {
             indexes += (current_level - 1) + "_";
-            if(levels[current_level - 1].ToString() == Item.NOTHING.ToString()) {
+            if(levels[current_level - 1].ToString() == Items.NOTHING.ToString()) {
                 item_slots_unlocks ++;
                 PlayerPrefs.SetInt("item_slots_unlocks", item_slots_unlocks);
                 Debug.Log("item slot unlocked");

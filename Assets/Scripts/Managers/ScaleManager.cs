@@ -65,8 +65,8 @@ public class ScaleManager : MonoBehaviour {
             player.transform.position.z
         );
 
-		if(!ItemManager.self.actives[Item.WINGS]) {
-            bool has_zoom = ItemManager.self.actives[Item.ZOOM];
+		if(!ItemManager.self.actives[Items.WINGS]) {
+            bool has_zoom = ItemManager.self.actives[Items.ZOOM];
             switch (SpeedManager.self.state) {
                 case SpeedStates.INCREASE:
                     if(main_camera.orthographicSize < (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f)) {
