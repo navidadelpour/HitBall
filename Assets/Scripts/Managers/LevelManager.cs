@@ -40,20 +40,23 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void CheckForLevelUp(string indexes = "") {
-        if(GameManager.self.exp > Mathf.Pow(level_factor, current_level)) {
-            indexes += (current_level - 1) + "_";
-            if(levels[current_level - 1].ToString() == Items.NOTHING.ToString()) {
-                item_slots_unlocks ++;
-                PlayerPrefs.SetInt("item_slots_unlocks", item_slots_unlocks);
+        int exp = GameManager.self.exp;
+        if(current_level < levels.Length + 1) {
+            if(exp > Mathf.Pow(level_factor, current_level)) {
+                indexes += (current_level - 1) + "_";
+                if(levels[current_level - 1].ToString() == Items.NOTHING.ToString()) {
+                    item_slots_unlocks ++;
+                    PlayerPrefs.SetInt("item_slots_unlocks", item_slots_unlocks);
+                } else {
+                    PlayerPrefs.SetInt(levels[current_level - 1].ToString(), 0);
+                }
+                current_level ++;
+                PlayerPrefs.SetInt("current_level", current_level);
+                CheckForLevelUp(indexes);
             } else {
-                PlayerPrefs.SetInt(levels[current_level - 1].ToString(), 0);
+                UiManager.self.HandleItemSlots();
+                PlayerPrefs.SetString("indexes", indexes);
             }
-            current_level ++;
-            PlayerPrefs.SetInt("current_level", current_level);
-            CheckForLevelUp(indexes);
-        } else {
-            UiManager.self.HandleItemSlots();
-            PlayerPrefs.SetString("indexes", indexes);
         }
     }
 
