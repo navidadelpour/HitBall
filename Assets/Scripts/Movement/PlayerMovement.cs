@@ -136,6 +136,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void Wings() {
+		// FIXME : checking the height
 		if(!stoped) {
 			body.velocity = Vector2.zero;
 			stoped = true;

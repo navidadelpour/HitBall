@@ -190,6 +190,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	IEnumerator Unlock() {
+		// TODO : spawning the stars
 		string[] indexes = PlayerPrefs.GetString("indexes").Split(new String[] {"_"}, StringSplitOptions.None);
 
 		if(!indexes.Equals("")) {

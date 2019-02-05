@@ -46,8 +46,8 @@ public class ShopManager : MonoBehaviour {
 			{Guns.RIFLE, new string[]{Guns.RIFLE.ToString(), Guns.RIFLE.ToString() + "description"}},
 		};
 
-		tick_sprite = Resources.Load<Sprite>("Textures/UI/Main/tick");
-		lock_sprite = Resources.Load<Sprite>("Textures/UI/Main/lock");
+		tick_sprite = Resources.Load<Sprite>("Textures/UI/Shop/tick");
+		lock_sprite = Resources.Load<Sprite>("Textures/UI/Shop/lock");
 
         faces_header = Resources.Load<GameObject>("Prefabs/Ui/FacesHeader");
         faces_panel = Resources.Load<GameObject>("Prefabs/Ui/Panel");
