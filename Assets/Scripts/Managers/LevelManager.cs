@@ -17,14 +17,14 @@ public class LevelManager : MonoBehaviour {
 
         level_factor = 2;
         levels = new System.Enum[] {
-            Items.NOTHING,
+            Items.NOTHING,                      // level 2
             SpecialAbilities.ENEMY_EARNER,
             Guns.RIFLE,
             SpecialAbilities.BOUNCY,
             Items.NOTHING,
             SpecialAbilities.GUNNER,
             Guns.SHOTGUN,
-            SpecialAbilities.RANDOMER,
+            SpecialAbilities.RANDOMER,          // level 9
         };
 
         current_level = PlayerPrefs.GetInt("current_level");
@@ -61,7 +61,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     public int GetNextGoal() {
-        return (int) Mathf.Pow(level_factor, current_level + 1);
+        return (int) Mathf.Pow(level_factor, current_level + 1) * (current_level < levels.Length + 1 ? 1 : 0); 
     }
 
 }
