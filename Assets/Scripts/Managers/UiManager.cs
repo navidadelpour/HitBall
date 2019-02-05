@@ -197,24 +197,18 @@ public class UiManager : MonoBehaviour {
 			Image image = level_panel.transform.GetChild(0).Find("Image").GetComponent<Image>();
 			Text name_text = level_panel.transform.GetChild(0).Find("Name").GetComponent<Text>();
 
-			foreach(string index in indexes) {
-				if(!index.Equals("")) {
-					int i = int.Parse(index);
-					Enum item = LevelManager.self.levels[i];
+			for(int j = 0; j < indexes.Length - 1; j++) {
+				int i = int.Parse(indexes[j]);
+				Enum item = LevelManager.self.levels[i];
 
-					string path = "Textures/";
-					string name = item.ToString().ToLower();
+				string path = "Textures";
+				string header = item.ToString().Replace('_', ' ');
+				if(item.ToString() == Item.NOTHING.ToString())
+					header = "ITEM SLOT";
 
-					switch(item.GetType().ToString()) {
-						case "SpecialAbility": path += "SpecialAbilities/"; break;
-						case "Guns": path += "Guns/"; break;
-						case "Item": path += "Items/"; name = "ITEM SLOT"; break;
-					}
-
-					name_text.text = name;
-					image.sprite = Resources.Load<Sprite>(path + item.ToString().ToLower());
-					yield return new WaitForSeconds(.5f);
-				}
+				name_text.text = header;
+				image.sprite = Resources.Load<Sprite>(path + "/" + item.GetType().ToString() + "/" + item.ToString().ToLower());
+				yield return new WaitForSeconds(1f);
 			}
 			level_panel.SetActive(false);
 		}
