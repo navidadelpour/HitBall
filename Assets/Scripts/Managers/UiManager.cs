@@ -103,8 +103,9 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetItem(int i, Items item) {
-		// TODO : adding the background for items;
-		item_buttons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
+		item_buttons[i].GetComponent<Image>().sprite = item == Items.NOTHING ? null : Resources.Load<Sprite>("textures/ItemBackgrounds/" + SpawnManager.self.item_backgrounds[item.ToString().ToLower()]);
+		item_buttons[i].GetComponent<Image>().color = item == Items.NOTHING ? Color.clear : Color.white;
+		item_buttons[i].transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
 	}
 
 	public void SetGunTexture() {

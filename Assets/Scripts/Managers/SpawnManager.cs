@@ -45,7 +45,7 @@ public class SpawnManager : MonoBehaviour {
 	// 1: green background
 	// 2: orange background
 	// 3: blue background
-	private Dictionary<string, int> item_backgrounds = new Dictionary<string, int>() {
+	public Dictionary<string, int> item_backgrounds = new Dictionary<string, int>() {
 		{Items.DISABLER.ToString().ToLower(), 1},
 		{Items.DOUBLE_JUMP.ToString().ToLower(), 3},
 		{Items.FORCE_FALL.ToString().ToLower(), 3},
