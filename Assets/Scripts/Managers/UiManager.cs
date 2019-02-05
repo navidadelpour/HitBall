@@ -103,6 +103,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetItem(int i, Items item) {
+		// TODO : adding the background for items;
 		item_buttons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
 	}
 

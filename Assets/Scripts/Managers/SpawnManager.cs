@@ -14,6 +14,7 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject arrow_prefab;
 	private GameObject item_prefab;
 	private Sprite[] item_textures;
+	private Sprite[] item_background_textures;
 	private GameObject[] obstacles_prefabs;
 
 	private GameObject grounds;
@@ -40,6 +41,25 @@ public class SpawnManager : MonoBehaviour {
 	private int[] coins_range = {1, 3};
 	private int[] obstacles_range = {1, 3};
 	public bool has_portal;
+	
+	// 1: green background
+	// 2: orange background
+	// 3: blue background
+	private Dictionary<string, int> item_backgrounds = new Dictionary<string, int>() {
+		{Items.DISABLER.ToString().ToLower(), 1},
+		{Items.DOUBLE_JUMP.ToString().ToLower(), 3},
+		{Items.FORCE_FALL.ToString().ToLower(), 3},
+		{Items.HIGH_JUMP.ToString().ToLower(), 3},
+		{Items.JUMP_POWER.ToString().ToLower(), 3},
+		{Items.MAGNET.ToString().ToLower(), 2},
+		{Items.SCALER.ToString().ToLower(), 2},
+		{Items.SHIELD.ToString().ToLower(), 1},
+		{Items.SLOW_MOTION.ToString().ToLower(), 2},
+		{Items.TELEPORT.ToString().ToLower(), 2},
+		{Items.WEB.ToString().ToLower(), 3},
+		{Items.WINGS.ToString().ToLower(), 3},
+		{Items.ZOOM.ToString().ToLower(), 2},
+	};
 
 	void Awake() {
 		self = this;
@@ -53,6 +73,7 @@ public class SpawnManager : MonoBehaviour {
 		arrow_prefab =  Resources.Load<GameObject>("prefabs/Arrow");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
 		item_textures = Resources.LoadAll <Sprite>("textures/Items");
+		item_background_textures = Resources.LoadAll <Sprite>("textures/ItemBackgrounds");
 
 		grounds = GameObject.Find ("Grounds");
 		
@@ -260,11 +281,17 @@ public class SpawnManager : MonoBehaviour {
 			Quaternion.identity,
 			last_ground.transform
 		);
+
 		Sprite item_texture;
+		Sprite item_background_texture;
+
 		do {
 			item_texture = item_textures[Random.Range(0, item_textures.Length)];
 		} while (item_texture.name == "nothing");
-		item_created.GetComponent<SpriteRenderer>().sprite = item_texture;
+		item_background_texture = item_background_textures[item_backgrounds[item_texture.name] - 1];
+
+		item_created.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = item_texture;
+		item_created.GetComponent<SpriteRenderer>().sprite = item_background_texture;
 		item_created.name = item_texture.name;
 	}
 }
