@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour {
 	private Rigidbody2D body;
 	private int rotate_angle = 15;
 	private float min_scale = .5f;
-	private float scale_amount = 1;
+	private float scale_amount;
 
 	private bool stoped;
 
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private float base_scale;
 
-	
+
 	[Range(0, 3)]
 	public float param = 1.5f;
 	[Range(0, 60)]
@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour {
 		body = GetComponent<Rigidbody2D> ();
 		force = Vector2.zero;
 		base_scale = transform.localScale.x;
+		scale_amount = base_scale;
 	}
 
 	void Start () {
@@ -124,12 +125,12 @@ public class PlayerMovement : MonoBehaviour {
 	private void Scale() {
 		Util.Ease(ref scale_amount, base_scale * (ItemManager.self.actives[Items.SCALER] ? .5f : 1), 2f);
 
-		transform.localScale = Vector3.one * base_scale * scale_amount
+		transform.localScale = Vector3.one * scale_amount
 		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * param
 		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * param) * x_scale;
 
 		if(transform.position.y < min_hight)
-			transform.localScale = Vector3.one * base_scale * scale_amount
+			transform.localScale = Vector3.one * scale_amount
 			+ Vector3.right * Mathf.Abs(transform.position.y - min_hight) * Time.deltaTime * param2 * scale_amount;
 
 	}
@@ -155,7 +156,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		transform.localScale = Vector3.one * scale_amount
-		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f;
+		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * param;
 
 		if(SpeedManager.self.state == SpeedStates.INCREASE){
 			force = Vector2.up;
