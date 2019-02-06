@@ -11,7 +11,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
     public bool should_reset;
     public bool reseted;
-	public Color32[] colors = new Color32[] {Color.white, Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
+	public Color32[] colors = new Color32[] {Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
 
     void Awake() {
         self = this;
