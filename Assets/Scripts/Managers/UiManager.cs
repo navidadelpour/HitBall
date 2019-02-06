@@ -155,7 +155,7 @@ public class UiManager : MonoBehaviour {
 		SpecialAbilitiesManager.self.current_ability = special_ability;
 		SetSpecialAbility();
 	}
-
+	// TODO : changing the player overview
 	public void SetGun(string name) {
 		Dictionary<Enum, Vector3[]> transforms = new Dictionary<Enum, Vector3[]>() {
 			{Guns.PISTOL, new Vector3[] {new Vector3(0.95f, -0.25f, 1), new Vector3(0, 0, -21.079f), new Vector3(.1f, .1f, .1f)}},
