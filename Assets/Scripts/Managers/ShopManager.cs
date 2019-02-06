@@ -232,7 +232,7 @@ public class ShopManager : MonoBehaviour {
 		Color32[] color_array = PlayerPrefsManager.self.colors;
 
 		Transform content = Util.FindDeepChild(shop_colors_panel.transform, "Content").transform;
-		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * ((color_array.Length - 1) * (shop_margin + shop_item_size.y) + shop_margin);
+		content.GetComponent<RectTransform>().sizeDelta = Vector2.up * (Mathf.Ceil((float) color_array.Length / 3) * (shop_margin + shop_item_size.y) + shop_margin);
 
 		for(int i = 0; i < color_array.Length / 3 + 1; i++) {
 			for(int j = 0; j < 3; j++) {
@@ -279,7 +279,7 @@ public class ShopManager : MonoBehaviour {
 	void SetupShopFacesPanel() {
 		Transform content = Util.FindDeepChild(shop_faces_panel.transform, "Content").transform;
 		float content_size = 0f;
-		string[] postfixes = {"Beards", "Hats"};
+		string[] postfixes = {"Mustaches", "Beards", "Hats"};
 		for(int k = 0; k < postfixes.Length; k++) {
 			Sprite[] sprite_array = Resources.LoadAll<Sprite>("Textures/Faces/" + postfixes[k]);
 
@@ -291,7 +291,8 @@ public class ShopManager : MonoBehaviour {
 				Quaternion.identity,
 				content.transform
 			);
-			panel.GetComponent<RectTransform>().sizeDelta = Vector2.up * ((sprite_array.Length / 3 + 1) * (shop_margin + shop_faces_item_size.y) + shop_margin + faces_header_size.y);
+			
+			panel.GetComponent<RectTransform>().sizeDelta = Vector2.up * (Mathf.Ceil((float) sprite_array.Length / 3) * (shop_margin + shop_faces_item_size.y) + shop_margin + faces_header_size.y);
 			panel.name = postfixes[k];
 
 			GameObject header = Instantiate(

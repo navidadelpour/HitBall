@@ -11,10 +11,11 @@ public class PlayerPrefsManager : MonoBehaviour {
 
     public bool should_reset;
     public bool reseted;
-	public Color32[] colors = new Color32[] {Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
+	public Color32[] colors;
 
     void Awake() {
         self = this;
+        colors = new Color32[] {Color.red, Color.blue, Color.green, Color.yellow, Color.magenta};
         Initialize();
     }
 
@@ -39,6 +40,9 @@ public class PlayerPrefsManager : MonoBehaviour {
 
             PlayerPrefs.SetInt("default", active);
             PlayerPrefs.SetInt("0.Color", active);
+            PlayerPrefs.SetInt("mustache01", active);
+            PlayerPrefs.SetInt("beard01", active);
+            PlayerPrefs.SetInt("hat01", active);
 
             PlayerPrefs.SetInt("Initialized", 1);
 
@@ -59,9 +63,9 @@ public class PlayerPrefsManager : MonoBehaviour {
         }
 
 
-        string[] pathes = {"ThemesIcons", "Faces"};
+        string[] pathes = {"ThemesIcons", "Faces/Beards", "Faces/Hats", "Faces/Mustaches"};
         foreach(string path in pathes) {
-            Sprite[] sprite_array = Resources.LoadAll<Sprite>("Textures/");
+            Sprite[] sprite_array = Resources.LoadAll<Sprite>("Textures/" + path);
             string name;
             foreach(Sprite sprite in sprite_array) {
                 name = sprite.name.Split(new String[] {"_"}, StringSplitOptions.None)[0];

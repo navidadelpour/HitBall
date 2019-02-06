@@ -191,7 +191,7 @@ public class UiManager : MonoBehaviour {
 
 	public void SetColor(int index) {
 		SpriteRenderer player_renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
-		player_renderer.color = PlayerPrefsManager.self.colors[index];
+		player_renderer.sprite = Resources.Load<Sprite>("Textures/Faces/Backgrounds/background_" + index);
 	}
 
 	public void SetFace(string key, string name) {
