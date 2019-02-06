@@ -12,7 +12,7 @@ public class ParticleManager : MonoBehaviour {
 	void Awake() {
 		self = this;
 		particles_parent = new GameObject();
-		particles_parent.name = "ParticlesParent";
+		particles_parent.name = "Particles";
 	}
 
 	void Start () {

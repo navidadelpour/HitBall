@@ -18,6 +18,7 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject[] obstacles_prefabs;
 
 	private GameObject grounds;
+	private GameObject blocks;
 	private GameObject last_ground;
 	private float ground_limit_scale = 1.5f;
 	private int ground_limit;
@@ -76,6 +77,8 @@ public class SpawnManager : MonoBehaviour {
 		item_background_textures = Resources.LoadAll <Sprite>("textures/ItemBackgrounds");
 
 		grounds = GameObject.Find ("Grounds");
+		blocks = new GameObject();
+		blocks.name = "Blocks";
 		
 		ground_size_y = ground_prefab.GetComponent<BoxCollider2D> ().size.y * ground_prefab.transform.lossyScale.y;
 		ground_size_x = ground_prefab.GetComponent<BoxCollider2D> ().size.x * ground_prefab.transform.lossyScale.x;
@@ -221,7 +224,8 @@ public class SpawnManager : MonoBehaviour {
 		Instantiate(
 			block_prefab,
 			last_ground.transform.position + Vector3.up * ground_size_y / 2 + Vector3.up * Random.Range(2f, 5f),
-			Quaternion.identity
+			Quaternion.identity,
+			blocks.transform
 		);
 		last_item_spawned = Things.BLOCK;
 	}
