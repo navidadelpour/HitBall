@@ -23,11 +23,24 @@ public class PlayerMovement : MonoBehaviour {
 	private float max_web_angle = 90f;
 	private Vector3 started_position;
 
+	private float base_scale;
+
+	
+	[Range(0, 3)]
+	public float param = 1.5f;
+	[Range(0, 60)]
+	public float param2 = 30f;
+	[Range(0, 5)]
+	public float min_hight = 2.1f;
+	[Range(0, 2)]
+	public float x_scale = 1;
+
 	void Awake() {
 		self = this;
 
 		body = GetComponent<Rigidbody2D> ();
 		force = Vector2.zero;
+		base_scale = transform.localScale.x;
 	}
 
 	void Start () {
@@ -109,18 +122,15 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void Scale() {
-		if(ItemManager.self.actives[Items.SCALER])
-			Util.Ease(ref scale_amount, min_scale, 2f);
-		else
-			Util.Ease(ref scale_amount, 1, 2f);
+		Util.Ease(ref scale_amount, base_scale * (ItemManager.self.actives[Items.SCALER] ? .5f : 1), 2f);
 
-		transform.localScale = Vector3.one * scale_amount
-		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f
-		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * 1.5f);
+		transform.localScale = Vector3.one * base_scale * scale_amount
+		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * param
+		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * param) * x_scale;
 
-		if(transform.position.y < 2.1f)
-			transform.localScale = Vector3.one * scale_amount
-			+ Vector3.right * Mathf.Abs(transform.position.y - 2.1f) * Time.deltaTime * 30f * scale_amount;
+		if(transform.position.y < min_hight)
+			transform.localScale = Vector3.one * base_scale * scale_amount
+			+ Vector3.right * Mathf.Abs(transform.position.y - min_hight) * Time.deltaTime * param2 * scale_amount;
 
 	}
 
