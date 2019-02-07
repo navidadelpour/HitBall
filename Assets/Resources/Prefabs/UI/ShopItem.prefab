@@ -377,7 +377,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'UNLOCKS IN
 
-    LEVEL X'
+    LEVEL '
 --- !u!114 &114688260796602650
 MonoBehaviour:
   m_ObjectHideFlags: 1

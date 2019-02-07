@@ -123,7 +123,7 @@ public class ShopManager : MonoBehaviour {
 				case 1:
 					Transform lock_panel = shop_item_created.transform.Find("LockPanel");
 					lock_panel.gameObject.SetActive(true);
-					// lock_panel.Find("Cost").gameObject.GetComponent<Text>().text = cost;
+					lock_panel.Find("Cost").gameObject.GetComponent<Text>().text += 2 + Array.FindIndex(LevelManager.self.levels, x => x.ToString() == enum_array[i].ToString());
 					shop_item_created.GetComponent<Button>().interactable = false;
 					break;
 				case 2:
@@ -164,7 +164,7 @@ public class ShopManager : MonoBehaviour {
 				case 1:
 					Transform lock_panel = shop_item_created.transform.Find("LockPanel");
 					lock_panel.gameObject.SetActive(true);
-					// lock_panel.Find("Cost").gameObject.GetComponent<Text>().text = cost;
+					lock_panel.Find("Cost").gameObject.GetComponent<Text>().text += 2 + Array.FindIndex(LevelManager.self.levels, x => x.ToString() == enum_array[i].ToString());
 					shop_item_created.GetComponent<Button>().interactable = false;
 					break;
 				case 2:
