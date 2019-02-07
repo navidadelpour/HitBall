@@ -351,9 +351,9 @@ public class ShopManager : MonoBehaviour {
 				if(shop_item_instance == actives["SpecialAbilities"])
 					return;
 				PlayerPrefs.SetInt(actives["SpecialAbilities"].name, 0);
-				actives["SpecialAbilities"].transform.Find("Status").GetComponent<Image>().sprite = null;
+				actives["SpecialAbilities"].transform.Find("Tick").gameObject.SetActive(false);
 				actives["SpecialAbilities"] = shop_item_instance;
-				actives["SpecialAbilities"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+				actives["SpecialAbilities"].transform.Find("Tick").gameObject.SetActive(true);
 				PlayerPrefs.SetInt(actives["SpecialAbilities"].name, 2);
 				UiManager.self.SetSpecialAbility(actives["SpecialAbilities"].name);
 				break;
@@ -361,9 +361,9 @@ public class ShopManager : MonoBehaviour {
 				if(shop_item_instance == actives["Guns"])
 					return;
 				PlayerPrefs.SetInt(actives["Guns"].name, 0);
-				actives["Guns"].transform.Find("Status").GetComponent<Image>().sprite = null;
+				actives["Guns"].transform.Find("Tick").gameObject.SetActive(false);
 				actives["Guns"] = shop_item_instance;
-				actives["Guns"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
+				actives["Guns"].transform.Find("Tick").gameObject.SetActive(true);
 				PlayerPrefs.SetInt(actives["Guns"].name, 2);
 				UiManager.self.SetGun(actives["Guns"].name);
 				break;
@@ -379,14 +379,13 @@ public class ShopManager : MonoBehaviour {
 					if(!unlock && GameManager.self.coins >= cost) {
 						GameManager.self.coins -= cost;
                         unlock = true;
+						shop_item_instance.transform.Find("LockPanel").gameObject.SetActive(false);
 					}
                     if(unlock) {
 						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
-						actives["Themes"].transform.Find("Status").GetComponent<Image>().sprite = null;
-						actives["Themes"].transform.Find("Cost").GetComponent<Text>().text = "";
+						actives["Themes"].transform.Find("Tick").gameObject.SetActive(false);
 						actives["Themes"] = shop_item_instance;
-						actives["Themes"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-						actives["Themes"].transform.Find("Cost").GetComponent<Text>().text = "";
+						actives["Themes"].transform.Find("Tick").gameObject.SetActive(true);
 						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
 						UiManager.self.SetTheme();
                     }
@@ -404,14 +403,13 @@ public class ShopManager : MonoBehaviour {
 						if(!unlock && GameManager.self.coins >= cost) {
 							GameManager.self.coins -= cost;
 							unlock = true;
+							shop_item_instance.transform.Find("LockPanel").gameObject.SetActive(false);
 						}
 						if(unlock) {
 							PlayerPrefs.SetInt(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
-							actives["Colors"].transform.Find("Status").GetComponent<Image>().sprite = null;
-							actives["Colors"].transform.Find("Cost").GetComponent<Text>().text = "";
+							actives["Colors"].transform.Find("Tick").gameObject.SetActive(false);
 							actives["Colors"] = shop_item_instance;
-							actives["Colors"].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-							actives["Colors"].transform.Find("Cost").GetComponent<Text>().text = "";
+							actives["Colors"].transform.Find("Tick").gameObject.SetActive(true);
 							PlayerPrefs.SetInt(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
 							UiManager.self.SetColor(int.Parse(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0].Split(new String[] {"."}, StringSplitOptions.None)[0]));
 						}
@@ -428,24 +426,22 @@ public class ShopManager : MonoBehaviour {
 
 					if(actives.ContainsKey(key) && shop_item_instance == actives[key]) {
 						PlayerPrefs.SetInt(actives[key].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
-						actives[key].transform.Find("Status").GetComponent<Image>().sprite = null;
-						actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
+						actives[key].transform.Find("Tick").gameObject.SetActive(false);
 						actives[key] = null;
 						UiManager.self.SetFace(key, null);
 					} else {
 						if(!unlock && GameManager.self.coins >= cost) {
 							GameManager.self.coins -= cost;
 							unlock = true;
+							shop_item_instance.transform.Find("LockPanel").gameObject.SetActive(false);
 						}
 						if(unlock) {
 							if(actives.ContainsKey(key) && actives[key] != null) {
 								PlayerPrefs.SetInt(actives[key].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
-								actives[key].transform.Find("Status").GetComponent<Image>().sprite = null;
-								actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
+								actives[key].transform.Find("Tick").gameObject.SetActive(false);
 							}
 							actives[key] = shop_item_instance;
-							actives[key].transform.Find("Status").GetComponent<Image>().sprite = tick_sprite;
-							actives[key].transform.Find("Cost").GetComponent<Text>().text = "";
+							actives[key].transform.Find("Tick").gameObject.SetActive(true);
 							PlayerPrefs.SetInt(actives[key].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
 							UiManager.self.SetFace(key, actives[key].name);
 						}
