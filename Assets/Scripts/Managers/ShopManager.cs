@@ -26,7 +26,7 @@ public class ShopManager : MonoBehaviour {
 	private GameObject shop_themes_item;
 	private Vector3 shop_item_size;
 	private Vector3 shop_faces_item_size;
-	private float shop_margin = 30f;
+	private float shop_margin = 0f;
 	private int colors_cost = 10;
 
 	public Dictionary<string, GameObject> actives = new Dictionary<string, GameObject>();
@@ -110,33 +110,31 @@ public class ShopManager : MonoBehaviour {
 			GameObject shop_item_created = Instantiate(
 				shop_item,
 				content.transform.position +
-				Vector3.right * (shop_item_size.x / 2 + shop_margin) +
+				Vector3.right * (shop_item_size.x / 2) +
 				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
 				Quaternion.identity,
 				content.transform
 			);
 			
-			Sprite sprite_to_give = null;
-			bool interactable = true;
 			switch(PlayerPrefs.GetInt(enum_array[i].ToString())) {
 				case 0:
-					sprite_to_give = null;
+
 					break;
 				case 1:
-					sprite_to_give = lock_sprite;
-					interactable = false;
+					Transform lock_panel = shop_item_created.transform.Find("LockPanel");
+					lock_panel.gameObject.SetActive(true);
+					// lock_panel.Find("Cost").gameObject.GetComponent<Text>().text = cost;
+					shop_item_created.GetComponent<Button>().interactable = false;
 					break;
 				case 2:
-					sprite_to_give = tick_sprite;
+					shop_item_created.transform.Find("Tick").gameObject.SetActive(true);
 					actives["Guns"] = shop_item_created;
 					UiManager.self.SetGun(enum_array[i].ToString());
 					break;
 			}
 
 			shop_item_created.name = enum_array[i].ToString();
-			shop_item_created.GetComponent<Button>().interactable = interactable;
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Guns/" + enum_array[i].ToString().ToLower());
-			shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = sprite_to_give;
 			shop_item_created.transform.Find("Header").GetComponent<Text>().text = metas[enum_array[i]][0];
 			shop_item_created.transform.Find("Description").GetComponent<Text>().text = metas[enum_array[i]][1];
 
@@ -153,33 +151,31 @@ public class ShopManager : MonoBehaviour {
 			GameObject shop_item_created = Instantiate(
 				shop_item,
 				content.transform.position +
-				Vector3.right * (shop_item_size.x / 2 + shop_margin) +
+				Vector3.right * (shop_item_size.x / 2) +
 				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
 				Quaternion.identity,
 				content.transform
 			);
 			
-			Sprite sprite_to_give = null;
-			bool interactable = true;
 			switch(PlayerPrefs.GetInt(enum_array[i].ToString())) {
 				case 0:
-					sprite_to_give = null;
+
 					break;
 				case 1:
-					sprite_to_give = lock_sprite;
-					interactable = false;
+					Transform lock_panel = shop_item_created.transform.Find("LockPanel");
+					lock_panel.gameObject.SetActive(true);
+					// lock_panel.Find("Cost").gameObject.GetComponent<Text>().text = cost;
+					shop_item_created.GetComponent<Button>().interactable = false;
 					break;
 				case 2:
-					sprite_to_give = tick_sprite;
+					shop_item_created.transform.Find("Tick").gameObject.SetActive(true);
 					actives["SpecialAbilities"] = shop_item_created;
 					UiManager.self.SetSpecialAbility(enum_array[i].ToString());
 					break;
 			}
 
 			shop_item_created.name = enum_array[i].ToString();
-			shop_item_created.GetComponent<Button>().interactable = interactable;
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/SpecialAbilities/" + enum_array[i].ToString().ToLower());
-			shop_item_created.transform.Find("Status").GetComponent<Image>().sprite = sprite_to_give;
 			shop_item_created.transform.Find("Header").GetComponent<Text>().text = metas[enum_array[i]][0];
 			shop_item_created.transform.Find("Description").GetComponent<Text>().text = metas[enum_array[i]][1];
 		}
@@ -195,7 +191,7 @@ public class ShopManager : MonoBehaviour {
 			GameObject shop_item_created = Instantiate(
 				shop_themes_item,
 				content.transform.position +
-				Vector3.right * (shop_item_size.x / 2 + shop_margin) +
+				Vector3.right * (shop_item_size.x / 2) +
 				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
 				Quaternion.identity,
 				content.transform
@@ -204,26 +200,23 @@ public class ShopManager : MonoBehaviour {
 			string[] x = sprite_array[i].name.Split(new String[] {"_"}, StringSplitOptions.None);
 			string name = x[0];
 			string cost = x[1];
-			Sprite sprite_to_give = null;
 			shop_item_created.name = sprite_array[i].name;
 			switch(PlayerPrefs.GetInt(name)) {
 				case 0:
-					sprite_to_give = null;
-					cost = "";
+
 					break;
 				case 1:
-					sprite_to_give = lock_sprite;
+					Transform lock_panel = shop_item_created.transform.Find("LockPanel");
+					lock_panel.gameObject.SetActive(true);
+					lock_panel.Find("Cost").gameObject.GetComponent<Text>().text = cost;
 					break;
 				case 2:
-					sprite_to_give = tick_sprite;
-					cost = "";
+					shop_item_created.transform.Find("Tick").gameObject.SetActive(true);
 					actives["Themes"] = shop_item_created;
 					break;
 			}
 
 			shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[i];
-			shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
-			shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
 		}
 
 	}
@@ -251,38 +244,39 @@ public class ShopManager : MonoBehaviour {
 
 				string name = index + ".Color";
 				string cost = colors_cost + "";
-				Sprite sprite_to_give = null;
 				switch(PlayerPrefs.GetInt(name)) {
 					case 0:
-						sprite_to_give = null;
-						cost = "";
+
 						break;
 					case 1:
-						sprite_to_give = lock_sprite;
+						Transform lock_panel = shop_item_created.transform.Find("LockPanel");
+						lock_panel.gameObject.SetActive(true);
+						lock_panel.Find("Cost").gameObject.GetComponent<Text>().text = cost;
 						break;
 					case 2:
-						sprite_to_give = tick_sprite;
-						cost = "";
+						shop_item_created.transform.Find("Tick").gameObject.SetActive(true);
 						actives["Colors"] = shop_item_created;
 						UiManager.self.SetColor(index);
 						break;
 				}
 				shop_item_created.name = name + "_" + (cost == "" ? "0" : cost);
-				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = null;
-				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().color = color_array[index];
-				shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
-				shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
+				shop_item_created.transform.Find("Image").gameObject.GetComponent<RawImage>().color = color_array[index];
 			}
 		}
 	}
 
 
 	void SetupShopFacesPanel() {
+		Dictionary<string, Vector2> uv_rects = new Dictionary<string, Vector2>() {
+			{"Mustaches", new Vector2(.12f, .2f)},
+			{"Beards", new Vector2(0, 0)},
+			{"Hats", new Vector2(0, 0)}
+		};
 		Transform content = Util.FindDeepChild(shop_faces_panel.transform, "Content").transform;
 		float content_size = 0f;
 		string[] postfixes = {"Mustaches", "Beards", "Hats"};
 		for(int k = 0; k < postfixes.Length; k++) {
-			Sprite[] sprite_array = Resources.LoadAll<Sprite>("Textures/Faces/" + postfixes[k]);
+			Texture2D[] sprite_array = Resources.LoadAll<Texture2D>("Textures/Faces/" + postfixes[k]);
 
 			Vector2 faces_header_size = Vector3.right * faces_header.GetComponent<RectTransform>().rect.width + Vector3.up * faces_header.GetComponent<RectTransform>().rect.height;
 
@@ -315,7 +309,7 @@ public class ShopManager : MonoBehaviour {
 					GameObject shop_item_created = Instantiate(
 						shop_faces_item,
 						panel.transform.position +
-						Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x + shop_margin) * j + shop_margin) +
+						Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x + shop_margin) * j) +
 						Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin + faces_header_size.y + content_size),
 						Quaternion.identity,
 						panel.transform
@@ -324,27 +318,25 @@ public class ShopManager : MonoBehaviour {
 					string[] x = sprite_array[index].name.Split(new String[] {"_"}, StringSplitOptions.None);
 					string name = x[0];
 					string cost = x[1];
-					Sprite sprite_to_give = null;
 					switch(PlayerPrefs.GetInt(name)) {
 						case 0:
-							sprite_to_give = null;
-							cost = "";
+							
 							break;
 						case 1:
-							sprite_to_give = lock_sprite;
+							Transform lock_panel = shop_item_created.transform.Find("LockPanel");
+							lock_panel.gameObject.SetActive(true);
+							lock_panel.Find("Cost").gameObject.GetComponent<Text>().text = cost;
 							break;
 						case 2:
-							sprite_to_give = tick_sprite;
-							cost = "";
+							shop_item_created.transform.Find("Tick").gameObject.SetActive(true);
 							actives[postfixes[k]] = shop_item_created;
 							UiManager.self.SetFace(postfixes[k], sprite_array[index].name);
 							break;
 					}
 					
 					shop_item_created.name = sprite_array[index].name;
-					shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = sprite_array[index];
-					shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
-					shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;
+					shop_item_created.transform.Find("Image").gameObject.GetComponent<RawImage>().uvRect = new Rect(uv_rects[postfixes[k]], Vector2.one);
+					shop_item_created.transform.Find("Image").gameObject.GetComponent<RawImage>().texture = sprite_array[index];
 				}
 			}
 			content_size += panel.GetComponent<RectTransform>().sizeDelta.y;
