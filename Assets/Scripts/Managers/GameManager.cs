@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager self;
 
 	public bool safe_mode = true;
+	public bool gameover;
 	public bool paused;
 	public bool started;
 	public int combo = 1;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
+		gameover = true;
 		SetHighScore();
 
 		if(!PlayerPrefsManager.self.reseted) {
@@ -52,8 +54,8 @@ public class GameManager : MonoBehaviour {
 			LevelManager.self.CheckForLevelUp();
 			SettingManager.self.Save();
 		}
-		InputManager.self.OnPauseButtonClick();
 		UiManager.self.GameOver();
+		InputManager.self.OnPauseButtonClick();
 	}
 
 	public void SetHighScore() {
