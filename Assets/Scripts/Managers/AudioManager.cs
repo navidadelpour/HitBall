@@ -21,7 +21,8 @@ public class AudioManager : MonoBehaviour {
 		self = this;
 
         main_music = GameObject.Find("MainMusic").GetComponent<AudioSource>();
-
+        
+        // TODO : dynamic dictionary adding.
         audio_sources = new Dictionary<string, AudioSource>() {
             {"coin", coin = GameObject.Find("Coin").GetComponent<AudioSource>()},
             {"player_die", player_die = GameObject.Find("PlayerDie").GetComponent<AudioSource>()},

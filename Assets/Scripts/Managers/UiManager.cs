@@ -160,9 +160,9 @@ public class UiManager : MonoBehaviour {
 
 	public void SetGun(string name) {
 		Dictionary<Enum, Vector3[]> transforms = new Dictionary<Enum, Vector3[]>() {
-			{Guns.PISTOL, new Vector3[] {new Vector3(0.95f, -0.25f, 1), new Vector3(0, 0, -21.079f), new Vector3(.1f, .1f, .1f)}},
-			{Guns.SHOTGUN, new Vector3[] {new Vector3(1.06f, -0.22f, 1), new Vector3(0, 0, -45), new Vector3(.2f, .2f, .2f)}},
-			{Guns.RIFLE, new Vector3[] {new Vector3(0.9f, -0.22f, 1), new Vector3(0, 0, -45f), new Vector3(.2f, .2f, .2f)}},
+			{Guns.PISTOL, new Vector3[] {new Vector3(3.5f, 0, 0), new Vector3(0, 0, -20f), new Vector3(.5f, .5f, .5f)}},
+			{Guns.RIFLE, new Vector3[] {new Vector3(3.5f, 0, 0), new Vector3(0, 0, -45f), new Vector3(.8f, .8f, .8f)}},
+			{Guns.SHOTGUN, new Vector3[] {new Vector3(4f, 0, 0), new Vector3(0, 0, -45f), new Vector3(.8f, .8f, .8f)}},
 		};
 
 		Guns gun = (Guns) System.Enum.Parse(typeof(Guns), name.ToUpper());
@@ -179,7 +179,6 @@ public class UiManager : MonoBehaviour {
 		gun_transform.localEulerAngles = transforms[gun][1];
 		gun_transform.localScale = transforms[gun][2];
 
-		player_overview_panel.transform.GetChild(0).Find("Gun").GetComponent<Image>().sprite = sprite;
 	}
 
 	public void SetTheme() {
