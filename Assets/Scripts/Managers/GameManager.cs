@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour {
 		coins += gift_coin;
 		SetGift();
 		UiManager.self.DisableGift();
+		UiManager.self.SetCoins();
 	}
 
 }
