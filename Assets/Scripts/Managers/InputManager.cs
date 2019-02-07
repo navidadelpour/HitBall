@@ -54,6 +54,10 @@ public class InputManager : MonoBehaviour {
 		AudioManager.self.Play("button");
 	}
 
+	public void OnRateButtonClick() {
+		// TODO : rate buttion functionality
+	}
+
 	public void OnGunbuttonHold() {
 		gun_button_pressed = !gun_button_pressed;
 		AudioManager.self.Play("button");

@@ -268,6 +268,7 @@ public class ShopManager : MonoBehaviour {
 						break;
 				}
 				shop_item_created.name = name + "_" + (cost == "" ? "0" : cost);
+				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().sprite = null;
 				shop_item_created.transform.Find("Image").gameObject.GetComponent<Image>().color = color_array[index];
 				shop_item_created.transform.Find("Status").gameObject.GetComponent<Image>().sprite = sprite_to_give;
 				shop_item_created.transform.Find("Cost").gameObject.GetComponent<Text>().text = cost;

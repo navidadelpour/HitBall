@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     public int item_slots_unlocks;
     public System.Enum[] levels;
     public int current_level;
+    public int temp_current__level;
     private int level_factor;
 
     void Awake() {
@@ -29,10 +30,12 @@ public class LevelManager : MonoBehaviour {
 
         current_level = PlayerPrefs.GetInt("current_level");
         item_slots_unlocks = PlayerPrefs.GetInt("item_slots_unlocks");
+        temp_current__level = current_level;
     }
 
     void Start() {
-
+        UiManager.self.SetLevel(temp_current__level);
+        SetNextGoal(GameManager.self.exp);
     }
 
     void Update() {
@@ -60,8 +63,21 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    public int GetNextGoal() {
-        return (int) Mathf.Pow(level_factor, current_level + 1) * (current_level < levels.Length + 1 ? 1 : 0); 
+    public void SetNextGoal(int exp) {
+        int goal = 0;
+        if(temp_current__level < levels.Length + 1) {
+            goal = (int) Mathf.Pow(level_factor, temp_current__level + 1);
+            int left = goal - exp;
+            if(left < 0) {
+                Debug.Log("REACHED!");
+                temp_current__level++;
+                UiManager.self.SetLevel(temp_current__level);
+            } else {
+                UiManager.self.SetNextGoal(left);
+            }
+        } else {
+            UiManager.self.SetNextGoal(0, true);
+        }
     }
 
 }

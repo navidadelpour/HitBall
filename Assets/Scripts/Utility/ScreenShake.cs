@@ -25,6 +25,7 @@ public class ScreenShake : MonoBehaviour {
 
 	}
 
+	// TODO : custom object shake
 	public void Shake(float toShake) {
 		range = toShake;
 	}

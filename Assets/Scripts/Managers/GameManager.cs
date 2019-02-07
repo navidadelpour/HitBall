@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour {
 		score += combo;
 		exp += combo;
 		UiManager.self.SetScore ();
-		UiManager.self.SetNextGoal(LevelManager.self.GetNextGoal() - exp);
+		LevelManager.self.SetNextGoal(exp);
 	}
 
 	public void EnemyEarn() {
