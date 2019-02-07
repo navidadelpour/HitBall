@@ -25,6 +25,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject game_panel;
 	public GameObject game_over_panel;
 	public GameObject level_panel;
+	public GameObject player_overview_panel;
 
 	public GameObject texture;
 	public GameObject fixed_background;
@@ -50,6 +51,7 @@ public class UiManager : MonoBehaviour {
 
 		texture = GameObject.Find("Texture");
         fixed_background = GameObject.Find("FixedBackground");
+        player_overview_panel = GameObject.Find("PlayerOverviewPanel");
 
         obstacle_prefab = Resources.Load<GameObject>("Prefabs/Obstacles/Obstacle").GetComponent<SpriteRenderer>();
         ground_prefab = Resources.Load<GameObject>("Prefabs/Ground").GetComponent<SpriteRenderer>();
@@ -119,12 +121,6 @@ public class UiManager : MonoBehaviour {
 		item_buttons[i].transform.GetChild(0).GetComponent<Image>().sprite = sprite;
 	}
 
-	public void SetGunTexture() {
-		Sprite sprite = Resources.Load<Sprite>("textures/Guns/" + GunController.self.active_gun.ToString().ToLower());
-		gun_image.sprite = sprite;
-		PlayerMovement.self.transform.Find("Gun").GetComponent<SpriteRenderer>().sprite = sprite;
-	}
-
 	public void SetGunText(int current_ammo, int ammo) {
 		gun_text.text = current_ammo + " / " + ammo;
 	}
@@ -155,22 +151,29 @@ public class UiManager : MonoBehaviour {
 		SpecialAbilitiesManager.self.current_ability = special_ability;
 		SetSpecialAbility();
 	}
-	// TODO : changing the player overview
+
 	public void SetGun(string name) {
 		Dictionary<Enum, Vector3[]> transforms = new Dictionary<Enum, Vector3[]>() {
 			{Guns.PISTOL, new Vector3[] {new Vector3(0.95f, -0.25f, 1), new Vector3(0, 0, -21.079f), new Vector3(.1f, .1f, .1f)}},
 			{Guns.SHOTGUN, new Vector3[] {new Vector3(1.06f, -0.22f, 1), new Vector3(0, 0, -45), new Vector3(.2f, .2f, .2f)}},
 			{Guns.RIFLE, new Vector3[] {new Vector3(0.9f, -0.22f, 1), new Vector3(0, 0, -45f), new Vector3(.2f, .2f, .2f)}},
 		};
+
 		Guns gun = (Guns) System.Enum.Parse(typeof(Guns), name.ToUpper());
 		GunController.self.SetGun(gun);
+
+		Sprite sprite = Resources.Load<Sprite>("textures/Guns/" + gun.ToString().ToLower());
+		gun_image.sprite = sprite;
+		PlayerMovement.self.transform.Find("Gun").GetComponent<SpriteRenderer>().sprite = sprite;
+
 		SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
-		SetGunTexture();
 
 		Transform gun_transform = PlayerMovement.self.transform.Find("Gun").transform;
 		gun_transform.localPosition = transforms[gun][0];
 		gun_transform.localEulerAngles = transforms[gun][1];
 		gun_transform.localScale = transforms[gun][2];
+
+		player_overview_panel.transform.GetChild(0).Find("Gun").GetComponent<Image>().sprite = sprite;
 	}
 
 	public void SetTheme() {
@@ -191,15 +194,17 @@ public class UiManager : MonoBehaviour {
 
 	public void SetColor(int index) {
 		SpriteRenderer player_renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
-		player_renderer.sprite = Resources.Load<Sprite>("Textures/Faces/Backgrounds/background_" + index);
+		Sprite sprite = Resources.Load<Sprite>("Textures/Faces/Backgrounds/background_" + index);
+		player_renderer.sprite = sprite;
+		player_overview_panel.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
 	}
 
 	public void SetFace(string key, string name) {
 		SpriteRenderer key_on_player = GameObject.Find("Player").transform.Find(key).GetComponent<SpriteRenderer>();
-		if(name == null)
-			key_on_player.sprite = null;
-		else
-			key_on_player.sprite = Resources.Load<Sprite>("Textures/Faces/" + key + "/" + name);
+		Sprite sprite = name == null ? null : Resources.Load<Sprite>("Textures/Faces/" + key + "/" + name);
+		key_on_player.sprite = sprite;
+		player_overview_panel.transform.GetChild(0).Find(key).GetComponent<Image>().sprite = sprite;
+		player_overview_panel.transform.GetChild(0).Find(key).GetComponent<Image>().color = name == null ? Color.clear : Color.white;
 	}
 
 	IEnumerator Unlock() {
