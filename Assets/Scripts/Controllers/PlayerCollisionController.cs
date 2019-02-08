@@ -82,11 +82,8 @@ public class PlayerCollisionController : MonoBehaviour {
 				break;
 
 			case "Coil":
-				HeightManager.self.SetHeight ();
-				PlayerMovement.self.Jump ();
-				HeightManager.self.has_coil = true;
-				HeightManager.self.should_remove_coil = false;
 				AudioManager.self.Play("coil");
+				StartCoroutine(JumpDelaied());
 				break;
 			case "Item":
 				Destroy (other.gameObject);
@@ -95,5 +92,13 @@ public class PlayerCollisionController : MonoBehaviour {
         		AudioManager.self.Play("item_get");
 				break;
 		}
+	}
+
+	IEnumerator JumpDelaied() {
+		yield return new WaitForSeconds(.05f);
+		HeightManager.self.SetHeight ();
+		PlayerMovement.self.Jump ();
+		HeightManager.self.has_coil = true;
+		HeightManager.self.should_remove_coil = false;
 	}
 }
