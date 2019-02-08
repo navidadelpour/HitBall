@@ -77,6 +77,7 @@ public class PlayerPrefsManager : MonoBehaviour {
             PlayerPrefs.SetInt(i + ".Color", unlock);
         }
 
+		PlayerPrefs.SetString("indexes", "");
         PlayerPrefs.SetInt("current_level", 1);
         PlayerPrefs.SetInt("item_slots_unlocks", 1);
         PlayerPrefs.SetInt("coins", 0);

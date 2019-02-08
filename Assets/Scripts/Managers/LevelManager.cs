@@ -57,7 +57,6 @@ public class LevelManager : MonoBehaviour {
                 PlayerPrefs.SetInt("current_level", current_level);
                 CheckForLevelUp(indexes);
             } else {
-                UiManager.self.HandleItemSlots();
                 PlayerPrefs.SetString("indexes", indexes);
             }
         }

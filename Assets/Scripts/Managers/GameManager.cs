@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start () {
-
+		Time.timeScale = 1;
 	}
 	
 	void Update () {
@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour {
 			LevelManager.self.CheckForLevelUp();
 			SettingManager.self.Save();
 		}
-		UiManager.self.GameOver();
 	}
 
 	public void SetHighScore() {

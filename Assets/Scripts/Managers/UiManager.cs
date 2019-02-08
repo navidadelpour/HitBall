@@ -77,6 +77,7 @@ public class UiManager : MonoBehaviour {
 		HandleItemSlots();
 		DisableGift();
 
+		UiManager.self.HandleItemSlots();
 		StartCoroutine(Unlock());
 	}
 	

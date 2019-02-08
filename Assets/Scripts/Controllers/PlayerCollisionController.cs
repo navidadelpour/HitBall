@@ -68,6 +68,7 @@ public class PlayerCollisionController : MonoBehaviour {
 						ItemManager.self.actives[Items.SHIELD] = false;
 					else
 						GameManager.self.GameOver();
+						UiManager.self.GameOver();
 				}
 				break;
 
@@ -79,6 +80,7 @@ public class PlayerCollisionController : MonoBehaviour {
 
 			case "Hole":
 				GameManager.self.GameOver();
+				UiManager.self.GameOver();
 				break;
 
 			case "Coil":

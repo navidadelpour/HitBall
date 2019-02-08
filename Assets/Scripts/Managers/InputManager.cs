@@ -50,8 +50,9 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public void OnResetButtonClick() {
-		SceneManager.LoadScene("Scene1");
+		GameManager.self.GameOver();
 		AudioManager.self.Play("button");
+		SceneManager.LoadScene("Scene1");
 	}
 
 	public void OnRateButtonClick() {
