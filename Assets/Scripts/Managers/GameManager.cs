@@ -55,7 +55,8 @@ public class GameManager : MonoBehaviour {
 			SettingManager.self.Save();
 		}
 		UiManager.self.GameOver();
-		InputManager.self.OnPauseButtonClick();
+		Time.timeScale = 0;
+		GameManager.self.paused = true;
 	}
 
 	public void SetHighScore() {
@@ -118,6 +119,11 @@ public class GameManager : MonoBehaviour {
 
 	private void OnApplicationQuit() {
 		GameOver();
+	}
+
+	public void OnExitButtonClick() {
+		AudioManager.self.Play("button");
+		Application.Quit();
 	}
 
 	public void OnGiftButtonClick() {

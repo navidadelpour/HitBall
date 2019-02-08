@@ -18,6 +18,7 @@ public class ShopManager : MonoBehaviour {
 	private GameObject shop_themes_panel;
 	private GameObject shop_colors_panel;
 	public GameObject player_overview_panel;
+	public GameObject always_panel;
 
 	private GameObject faces_header;
 	private GameObject faces_panel;
@@ -78,22 +79,23 @@ public class ShopManager : MonoBehaviour {
 
     void Start() {
         UiManager.self.BringPanelsToCenter(new GameObject[]{
+			always_panel = GameObject.Find("Always"),
+			player_overview_panel = GameObject.Find("PlayerOverviewPanel"),
 			shop_panel,
 			shop_guns_panel,
 			shop_special_abilities_panel,
 			shop_faces_panel,
 			shop_themes_panel,
 			shop_colors_panel,
-			player_overview_panel = GameObject.Find("PlayerOverviewPanel")
-		});
+		}, shop_panel);
 		player_overview_panel.SetActive(false);
-
+		always_panel.SetActive(true);
 		SetupShopGunsPanel();
 		SetupShopSpecialAbilityPanel();
 		SetupShopFacesPanel();
 		SetupShopThemesPanel();
 		SetupShopColorsPanel();
-		player_overview_panel.transform.SetAsLastSibling();
+		// player_overview_panel.transform.SetAsLastSibling();
     }
 
     void Update() {

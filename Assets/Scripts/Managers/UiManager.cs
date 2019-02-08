@@ -27,6 +27,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject game_over_panel;
 	public GameObject level_panel;
 	public GameObject player_overview_panel;
+	public GameObject pause_panel;
 
 	public GameObject texture;
 	public GameObject fixed_background;
@@ -65,6 +66,7 @@ public class UiManager : MonoBehaviour {
 			game_panel = GameObject.Find("GamePanel"),
 			game_over_panel = GameObject.Find("GameOverPanel"),
 			level_panel = GameObject.Find("LevelPanel"),
+			pause_panel = GameObject.Find("PausePanel"),
 		});
 		menu_panel.SetActive(true);
 
@@ -244,11 +246,13 @@ public class UiManager : MonoBehaviour {
 		Util.GoToPanel(game_panel, game_over_panel);
 	}
 
-	public void BringPanelsToCenter(GameObject[] panels) {
+	public void BringPanelsToCenter(GameObject[] panels, GameObject parent_panel = null) {
 		foreach(GameObject panel in panels) {
 			RectTransform rect_transform = panel.GetComponent<RectTransform>();
 			rect_transform.offsetMax = new Vector2(0, 0);
 			rect_transform.offsetMin = new Vector2(0, 0);
+			if(parent_panel != null && panel != parent_panel)
+				panel.transform.SetSiblingIndex(parent_panel.transform.GetSiblingIndex() + 1);
 			panel.SetActive(false);
 		}
 	}

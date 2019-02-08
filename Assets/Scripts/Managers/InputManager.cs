@@ -45,6 +45,7 @@ public class InputManager : MonoBehaviour {
 		else
 			Time.timeScale = 0;
 		GameManager.self.paused = !GameManager.self.paused;
+		UiManager.self.pause_panel.SetActive(GameManager.self.paused);
 		AudioManager.self.Play("button");
 	}
 
