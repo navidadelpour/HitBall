@@ -42,6 +42,17 @@ public class SpeedManager : MonoBehaviour {
 	} 
 
 	void Update () {
+		if(GameManager.self.gameover) {
+			if(player_speed > 2)
+				player_speed = 2;
+			if(player_speed > 0)
+				player_speed -= player_speed_difference_amount * Time.deltaTime;
+			if(game_speed > 2)
+				game_speed = 2;
+			if(game_speed > 0)
+				game_speed -= game_speed_diffrence_amount * Time.deltaTime;
+			return;
+		}
 		if(GameManager.self.started)
 			MakeHard();
 		bool has_slow_motion = ItemManager.self.actives[Items.SLOW_MOTION];

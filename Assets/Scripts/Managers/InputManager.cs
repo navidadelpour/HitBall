@@ -50,7 +50,6 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public void OnResetButtonClick() {
-		OnPauseButtonClick();
 		SceneManager.LoadScene("Scene1");
 		AudioManager.self.Play("button");
 	}

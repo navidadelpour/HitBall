@@ -55,8 +55,6 @@ public class GameManager : MonoBehaviour {
 			SettingManager.self.Save();
 		}
 		UiManager.self.GameOver();
-		Time.timeScale = 0;
-		GameManager.self.paused = true;
 	}
 
 	public void SetHighScore() {
@@ -86,7 +84,7 @@ public class GameManager : MonoBehaviour {
 
 
 	public void IncreamentScore() {
-		if(!started)
+		if(!started || gameover)
 			return;
 		score += combo;
 		exp += combo;

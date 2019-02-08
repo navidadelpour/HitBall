@@ -129,7 +129,7 @@ public class PlayerMovement : MonoBehaviour {
 		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * param
 		+ Vector3.right * (.2f -  Mathf.Abs(body.velocity.y) * Time.deltaTime * param) * x_scale;
 
-		if(transform.position.y < min_hight)
+		if(transform.position.y < min_hight && !GameManager.self.gameover)
 			transform.localScale = Vector3.one * scale_amount
 			+ Vector3.right * Mathf.Abs(transform.position.y - min_hight) * Time.deltaTime * param2 * scale_amount;
 

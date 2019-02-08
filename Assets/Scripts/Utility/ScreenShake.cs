@@ -15,7 +15,7 @@ public class ScreenShake : MonoBehaviour {
     }
 
 	void Update () {
-		if(range > 0 && !GameManager.self.gameover) {
+		if(range > 0) {
 			amount = new Vector3(Random.Range(-range, range), Random.Range(-range, range), 0f);
 			range -= Time.deltaTime * decay;
 		} else {

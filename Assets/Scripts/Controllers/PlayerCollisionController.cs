@@ -25,9 +25,11 @@ public class PlayerCollisionController : MonoBehaviour {
 			ItemManager.self.actives[Items.WEB] = false;
 			HeightManager.self.SetHeight ();
 			PlayerMovement.self.Jump ();
-			ParticleManager.self.Spawn("dust", this.transform.position);
-			AudioManager.self.Play("player_jump");
-			ScreenShake.self.Shake(.15f);
+			if(!GameManager.self.gameover){
+				ParticleManager.self.Spawn("dust", this.transform.position);
+				AudioManager.self.Play("player_jump");
+				ScreenShake.self.Shake(.15f);
+			}
 			if(ItemManager.self.actives[Items.HIGH_JUMP]) {
 				HeightManager.self.has_coil = true;
 				HeightManager.self.should_remove_coil = false;
@@ -46,6 +48,8 @@ public class PlayerCollisionController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+		if(GameManager.self.gameover)
+			return;
 		switch (other.gameObject.tag) {
 			case "Block":
 				if(SpecialAbilitiesManager.self.Has(SpecialAbilities.ENEMY_EARNER)) {
@@ -55,14 +59,16 @@ public class PlayerCollisionController : MonoBehaviour {
 				break;
 			// case "Arrow":
 			case "Obstacle":
+				if(!GameManager.self.gameover) {
+					AudioManager.self.Play("player_die");
+					ScreenShake.self.Shake(.3f);
+				}
 				if(!GameManager.self.safe_mode) {
 					if(ItemManager.self.actives[Items.SHIELD])
 						ItemManager.self.actives[Items.SHIELD] = false;
 					else
 						GameManager.self.GameOver();
 				}
-				AudioManager.self.Play("player_die");
-				ScreenShake.self.Shake(.3f);
 				break;
 
 			case "Coin":

@@ -52,6 +52,10 @@ public class HeightManager : MonoBehaviour {
 	}
 
 	public void SetHeight() {
+		if(GameManager.self.gameover) {
+			player_jump_height = 1;
+			return;
+		}
 		switch (SpeedManager.self.state) {
 			case SpeedStates.INCREASE:
 				if(ItemManager.self.actives[Items.JUMP_POWER])
