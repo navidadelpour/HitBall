@@ -238,7 +238,7 @@ public class ShopManager : MonoBehaviour {
 				GameObject shop_item_created = Instantiate(
 					shop_faces_item,
 					content.transform.position +
-					Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x + shop_margin) * j + shop_margin) +
+					Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x) * j) +
 					Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin),
 					Quaternion.identity,
 					content.transform
@@ -311,7 +311,7 @@ public class ShopManager : MonoBehaviour {
 					GameObject shop_item_created = Instantiate(
 						shop_faces_item,
 						panel.transform.position +
-						Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x + shop_margin) * j) +
+						Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x) * j) +
 						Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin + faces_header_size.y + content_size),
 						Quaternion.identity,
 						panel.transform

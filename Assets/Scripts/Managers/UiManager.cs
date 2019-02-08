@@ -33,6 +33,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject fixed_background;
 
 	public SpriteRenderer obstacle_prefab;
+	public SpriteRenderer obstacle_sweep_prefab;
 	public SpriteRenderer ground_prefab;
 
 
@@ -57,6 +58,7 @@ public class UiManager : MonoBehaviour {
         player_overview_panel = GameObject.Find("PlayerOverviewPanel");
 
         obstacle_prefab = Resources.Load<GameObject>("Prefabs/Obstacles/Obstacle").GetComponent<SpriteRenderer>();
+        obstacle_sweep_prefab = Resources.Load<GameObject>("Prefabs/Obstacles/ObstacleSweep").GetComponent<SpriteRenderer>();
         ground_prefab = Resources.Load<GameObject>("Prefabs/Ground").GetComponent<SpriteRenderer>();
 	}
 
@@ -192,11 +194,14 @@ public class UiManager : MonoBehaviour {
 		texture.GetComponent<Renderer>().material.SetTexture("_MainTex", Resources.Load<Texture>("Textures/Backgrounds/" + name + "texture"));
 		fixed_background.GetComponent<Renderer>().material.SetTexture("_MainTex", Resources.Load<Texture>("Textures/Backgrounds/" + name + "fixed_background"));
 
-		obstacle_prefab.sprite = Resources.Load<Sprite>("Textures/Objects/Obstacles/" + theme_name + "_" + "obstacle");
-		ground_prefab.sprite = Resources.Load<Sprite>("Textures/Objects/Grounds/" + theme_name + "_" + "ground");
+		Sprite obstacle_sprite = Resources.Load<Sprite>("Textures/Objects/Obstacles/" + theme_name + "_" + "obstacle");
+		Sprite ground_sprite = Resources.Load<Sprite>("Textures/Objects/Grounds/" + theme_name + "_" + "ground");
+		obstacle_prefab.sprite = obstacle_sprite;
+		obstacle_sweep_prefab.sprite = obstacle_sprite;
+		ground_prefab.sprite = ground_sprite;
 		Transform Grounds_on_scene = GameObject.Find("Grounds").transform;
 		for(int i = 0; i < Grounds_on_scene.childCount; i++) {
-			Grounds_on_scene.GetChild(i).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Objects/Grounds/" + theme_name + "_" + "ground");
+			Grounds_on_scene.GetChild(i).GetComponent<SpriteRenderer>().sprite = ground_sprite;
 		}
 	}
 

@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour {
 
     }
 
+    // FIXME : I THINK THERE IS A BUG HERE...
     public void CheckForLevelUp(string indexes = "") {
         int exp = GameManager.self.exp;
         if(current_level < levels.Length + 1) {
