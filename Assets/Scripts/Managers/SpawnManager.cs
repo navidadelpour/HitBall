@@ -202,9 +202,10 @@ public class SpawnManager : MonoBehaviour {
 		float offset_x = 0;
 		float offset_y = 1;
 
+		offset_x = obstacles_prefab.GetComponent<BoxCollider2D> ().size.x * obstacles_prefab.transform.lossyScale.x;
+		offset_y = obstacles_prefab.GetComponent<BoxCollider2D> ().size.y * obstacles_prefab.transform.lossyScale.y;
+
 		if(obstacles_prefab.name == "Obstacle") {
-			offset_x = obstacles_prefab.GetComponent<BoxCollider2D> ().size.x * obstacles_prefab.transform.lossyScale.x;
-			offset_y = obstacles_prefab.GetComponent<BoxCollider2D> ().size.y * obstacles_prefab.transform.lossyScale.y;
 			max_i = Random.Range (obstacles_range[0], obstacles_range[1] + 1);
 			starting_point = (1 - max_i) * .5f;
 		}

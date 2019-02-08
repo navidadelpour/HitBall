@@ -12,7 +12,7 @@ public class ObstacleSweepMovement : MonoBehaviour {
 
 	void Awake() {
 		initial_height = Vector3.up * transform.localPosition.y;
-		time_should_take = Random.Range(1f, 4f);
+		time_should_take = Random.Range(.5f, 2f);
 		parameter = Random.Range(0f, 1f);
 	}
 
