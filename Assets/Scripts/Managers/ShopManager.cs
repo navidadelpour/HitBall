@@ -460,28 +460,43 @@ public class ShopManager : MonoBehaviour {
 	}
 
 	public void OnGunsPanelButtonClick() {
-		Util.GoToPanel(shop_panel, shop_guns_panel);
+		shop_guns_panel.SetActive(true);
 		AudioManager.self.Play("button");
+		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
+		shop_guns_panel.GetComponent<Animator>().SetTrigger("In");
+		shop_guns_panel.GetComponent<CanvasGroup>().interactable = true;
 	}
 
 	public void OnSpecialAbilitiesPanelButtonClick() {
-		Util.GoToPanel(shop_panel, shop_special_abilities_panel);
+		shop_special_abilities_panel.SetActive(true);
 		AudioManager.self.Play("button");
+		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
+		shop_special_abilities_panel.GetComponent<Animator>().SetTrigger("In");
+		shop_special_abilities_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 	
 	public void OnFacesPanelButtonClick() {
-		Util.GoToPanel(shop_panel, shop_faces_panel);
+		shop_faces_panel.SetActive(true);
 		AudioManager.self.Play("button");
+		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
+		shop_faces_panel.GetComponent<Animator>().SetTrigger("In");
+		shop_faces_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 
 	public void OnThemesPanelButtonClick() {
-		Util.GoToPanel(shop_panel, shop_themes_panel);
+		shop_themes_panel.SetActive(true);
 		AudioManager.self.Play("button");
+		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
+		shop_themes_panel.transform.GetComponent<Animator>().SetTrigger("In");
+		shop_themes_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 
 	public void OnColorsPanelButtonClick() {
-		Util.GoToPanel(shop_panel, shop_colors_panel);
+		shop_colors_panel.SetActive(true);
 		AudioManager.self.Play("button");
+		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
+		shop_colors_panel.GetComponent<Animator>().SetTrigger("In");
+		shop_colors_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 
 }

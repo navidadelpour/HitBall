@@ -225,6 +225,7 @@ public class UiManager : MonoBehaviour {
 		key_on_player.sprite = sprite;
 		player_overview_panel.transform.GetChild(0).Find(key).GetComponent<Image>().sprite = sprite;
 		player_overview_panel.transform.GetChild(0).Find(key).GetComponent<Image>().color = name == null ? Color.clear : Color.white;
+		player_overview_panel.transform.GetChild(0).Find(key).GetComponent<Animator>().SetTrigger("Wiggle");
 	}
 
 	IEnumerator Unlock() {
@@ -298,8 +299,10 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void OnBackToShopButtonClick() {
-		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, ShopManager.self.shop_panel);
 		AudioManager.self.Play("button");
+		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Right");
+		EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.GetComponent<Animator>().SetTrigger("Out");
+		EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 	}
 
 }

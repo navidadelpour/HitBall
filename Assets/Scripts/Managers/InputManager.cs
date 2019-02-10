@@ -57,6 +57,7 @@ public class InputManager : MonoBehaviour {
 
 	public void OnRateButtonClick() {
 		// TODO : rate buttion functionality
+		Debug.Log(1);
 	}
 
 	public void OnGunbuttonHold() {

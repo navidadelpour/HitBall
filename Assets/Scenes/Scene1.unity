@@ -1359,6 +1359,7 @@ GameObject:
   - component: {fileID: 215110884}
   - component: {fileID: 215110886}
   - component: {fileID: 215110885}
+  - component: {fileID: 215110887}
   m_Layer: 5
   m_Name: Hats
   m_TagString: Untagged
@@ -1403,7 +1404,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cc2d44e813fea0844b46fee508567c54, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1418,6 +1419,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 215110883}
   m_CullTransparentMesh: 0
+--- !u!95 &215110887
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 215110883}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 709995926a6d40b48bfc60f257df0973, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &219284895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +1994,7 @@ Animator:
   m_GameObject: {fileID: 317662244}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b89ea94b0bb6154dbc895ca8993697f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 87a9702c010686f45b00d209b8adec95, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3546,6 +3565,7 @@ GameObject:
   - component: {fileID: 623442749}
   - component: {fileID: 623442751}
   - component: {fileID: 623442750}
+  - component: {fileID: 623442752}
   m_Layer: 5
   m_Name: Beards
   m_TagString: Untagged
@@ -3605,6 +3625,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 623442748}
   m_CullTransparentMesh: 0
+--- !u!95 &623442752
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 623442748}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 709995926a6d40b48bfc60f257df0973, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &628645378
 GameObject:
   m_ObjectHideFlags: 0
@@ -3683,7 +3721,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 133496663}
-        m_MethodName: OnResetButtonClick
+        m_MethodName: OnRateButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4372,7 +4410,7 @@ Animator:
   m_GameObject: {fileID: 825385117}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b89ea94b0bb6154dbc895ca8993697f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 07b768d5fb2c9e04f8586a16b3dcc449, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4698,6 +4736,7 @@ GameObject:
   - component: {fileID: 870139971}
   - component: {fileID: 870139973}
   - component: {fileID: 870139972}
+  - component: {fileID: 870139974}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -4761,6 +4800,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 870139970}
   m_CullTransparentMesh: 0
+--- !u!95 &870139974
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 870139970}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 565a3e9a55b6eb044a30bdd2bc3d4061, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &882582235
 GameObject:
   m_ObjectHideFlags: 0
@@ -7366,6 +7423,7 @@ GameObject:
   - component: {fileID: 1370885570}
   - component: {fileID: 1370885572}
   - component: {fileID: 1370885571}
+  - component: {fileID: 1370885573}
   m_Layer: 5
   m_Name: Mustaches
   m_TagString: Untagged
@@ -7425,6 +7483,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1370885569}
   m_CullTransparentMesh: 0
+--- !u!95 &1370885573
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1370885569}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 709995926a6d40b48bfc60f257df0973, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1381217568
 GameObject:
   m_ObjectHideFlags: 0
@@ -8800,6 +8876,8 @@ GameObject:
   - component: {fileID: 1587647761}
   - component: {fileID: 1587647763}
   - component: {fileID: 1587647762}
+  - component: {fileID: 1587647765}
+  - component: {fileID: 1587647764}
   m_Layer: 5
   m_Name: ShopGeneralPanel
   m_TagString: Untagged
@@ -8864,6 +8942,35 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1587647760}
   m_CullTransparentMesh: 0
+--- !u!95 &1587647764
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1587647760}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dbf6df42fb5e0294abc3f8ab43a142d4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &1587647765
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1587647760}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1649369365
 GameObject:
   m_ObjectHideFlags: 0
