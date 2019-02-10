@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour {
 	[Range(0, 2)]
 	public float x_scale = 1;
 	public Animator face_animator;
+	private float max_wing_height = 5f;
 
 	void Awake() {
 		self = this;
@@ -154,7 +155,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void Wings() {
-		// FIXME : checking the height
+
 		if(!stoped) {
 			body.velocity = Vector2.zero;
 			stoped = true;
@@ -165,10 +166,15 @@ public class PlayerMovement : MonoBehaviour {
 		transform.localScale = Vector3.one * scale_amount
 		+ Vector3.up *  Mathf.Abs(body.velocity.y) * Time.deltaTime * param;
 
-		if(SpeedManager.self.state == SpeedStates.INCREASE){
+		SpeedStates state = SpeedManager.self.state;
+		if(state == SpeedStates.INCREASE && transform.position.y > max_wing_height) {
+			state = SpeedStates.NORMALIZE;
+		}
+
+		if(state == SpeedStates.INCREASE){
 			force = Vector2.up;
 			body.AddForce(force * 10f);
-		} else if (SpeedManager.self.state == SpeedStates.DECREASE) {
+		} else if (state == SpeedStates.DECREASE) {
 			force = Vector2.down;
 			body.AddForce(force * 10f);
 		} else {
