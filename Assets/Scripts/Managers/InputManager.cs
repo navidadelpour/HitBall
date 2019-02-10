@@ -82,6 +82,7 @@ public class InputManager : MonoBehaviour {
 
 	public void OnItemButtonClick() {
 		int index = int.Parse(EventSystem.current.currentSelectedGameObject.name);
+		Debug.Log(index);
 		if(ItemManager.self.available_items[index].item != Items.NOTHING) {
 			ItemManager.self.ActiveItem(index);
 		}

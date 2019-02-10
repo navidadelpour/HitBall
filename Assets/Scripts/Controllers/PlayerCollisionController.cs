@@ -61,7 +61,7 @@ public class PlayerCollisionController : MonoBehaviour {
 			case "Obstacle":
 				if(!GameManager.self.gameover) {
 					AudioManager.self.Play("player_die");
-					ScreenShake.self.Shake(.3f);
+					ScreenShake.self.Shake(.2f);
 				}
 				if(!GameManager.self.safe_mode) {
 					if(ItemManager.self.actives[Items.SHIELD])

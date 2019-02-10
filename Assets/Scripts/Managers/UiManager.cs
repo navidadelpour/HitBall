@@ -108,10 +108,16 @@ public class UiManager : MonoBehaviour {
 
 	public void SetCombo() {
 		combo_text.text = "x" + GameManager.self.combo; 
+		combo_text.GetComponent<Animator>().SetTrigger("Wiggle");
 	}
 
 	public void SetNextGoal(int value, bool b = false) {
-		next_goal_text.text = b ? "" : "NEXT GOAL: " + (value > 0 ? value + "" : "REACHED!");
+		string goal = value + "";
+		if(value <= 0) {
+			next_goal_text.GetComponent<Animator>().SetTrigger("Wiggle");
+			goal = "REACHED!";
+		}
+		next_goal_text.text = b ? "" : "NEXT GOAL: " + goal;
 	}
 
 	public void SetLevel(int value) {
@@ -182,11 +188,11 @@ public class UiManager : MonoBehaviour {
 
 		Sprite sprite = Resources.Load<Sprite>("textures/Guns/" + gun.ToString().ToLower());
 		gun_image.sprite = sprite;
-		PlayerMovement.self.transform.Find("Gun").GetComponent<SpriteRenderer>().sprite = sprite;
+		PlayerMovement.self.transform.Find("GunAnimator").GetChild(0).GetComponent<SpriteRenderer>().sprite = sprite;
 
 		SetGunText(GunController.self.guns[gun].ammo, GunController.self.guns[gun].ammo);
 
-		Transform gun_transform = PlayerMovement.self.transform.Find("Gun").transform;
+		Transform gun_transform = PlayerMovement.self.transform.Find("GunAnimator").GetChild(0).transform;
 		gun_transform.localPosition = transforms[gun][0];
 		gun_transform.localEulerAngles = transforms[gun][1];
 		gun_transform.localScale = transforms[gun][2];
@@ -260,6 +266,8 @@ public class UiManager : MonoBehaviour {
 
 	public void GameOver() {
 		Util.GoToPanel(game_panel, game_over_panel);
+		game_over_panel.GetComponent<Animator>().SetTrigger("In");
+		game_over_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("In");
 	}
 
 	public void BringPanelsToCenter(GameObject[] panels, GameObject parent_panel = null) {

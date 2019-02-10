@@ -69,7 +69,6 @@ public class LevelManager : MonoBehaviour {
             goal = (int) Mathf.Pow(level_factor, temp_current__level + 1);
             int left = goal - exp;
             if(left < 0) {
-                Debug.Log("REACHED!");
                 temp_current__level++;
                 UiManager.self.SetLevel(temp_current__level);
             } else {

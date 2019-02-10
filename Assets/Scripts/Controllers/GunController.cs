@@ -12,7 +12,8 @@ public class GunController : MonoBehaviour {
     private float start_shoting;
     private bool reloading;
     private int current_ammo;
-
+    private Animator gun_animator;
+    
     private void Awake() {
         self = this;
         guns = new Dictionary<Guns, Gun> {
@@ -23,7 +24,7 @@ public class GunController : MonoBehaviour {
     }
 
     private void Start() {
-
+        gun_animator = PlayerMovement.self.transform.Find("GunAnimator").GetComponent<Animator>();
     }
 
     public void SetGun(Guns gun) {
@@ -40,7 +41,7 @@ public class GunController : MonoBehaviour {
         if(Time.time - start_shoting > time && current_ammo > 0) {
             start_shoting = Time.time;
 
-            // Debug.Log("shot!");
+            // TODO : adding more rays to increase shot hit rate
             bool killed = false;
             RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.right * 1f, Vector3.right);
             if(hit.collider != null && !killed) {
@@ -53,6 +54,7 @@ public class GunController : MonoBehaviour {
 
             current_ammo--;
             UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
+            gun_animator.SetTrigger("Shot");
             AudioManager.self.Play("gun_shot");
             if(current_ammo == 0 && !reloading) {
                 StartCoroutine(Reload());
@@ -62,6 +64,7 @@ public class GunController : MonoBehaviour {
 
     IEnumerator Reload() {
         reloading = true;
+        gun_animator.SetTrigger("Reload");
         float time = guns[active_gun].reload_time * (SpecialAbilitiesManager.self.Has(SpecialAbilities.GUNNER) ? .5f : 1);
         AudioManager.self.Play("reloading");
         yield return new WaitForSeconds(time);
