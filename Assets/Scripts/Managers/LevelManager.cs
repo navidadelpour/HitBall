@@ -42,11 +42,10 @@ public class LevelManager : MonoBehaviour {
 
     }
 
-    // FIXME : I THINK THERE IS A BUG HERE...
     public void CheckForLevelUp(string indexes = "") {
         int exp = GameManager.self.exp;
         if(current_level < levels.Length + 1) {
-            if(exp > Mathf.Pow(level_factor, current_level)) {
+            if(exp > Mathf.Pow(level_factor, current_level + 1)) {
                 indexes += (current_level - 1) + "_";
                 if(levels[current_level - 1].ToString() == Items.NOTHING.ToString()) {
                     item_slots_unlocks ++;
@@ -55,9 +54,9 @@ public class LevelManager : MonoBehaviour {
                     PlayerPrefs.SetInt(levels[current_level - 1].ToString(), 0);
                 }
                 current_level ++;
-                PlayerPrefs.SetInt("current_level", current_level);
                 CheckForLevelUp(indexes);
             } else {
+                PlayerPrefs.SetInt("current_level", current_level);
                 PlayerPrefs.SetString("indexes", indexes);
             }
         }
