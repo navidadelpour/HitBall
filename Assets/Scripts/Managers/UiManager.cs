@@ -15,6 +15,7 @@ public class UiManager : MonoBehaviour {
 	public Text gun_text;
 	public Text next_goal_text;
 	public Text level_text;
+	public Text gift_text;
 
 	public Button[] item_buttons;
 	public Button special_ability_button;
@@ -28,6 +29,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject level_panel;
 	public GameObject player_overview_panel;
 	public GameObject pause_panel;
+	public GameObject transition_panel;
 
 	public GameObject texture;
 	public GameObject fixed_background;
@@ -46,6 +48,7 @@ public class UiManager : MonoBehaviour {
 		gun_text = GameObject.Find ("GunText").GetComponent<Text>();
 		next_goal_text = GameObject.Find ("NextGoalText").GetComponent<Text>();
 		level_text = GameObject.Find ("LevelText").GetComponent<Text>();
+		gift_text = GameObject.Find ("GiftText").GetComponent<Text>();
 
 		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
 		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
@@ -56,6 +59,7 @@ public class UiManager : MonoBehaviour {
 		texture = GameObject.Find("Texture");
         fixed_background = GameObject.Find("FixedBackground");
         player_overview_panel = GameObject.Find("PlayerOverviewPanel");
+        transition_panel = GameObject.Find("TransitionPanel");
 
         obstacle_prefab = Resources.Load<GameObject>("Prefabs/Obstacles/Obstacle").GetComponent<SpriteRenderer>();
         obstacle_sweep_prefab = Resources.Load<GameObject>("Prefabs/Obstacles/ObstacleSweep").GetComponent<SpriteRenderer>();
@@ -71,13 +75,12 @@ public class UiManager : MonoBehaviour {
 			pause_panel = GameObject.Find("PausePanel"),
 		});
 		menu_panel.SetActive(true);
-
+		transition_panel.GetComponent<Animator>().SetTrigger("Out");
 		SetScore ();
 		SetHighScore();
 		SetCoins ();
 		SetCombo ();
 		HandleItemSlots();
-		DisableGift();
 
 		UiManager.self.HandleItemSlots();
 		StartCoroutine(Unlock());
@@ -151,10 +154,14 @@ public class UiManager : MonoBehaviour {
 
 	public void EnableGift() {
 		gift_button.interactable = true;
+		gift_button.GetComponent<Animator>().SetTrigger("In");
 	}
 
-	public void DisableGift() {
+	public void DisableGift(int gift_coin) {
 		gift_button.interactable = false;
+		gift_text.text = "+" + gift_coin;
+		gift_button.GetComponent<Animator>().SetTrigger("Out");
+		gift_text.GetComponent<Animator>().SetTrigger("In");
 	}
 
 	public void SetSpecialAbility(string name) {
