@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float min_hight = 2.1f;
 	[Range(0, 2)]
 	public float x_scale = 1;
+	public Animator face_animator;
 
 	void Awake() {
 		self = this;
@@ -42,6 +43,8 @@ public class PlayerMovement : MonoBehaviour {
 		force = Vector2.zero;
 		base_scale = transform.localScale.x;
 		scale_amount = base_scale;
+		
+        face_animator = this.transform.Find("Face").GetComponent<Animator>();
 	}
 
 	void Start () {
@@ -86,6 +89,10 @@ public class PlayerMovement : MonoBehaviour {
 			transform.position += Vector3.down * 20f;
 			enabled = false;
 		}
+
+		face_animator.SetBool("Die", GameManager.self.gameover);
+		face_animator.SetFloat("Speed", SpeedManager.self.player_speed);
+		face_animator.SetFloat("Height", HeightManager.self.has_coil ? HeightManager.self.player_coil_jump_height : HeightManager.self.player_jump_height);
 	}
 
 	public void Jump() {

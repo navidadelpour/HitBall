@@ -13,6 +13,7 @@ public class GunController : MonoBehaviour {
     private bool reloading;
     private int current_ammo;
     private Animator gun_animator;
+    private Animator face_animator;
     
     private void Awake() {
         self = this;
@@ -25,6 +26,7 @@ public class GunController : MonoBehaviour {
 
     private void Start() {
         gun_animator = PlayerMovement.self.transform.Find("GunAnimator").GetComponent<Animator>();
+        face_animator = PlayerMovement.self.transform.Find("Face").GetComponent<Animator>();
     }
 
     public void SetGun(Guns gun) {
@@ -55,6 +57,7 @@ public class GunController : MonoBehaviour {
             current_ammo--;
             UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
             gun_animator.SetTrigger("Shot");
+            face_animator.SetTrigger("Shot");
             AudioManager.self.Play("gun_shot");
             if(current_ammo == 0 && !reloading) {
                 StartCoroutine(Reload());
