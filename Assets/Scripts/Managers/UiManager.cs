@@ -229,6 +229,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	IEnumerator Unlock() {
+		yield return new WaitForSeconds(1f);
 		// TODO : spawning the stars
 		string[] indexes = PlayerPrefs.GetString("indexes").Split(new String[] {"_"}, StringSplitOptions.None);
 
@@ -238,6 +239,7 @@ public class UiManager : MonoBehaviour {
 			Text name_text = level_panel.transform.GetChild(0).Find("Name").GetComponent<Text>();
 
 			for(int j = 0; j < indexes.Length - 1; j++) {
+				level_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("In");
 				int i = int.Parse(indexes[j]);
 				Enum item = LevelManager.self.levels[i];
 
@@ -248,7 +250,7 @@ public class UiManager : MonoBehaviour {
 
 				name_text.text = header;
 				image.sprite = Resources.Load<Sprite>(path + "/" + item.GetType().ToString() + "/" + item.ToString().ToLower());
-				yield return new WaitForSeconds(1f);
+				yield return new WaitForSeconds(2f);
 			}
 			level_panel.SetActive(false);
 		}
