@@ -15,6 +15,12 @@ public class GunController : MonoBehaviour {
     private Animator gun_animator;
     private Animator face_animator;
     
+    private LineRenderer laser_renderer;
+    private Vector3 target_pos;
+    private float length = 20f;
+    public GameObject target;
+    private RaycastHit2D hit;
+
     private void Awake() {
         self = this;
         guns = new Dictionary<Guns, Gun> {
@@ -22,6 +28,8 @@ public class GunController : MonoBehaviour {
             {Guns.RIFLE, new Gun(Guns.RIFLE, 30, .2f, 2)},
             {Guns.SHOTGUN, new Gun(Guns.SHOTGUN, 10, 1, 3)},
         };
+        target_pos = Vector3.right * length;
+        laser_renderer = GetComponent<LineRenderer>();
     }
 
     private void Start() {
@@ -35,7 +43,18 @@ public class GunController : MonoBehaviour {
     }
 
     void Update() {
-
+        target_pos = transform.position + Vector3.right * length;
+        hit = Physics2D.Raycast(transform.position + Vector3.right * 1f, Vector3.right);
+        if(hit.collider != null) {
+            if(hit.collider.tag == "Block") {
+                target = hit.collider.gameObject;
+            }
+            target_pos = (Vector3) hit.point;
+        } else {
+            target = null;
+        }
+        laser_renderer.SetPosition(0, this.transform.position);
+        laser_renderer.SetPosition(1, target_pos);
     }
 
     public void Shot() {
@@ -45,13 +64,10 @@ public class GunController : MonoBehaviour {
 
             // TODO : adding more rays to increase shot hit rate
             bool killed = false;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.right * 1f, Vector3.right);
-            if(hit.collider != null && !killed) {
-                if(hit.collider.tag == "Block" || hit.collider.tag == "Arrow"){
-                    Destroy(hit.collider.gameObject);
-                    GameManager.self.HandleEnemyKill();
-                    killed = true;
-                }
+            if(target != null && !killed) {
+                Destroy(target.gameObject);
+                GameManager.self.HandleEnemyKill();
+                killed = true;
             }
 
             current_ammo--;
