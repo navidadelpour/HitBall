@@ -20,27 +20,33 @@ public class PlayerCollisionController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		if (!is_collided && other.gameObject.tag == "Ground") {
-			ItemManager.self.actives[Items.WINGS] = false;
-			ItemManager.self.actives[Items.WEB] = false;
-			HeightManager.self.SetHeight ();
-			PlayerMovement.self.Jump ();
-			if(!GameManager.self.gameover){
-				ParticleManager.self.Spawn("dust", this.transform.position);
-				AudioManager.self.Play("player_jump");
-				ScreenShake.self.Shake(.15f);
+		if(!is_collided)
+			if (other.gameObject.tag == "Ground") {
+				ItemManager.self.actives[Items.WINGS] = false;
+				ItemManager.self.actives[Items.WEB] = false;
+				HeightManager.self.SetHeight ();
+				PlayerMovement.self.Jump ();
+				if(!GameManager.self.gameover){
+					ParticleManager.self.Spawn("dust", this.transform.position);
+					AudioManager.self.Play("player_jump");
+					ScreenShake.self.Shake(.15f);
+				}
+				if(ItemManager.self.actives[Items.HIGH_JUMP]) {
+					HeightManager.self.has_coil = true;
+					HeightManager.self.should_remove_coil = false;
+					ItemManager.self.actives[Items.HIGH_JUMP] = false;
+				}
+				if(ItemManager.self.actives[Items.GROUND_DIGGER]) {
+					transform.position += Vector3.down * 10f;
+					PlayerMovement.self.enabled = false;
+				}
+				is_collided = true;
+			} else if(other.gameObject.tag == "Block") {
+				if(SpecialAbilitiesManager.self.Has(SpecialAbilities.ENEMY_EARNER)) {
+					Destroy(other.gameObject);
+					GameManager.self.EnemyEarn();
+				}
 			}
-			if(ItemManager.self.actives[Items.HIGH_JUMP]) {
-				HeightManager.self.has_coil = true;
-				HeightManager.self.should_remove_coil = false;
-				ItemManager.self.actives[Items.HIGH_JUMP] = false;
-			}
-			if(ItemManager.self.actives[Items.GROUND_DIGGER]) {
-				transform.position += Vector3.down * 10f;
-				PlayerMovement.self.enabled = false;
-			}
-			is_collided = true;
-		}
 	}
 
 	void CheckForCollision() {
@@ -51,12 +57,6 @@ public class PlayerCollisionController : MonoBehaviour {
 		if(GameManager.self.gameover)
 			return;
 		switch (other.gameObject.tag) {
-			case "Block":
-				if(SpecialAbilitiesManager.self.Has(SpecialAbilities.ENEMY_EARNER)) {
-					Destroy(other.gameObject);
-					GameManager.self.EnemyEarn();
-				}
-				break;
 			// case "Arrow":
 			case "Obstacle":
 				if(!GameManager.self.gameover) {

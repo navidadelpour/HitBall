@@ -36,7 +36,6 @@ public class InputManager : MonoBehaviour {
 
 	public void OnPlayButtonClick() {
 		GameManager.self.started = true;
-		AudioManager.self.Play("button");
 	}
 
 	public void OnPauseButtonClick() {
@@ -46,12 +45,10 @@ public class InputManager : MonoBehaviour {
 			Time.timeScale = 0;
 		GameManager.self.paused = !GameManager.self.paused;
 		UiManager.self.pause_panel.SetActive(GameManager.self.paused);
-		AudioManager.self.Play("button");
 	}
 
 	public void OnResetButtonClick() {
 		GameManager.self.GameOver();
-		AudioManager.self.Play("button");
 		SceneManager.LoadScene("Scene1");
 	}
 
@@ -61,22 +58,19 @@ public class InputManager : MonoBehaviour {
 
 	public void OnGunbuttonHold() {
 		gun_button_pressed = !gun_button_pressed;
-		AudioManager.self.Play("button");
 	}
 
 	public void OnSpecialAbilitybuttonClick() {
+		Debug.Log("Clicked");
 		SpecialAbilitiesManager.self.Active();
-		AudioManager.self.Play("button");
 	}
 
 	public void OnJumpMaxButtonHold() {
 		jump_max_button_pressed = !jump_max_button_pressed;
-		AudioManager.self.Play("button");
 	}
 
 	public void OnJumpMinButtonHold() {
 		jump_min_button_pressed = !jump_min_button_pressed;
-		AudioManager.self.Play("button");
 	}
 
 	public void OnItemButtonClick() {
@@ -84,7 +78,6 @@ public class InputManager : MonoBehaviour {
 		if(ItemManager.self.available_items[index].item != Items.NOTHING) {
 			ItemManager.self.ActiveItem(index);
 		}
-		AudioManager.self.Play("button");
 	}
 
 }

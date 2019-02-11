@@ -143,6 +143,8 @@ public class UiManager : MonoBehaviour {
 
 	public void SetGunText(int current_ammo, int ammo) {
 		gun_text.text = current_ammo + " / " + ammo;
+		gun_text.GetComponent<Animator>().SetTrigger("Wiggle");
+		gun_image.GetComponent<Animator>().SetTrigger("Pressed");
 	}
 
 	public void SetSpecialAbility() {
@@ -152,10 +154,12 @@ public class UiManager : MonoBehaviour {
 
 	public void EnableSpecialAbility() {
 		special_ability_button.interactable = true;
+		special_ability_button.GetComponent<Image>().color = new Color(1, 1, 1, 1);
 	}
 
 	public void DisableSpecialAbility() {
 		special_ability_button.interactable = false;
+		special_ability_button.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
 	}
 
 	public void EnableGift() {
@@ -298,17 +302,14 @@ public class UiManager : MonoBehaviour {
 
 	public void OnPlayButtonClick() {
 		Util.GoToPanel(menu_panel, game_panel);
-		AudioManager.self.Play("button");
 	}
 
 	public void OnBackToMenuButtonClick() {
 		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
-		AudioManager.self.Play("button");
 		ShopManager.self.player_overview_panel.SetActive(false);
 	}
 
 	public void OnBackToShopButtonClick() {
-		AudioManager.self.Play("button");
 		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Right");
 		EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.GetComponent<Animator>().SetTrigger("Out");
 		EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
