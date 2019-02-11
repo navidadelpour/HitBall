@@ -46,7 +46,7 @@ public class GunController : MonoBehaviour {
         target_pos = transform.position + Vector3.right * length;
         hit = Physics2D.Raycast(transform.position + Vector3.right * 1f, Vector3.right);
         if(hit.collider != null) {
-            if(hit.collider.tag == "Block") {
+            if(hit.collider.tag == "Block" || hit.collider.tag == "Item") {
                 target = hit.collider.gameObject;
             }
             target_pos = (Vector3) hit.point;
@@ -66,8 +66,10 @@ public class GunController : MonoBehaviour {
             bool killed = false;
             if(target != null && !killed) {
                 Destroy(target.gameObject);
-                GameManager.self.HandleEnemyKill();
-                killed = true;
+                if(target.tag == "Block") {
+                    GameManager.self.HandleEnemyKill();
+                    killed = true;
+                }
             }
 
             current_ammo--;
