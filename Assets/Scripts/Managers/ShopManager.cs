@@ -32,6 +32,8 @@ public class ShopManager : MonoBehaviour {
 
 	public Dictionary<string, GameObject> actives = new Dictionary<string, GameObject>();
 	private Dictionary<System.Enum, string[]> metas;
+	float width_scale = (float) Screen.width / 854;
+	float height_scale = (float) Screen.height / 480;
 
     void Awake() {
         self = this;
@@ -112,8 +114,8 @@ public class ShopManager : MonoBehaviour {
 			GameObject shop_item_created = Instantiate(
 				shop_item,
 				content.transform.position +
-				Vector3.right * (shop_item_size.x / 2) +
-				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
+				Vector3.right * (shop_item_size.x / 2) * width_scale +
+				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin) * height_scale,
 				Quaternion.identity,
 				content.transform
 			);
@@ -153,8 +155,8 @@ public class ShopManager : MonoBehaviour {
 			GameObject shop_item_created = Instantiate(
 				shop_item,
 				content.transform.position +
-				Vector3.right * (shop_item_size.x / 2) +
-				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
+				Vector3.right * (shop_item_size.x / 2) * width_scale +
+				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin) * height_scale,
 				Quaternion.identity,
 				content.transform
 			);
@@ -193,8 +195,8 @@ public class ShopManager : MonoBehaviour {
 			GameObject shop_item_created = Instantiate(
 				shop_themes_item,
 				content.transform.position +
-				Vector3.right * (shop_item_size.x / 2) +
-				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin),
+				Vector3.right * (shop_item_size.x / 2) * width_scale +
+				Vector3.down * (shop_item_size.y / 2 + (shop_item_size.y + shop_margin) * i + shop_margin) * height_scale,
 				Quaternion.identity,
 				content.transform
 			);
@@ -238,8 +240,8 @@ public class ShopManager : MonoBehaviour {
 				GameObject shop_item_created = Instantiate(
 					shop_faces_item,
 					content.transform.position +
-					Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x) * j) +
-					Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin),
+					Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x) * j) * width_scale +
+					Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin) * height_scale,
 					Quaternion.identity,
 					content.transform
 				);
@@ -295,8 +297,8 @@ public class ShopManager : MonoBehaviour {
 			GameObject header = Instantiate(
 				faces_header,
 				panel.transform.position +
-				Vector3.right * faces_header_size.x / 2 +
-				Vector3.down * (faces_header_size.y / 2 + content_size),
+				Vector3.right * (faces_header_size.x / 2) * width_scale +
+				Vector3.down * (faces_header_size.y / 2 + content_size) * height_scale,
 				Quaternion.identity,
 				panel.transform
 			);
@@ -311,8 +313,8 @@ public class ShopManager : MonoBehaviour {
 					GameObject shop_item_created = Instantiate(
 						shop_faces_item,
 						panel.transform.position +
-						Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x) * j) +
-						Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin + faces_header_size.y + content_size),
+						Vector3.right * ((shop_faces_item_size.x / 2) + (shop_faces_item_size.x) * j) * width_scale +
+						Vector3.down * (shop_faces_item_size.y / 2 + (shop_faces_item_size.y + shop_margin) * i + shop_margin + faces_header_size.y + content_size) * height_scale,
 						Quaternion.identity,
 						panel.transform
 					);
