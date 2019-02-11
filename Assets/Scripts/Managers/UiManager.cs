@@ -271,6 +271,9 @@ public class UiManager : MonoBehaviour {
 		Util.GoToPanel(game_panel, game_over_panel);
 		game_over_panel.GetComponent<Animator>().SetTrigger("In");
 		game_over_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("In");
+		game_over_panel.transform.Find("GameOverScoreText").GetComponent<Text>().text = "AFTER: " + GameManager.self.score;
+		game_over_panel.transform.Find("GameOverBestText").GetComponent<Text>().text = "BEST: " + GameManager.self.high_score;
+		
 	}
 
 	public void BringPanelsToCenter(GameObject[] panels, GameObject parent_panel = null) {
