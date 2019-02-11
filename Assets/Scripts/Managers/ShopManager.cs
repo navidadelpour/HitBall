@@ -217,6 +217,7 @@ public class ShopManager : MonoBehaviour {
 				case 2:
 					shop_item_created.transform.Find("Tick").gameObject.SetActive(true);
 					actives["Themes"] = shop_item_created;
+					UiManager.self.SetTheme();
 					break;
 			}
 
