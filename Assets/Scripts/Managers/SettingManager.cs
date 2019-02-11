@@ -48,7 +48,7 @@ public class SettingManager : MonoBehaviour {
     public void Save() {
         PlayerPrefs.SetInt("has_music", has_music ? 1 : 0);
         PlayerPrefs.SetInt("has_sfx", has_sfx ? 1 : 0);
-        PlayerPrefs.SetInt("night_mode", has_night_mode ? 1 : 0);
+        PlayerPrefs.SetInt("has_night_mode", has_night_mode ? 1 : 0);
     }
 
 
