@@ -5,19 +5,20 @@ using UnityEngine;
 public class ObstacleSweepMovement : MonoBehaviour {
 
 	private Vector3 initial_height;
+	private Vector3 initial_z;
 	private float range = 1.5f;
 	private float time_should_take;
 	private bool should_go_right;
 	private float parameter = 0;
 
 	void Awake() {
-		initial_height = Vector3.up * transform.localPosition.y;
 		time_should_take = Random.Range(.5f, 2f);
 		parameter = Random.Range(0f, 1f);
 	}
 
 	void Start () {
-		
+		initial_height = Vector3.up * transform.localPosition.y;
+		initial_z = Vector3.forward * transform.localPosition.z;
 	}
 	
 	void Update () {
@@ -33,6 +34,6 @@ public class ObstacleSweepMovement : MonoBehaviour {
 			else
 				should_go_right = true;
 		}
-		transform.localPosition = Vector3.Lerp(Vector3.right * range, Vector3.left * range, parameter) + initial_height;
+		transform.localPosition = Vector3.Lerp(Vector3.right * range, Vector3.left * range, parameter) + initial_height + initial_z;
 	}
 }
