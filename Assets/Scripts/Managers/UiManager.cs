@@ -204,7 +204,6 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetTheme() {
-		Debug.Log(1);
 		string theme_name = ShopManager.self.actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0];
 		string night_mode_state = SettingManager.self.has_night_mode ? "dark" : "light";
 		string name = theme_name + "_" + night_mode_state + "_";

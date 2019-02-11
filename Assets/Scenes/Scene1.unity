@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212a48664d515bb40ad2c2f73013d62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  safe_mode: 0
+  safe_mode: 1
   gameover: 0
   paused: 0
   started: 0

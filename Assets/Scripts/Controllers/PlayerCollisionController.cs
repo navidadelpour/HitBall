@@ -85,6 +85,7 @@ public class PlayerCollisionController : MonoBehaviour {
 				break;
 
 			case "Coil":
+				other.gameObject.GetComponent<Animator>().SetTrigger("Wiggle");
 				AudioManager.self.Play("coil");
 				StartCoroutine(JumpDelaied());
 				break;

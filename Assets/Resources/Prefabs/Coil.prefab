@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4641608525071276}
   - component: {fileID: 212017292699955710}
   - component: {fileID: 61415234328818904}
+  - component: {fileID: 95273337210890930}
   m_Layer: 0
   m_Name: Coil
   m_TagString: Coil
@@ -57,7 +58,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.51, y: 1.51}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1.51, y: 1.51}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -66,6 +67,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1.31}
   m_EdgeRadius: 0
+--- !u!95 &95273337210890930
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1270451697210198}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d9f43c99863e3b245be5c1ed7352a87c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &212017292699955710
 SpriteRenderer:
   m_ObjectHideFlags: 1
