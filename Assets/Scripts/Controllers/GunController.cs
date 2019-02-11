@@ -62,7 +62,6 @@ public class GunController : MonoBehaviour {
         if(Time.time - start_shoting > time && current_ammo > 0) {
             start_shoting = Time.time;
 
-            // TODO : adding more rays to increase shot hit rate
             bool killed = false;
             if(target != null && !killed) {
                 Destroy(target.gameObject);
