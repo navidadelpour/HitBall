@@ -30,6 +30,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject player_overview_panel;
 	public GameObject pause_panel;
 	public GameObject transition_panel;
+	public GameObject tutorial_panel;
 
 	public GameObject texture;
 	public GameObject fixed_background;
@@ -73,6 +74,7 @@ public class UiManager : MonoBehaviour {
 			game_over_panel = GameObject.Find("GameOverPanel"),
 			level_panel = GameObject.Find("LevelPanel"),
 			pause_panel = GameObject.Find("PausePanel"),
+			tutorial_panel = GameObject.Find("TutorialPanel"),
 		});
 		menu_panel.SetActive(true);
 		transition_panel.GetComponent<Animator>().SetTrigger("Out");
