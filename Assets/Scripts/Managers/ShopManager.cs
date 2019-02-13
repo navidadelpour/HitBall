@@ -32,11 +32,13 @@ public class ShopManager : MonoBehaviour {
 
 	public Dictionary<string, GameObject> actives = new Dictionary<string, GameObject>();
 	private Dictionary<System.Enum, string[]> metas;
-	float width_scale = (float) Screen.width / 854;
-	float height_scale = (float) Screen.height / 480;
+	float width_scale;
+	float height_scale;
 
     void Awake() {
         self = this;
+		width_scale = (float) Screen.width / 854;
+		height_scale = (float) Screen.height / 480;
 
 		metas = new Dictionary<Enum, string[]>() {
 			{SpecialAbilities.BOUNCY, new string[]{SpecialAbilities.BOUNCY.ToString(), SpecialAbilities.BOUNCY.ToString() + "description"}},
