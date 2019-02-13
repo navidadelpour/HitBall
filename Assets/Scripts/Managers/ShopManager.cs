@@ -463,43 +463,45 @@ public class ShopManager : MonoBehaviour {
 	}
 
 	public void OnGunsPanelButtonClick() {
-		shop_guns_panel.SetActive(true);
-		AudioManager.self.Play("button");
-		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
-		shop_guns_panel.GetComponent<Animator>().SetTrigger("In");
-		shop_guns_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+		ShopPanelIn(shop_guns_panel);
 	}
 
 	public void OnSpecialAbilitiesPanelButtonClick() {
-		shop_special_abilities_panel.SetActive(true);
-		AudioManager.self.Play("button");
-		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
-		shop_special_abilities_panel.GetComponent<Animator>().SetTrigger("In");
-		shop_special_abilities_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+		ShopPanelIn(shop_special_abilities_panel);
 	}
 	
 	public void OnFacesPanelButtonClick() {
-		shop_faces_panel.SetActive(true);
-		AudioManager.self.Play("button");
-		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
-		shop_faces_panel.GetComponent<Animator>().SetTrigger("In");
-		shop_faces_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+		ShopPanelIn(shop_faces_panel);
 	}
 
 	public void OnThemesPanelButtonClick() {
-		shop_themes_panel.SetActive(true);
-		AudioManager.self.Play("button");
-		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
-		shop_themes_panel.transform.GetComponent<Animator>().SetTrigger("In");
-		shop_themes_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+		ShopPanelIn(shop_themes_panel);
 	}
 
 	public void OnColorsPanelButtonClick() {
-		shop_colors_panel.SetActive(true);
+		ShopPanelIn(shop_colors_panel);
+	}
+
+	public void ShopPanelIn(GameObject panel) {
 		AudioManager.self.Play("button");
+		panel.SetActive(true);
+
+		panel.GetComponent<Animator>().SetTrigger("In");
 		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
-		shop_colors_panel.GetComponent<Animator>().SetTrigger("In");
-		shop_colors_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+		panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+	}
+
+	public IEnumerator ShopPanelOut() {
+		GameObject panel = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+		Animator panel_animator = panel.GetComponent<Animator>();
+		
+		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Right");
+		panel_animator.SetTrigger("Out");
+
+		panel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+		yield return new WaitForSeconds(1f);
+		
+		panel.SetActive(false);
 	}
 
 }

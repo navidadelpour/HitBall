@@ -315,9 +315,7 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void OnBackToShopButtonClick() {
-		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Right");
-		EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.GetComponent<Animator>().SetTrigger("Out");
-		EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+		StartCoroutine(ShopManager.self.ShopPanelOut());
 	}
 
 }
