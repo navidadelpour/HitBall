@@ -467,7 +467,7 @@ public class ShopManager : MonoBehaviour {
 		AudioManager.self.Play("button");
 		player_overview_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Left");
 		shop_guns_panel.GetComponent<Animator>().SetTrigger("In");
-		shop_guns_panel.GetComponent<CanvasGroup>().interactable = true;
+		shop_guns_panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 
 	public void OnSpecialAbilitiesPanelButtonClick() {
