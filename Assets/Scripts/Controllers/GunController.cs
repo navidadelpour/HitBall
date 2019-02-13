@@ -14,6 +14,7 @@ public class GunController : MonoBehaviour {
     private int current_ammo;
     private Animator gun_animator;
     private Animator face_animator;
+    private GameObject gun_fire;
     
     private LineRenderer laser_renderer;
     private Vector3 target_pos;
@@ -35,6 +36,8 @@ public class GunController : MonoBehaviour {
     private void Start() {
         gun_animator = PlayerMovement.self.transform.Find("GunAnimator").GetComponent<Animator>();
         face_animator = PlayerMovement.self.transform.Find("Face").GetComponent<Animator>();
+        gun_fire = PlayerMovement.self.transform.Find("GunAnimator").Find("GunFire").gameObject;
+        gun_fire.SetActive(false);
     }
 
     public void SetGun(Guns gun) {
@@ -53,8 +56,10 @@ public class GunController : MonoBehaviour {
         } else {
             target = null;
         }
-        laser_renderer.SetPosition(0, this.transform.position);
-        laser_renderer.SetPosition(1, target_pos);
+        if(laser_renderer.enabled) {
+            laser_renderer.SetPosition(0, this.transform.position);
+            laser_renderer.SetPosition(1, target_pos);
+        }
     }
 
     public void Shot() {
@@ -76,13 +81,21 @@ public class GunController : MonoBehaviour {
             gun_animator.SetTrigger("Shot");
             face_animator.SetTrigger("Shot");
             AudioManager.self.Play("gun_shot");
+            StartCoroutine(ShotFire());
             if(current_ammo == 0 && !reloading) {
                 StartCoroutine(Reload());
             }
         }
     }
 
+    IEnumerator ShotFire() {
+        gun_fire.SetActive(true);
+        yield return new WaitForSeconds(guns[active_gun].shot_time / 2);
+        gun_fire.SetActive(false);
+    }
+
     IEnumerator Reload() {
+        laser_renderer.enabled = false;
         reloading = true;
         gun_animator.SetTrigger("Reload");
         float time = guns[active_gun].reload_time * (SpecialAbilitiesManager.self.Has(SpecialAbilities.GUNNER) ? .5f : 1);
@@ -91,6 +104,7 @@ public class GunController : MonoBehaviour {
         current_ammo = guns[active_gun].ammo;
         reloading = false;
         UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
+        laser_renderer.enabled = true;
     }
 
 }
