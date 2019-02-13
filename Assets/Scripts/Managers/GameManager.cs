@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 	public bool gameover;
 	public bool paused;
 	public bool started;
+	public bool on_player_views = true;
 	public int combo = 1;
 	public int score;
 	public int exp;
@@ -119,7 +120,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void OnExitButtonClick() {
-		AudioManager.self.Play("button");
 		Application.Quit();
 	}
 

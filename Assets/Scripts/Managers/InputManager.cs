@@ -61,7 +61,6 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public void OnSpecialAbilitybuttonClick() {
-		Debug.Log("Clicked");
 		SpecialAbilitiesManager.self.Active();
 	}
 

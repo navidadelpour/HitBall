@@ -244,7 +244,8 @@ public class UiManager : MonoBehaviour {
 		yield return new WaitForSeconds(1f);
 		string[] indexes = PlayerPrefs.GetString("indexes").Split(new String[] {"_"}, StringSplitOptions.None);
 
-		if(!indexes.Equals("")) {
+		if(!indexes[0].Equals("")) {
+			GameManager.self.on_player_views = false;
 			level_panel.SetActive(true);
 			Image image = level_panel.transform.GetChild(0).Find("Image").GetComponent<Image>();
 			Text name_text = level_panel.transform.GetChild(0).Find("Name").GetComponent<Text>();
@@ -312,10 +313,12 @@ public class UiManager : MonoBehaviour {
 	public void OnBackToMenuButtonClick() {
 		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
 		ShopManager.self.player_overview_panel.SetActive(false);
+		GameManager.self.on_player_views = true;
 	}
 
 	public void OnBackToShopButtonClick() {
 		StartCoroutine(ShopManager.self.ShopPanelOut());
+		GameManager.self.on_player_views = false;
 	}
 
 }

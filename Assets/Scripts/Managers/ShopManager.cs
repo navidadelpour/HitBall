@@ -461,7 +461,7 @@ public class ShopManager : MonoBehaviour {
     public void OnShopButtonClick() {
 		Util.GoToPanel(UiManager.self.menu_panel, shop_panel);
 		player_overview_panel.SetActive(true);
-		AudioManager.self.Play("button");
+		GameManager.self.on_player_views = false;
 	}
 
 	public void OnGunsPanelButtonClick() {
@@ -485,7 +485,6 @@ public class ShopManager : MonoBehaviour {
 	}
 
 	public void ShopPanelIn(GameObject panel) {
-		AudioManager.self.Play("button");
 		panel.SetActive(true);
 
 		panel.GetComponent<Animator>().SetTrigger("In");

@@ -80,7 +80,7 @@ public class GunController : MonoBehaviour {
             UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
             gun_animator.SetTrigger("Shot");
             face_animator.SetTrigger("Shot");
-            AudioManager.self.Play("gun_shot");
+            AudioManager.self.Play(active_gun.ToString().ToLower() + "_shot");
             StartCoroutine(ShotFire());
             if(current_ammo == 0 && !reloading) {
                 StartCoroutine(Reload());
@@ -99,7 +99,7 @@ public class GunController : MonoBehaviour {
         reloading = true;
         gun_animator.SetTrigger("Reload");
         float time = guns[active_gun].reload_time * (SpecialAbilitiesManager.self.Has(SpecialAbilities.GUNNER) ? .5f : 1);
-        AudioManager.self.Play("reloading");
+        AudioManager.self.Play(active_gun.ToString().ToLower() + "_reload");
         yield return new WaitForSeconds(time);
         current_ammo = guns[active_gun].ammo;
         reloading = false;

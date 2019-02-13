@@ -7,26 +7,20 @@ public class AudioManager : MonoBehaviour {
 	public static AudioManager self;
 
     public AudioSource main_music;
-    private AudioSource coil;
-    private AudioSource coin;
-    private AudioSource item_get;
-    private AudioSource player_die;
-    private AudioSource player_jump;
-    private AudioSource gun_shot;
-    private AudioSource reloading;
-    private AudioSource button;
-    private Dictionary<string, AudioSource> audio_sources;
+    public AudioSource sfx_music;
+    private Dictionary<string, AudioClip> audio_clips;
 	
 	void Awake() {
 		self = this;
 
         main_music = GameObject.Find("MainMusic").GetComponent<AudioSource>();
-        
-        audio_sources = new Dictionary<string, AudioSource>() {
-            {"coin", coin = GameObject.Find("Coin").GetComponent<AudioSource>()},
-            {"player_die", player_die = GameObject.Find("PlayerDie").GetComponent<AudioSource>()},
-            {"gun_shot", gun_shot = GameObject.Find("GunShot").GetComponent<AudioSource>()},
-        };
+        sfx_music = GameObject.Find("SFXMusic").GetComponent<AudioSource>();
+
+        audio_clips = new Dictionary<string, AudioClip>();
+        AudioClip[] clips = Resources.LoadAll<AudioClip>("Audio/SFX");
+        foreach (AudioClip clip in clips) {
+            audio_clips.Add(clip.name, clip);
+        }
 	}
 
 	void Start () {
@@ -38,14 +32,11 @@ public class AudioManager : MonoBehaviour {
 	}
 
     public void Play(string name) {
-        if(!SettingManager.self.has_sfx)
+        if(!SettingManager.self.has_sfx || !audio_clips.ContainsKey(name))
             return;
-        try {
-            AudioSource to_play = audio_sources[name];
-            to_play.Play();
-        } catch(System.Exception e) {
-            
-        }
+        
+        sfx_music.pitch = Random.Range(.9f, 1.1f);
+        sfx_music.PlayOneShot(audio_clips[name]);
     }
 
 }

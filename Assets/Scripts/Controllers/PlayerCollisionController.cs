@@ -28,7 +28,8 @@ public class PlayerCollisionController : MonoBehaviour {
 				PlayerMovement.self.Jump ();
 				if(!GameManager.self.gameover){
 					ParticleManager.self.Spawn("dust", this.transform.position);
-					AudioManager.self.Play("player_jump");
+					if(GameManager.self.on_player_views)
+						AudioManager.self.Play("ground");
 					ScreenShake.self.Shake(.15f);
 				}
 				if(ItemManager.self.actives[Items.HIGH_JUMP]) {
@@ -60,7 +61,7 @@ public class PlayerCollisionController : MonoBehaviour {
 			// case "Arrow":
 			case "Obstacle":
 				if(!GameManager.self.gameover) {
-					AudioManager.self.Play("player_die");
+					AudioManager.self.Play("hurt");
 					ScreenShake.self.Shake(.2f);
 				}
 				if(!GameManager.self.safe_mode) {

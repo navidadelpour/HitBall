@@ -53,8 +53,8 @@ public class SettingManager : MonoBehaviour {
 
 
     public void OnSettingButtonClick() {
+		GameManager.self.on_player_views = false;
 		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, setting_panel);
-		AudioManager.self.Play("button");
     }
 
     public void OnLinkButtonClick(string link) {
@@ -71,9 +71,9 @@ public class SettingManager : MonoBehaviour {
                 has_sfx = sfx.isOn;
                 break;
             case "has_night_mode": 
-            has_night_mode = night_mode.isOn;
-            UiManager.self.SetTheme();
-            break;
+                has_night_mode = night_mode.isOn;
+                UiManager.self.SetTheme();
+                break;
 
         }
     }

@@ -16,8 +16,6 @@ public class ButtonController : MonoBehaviour {
     }
 
     private void OnButtonClick() {   
-		AudioManager.self.Play("button");
-
         // enabling the listeners again
         SetListenersState(UnityEventCallState.EditorAndRuntime);
 
@@ -27,6 +25,10 @@ public class ButtonController : MonoBehaviour {
         // disabling all the event listeners
         SetListenersState(UnityEventCallState.Off);
 	}
+
+    private void PlaySfx() {
+		AudioManager.self.Play("button");
+    }
 
     private void SetListenersState(UnityEventCallState state) {
         for(int i = 0; i < button.onClick.GetPersistentEventCount(); i++) {

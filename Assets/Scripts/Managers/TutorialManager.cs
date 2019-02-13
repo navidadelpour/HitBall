@@ -29,6 +29,7 @@ public class TutorialManager : MonoBehaviour {
 		current = 0;
         tutorial_image.sprite = tutorial_sprites[current];
         Util.GoToPanel(UiManager.self.menu_panel, UiManager.self.tutorial_panel);
+		GameManager.self.on_player_views = false;
 	}
 
     public void OnNextTutorialButtonClick() {
