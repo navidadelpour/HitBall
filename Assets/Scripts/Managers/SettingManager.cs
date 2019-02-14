@@ -62,6 +62,7 @@ public class SettingManager : MonoBehaviour {
     }
 
     public void OnToggleButtonClick(string name) {
+		AudioManager.self.Play("button");
         switch(name) {
             case "has_music":
                 has_music = music.isOn;
@@ -69,6 +70,7 @@ public class SettingManager : MonoBehaviour {
                 break;
             case "has_sfx":
                 has_sfx = sfx.isOn;
+                AudioManager.self.sfx_music.mute = !has_sfx;
                 break;
             case "has_night_mode": 
                 has_night_mode = night_mode.isOn;

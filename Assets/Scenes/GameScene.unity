@@ -1055,6 +1055,7 @@ MonoBehaviour:
   gameover: 0
   paused: 0
   started: 0
+  on_player_views: 1
   combo: 1
   score: 0
   exp: 0
@@ -2866,6 +2867,7 @@ GameObject:
   - component: {fileID: 411612660}
   - component: {fileID: 411612661}
   - component: {fileID: 411612662}
+  - component: {fileID: 411612663}
   m_Layer: 5
   m_Name: NightModeToggle
   m_TagString: Untagged
@@ -2967,6 +2969,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &411612663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 411612659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b033f6c3b8b6af449159f7040723719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &421302465
 GameObject:
   m_ObjectHideFlags: 0
@@ -5598,6 +5611,7 @@ GameObject:
   - component: {fileID: 938063848}
   - component: {fileID: 938063849}
   - component: {fileID: 938063850}
+  - component: {fileID: 938063851}
   m_Layer: 5
   m_Name: MusicToggle
   m_TagString: Untagged
@@ -5699,6 +5713,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &938063851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 938063847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b033f6c3b8b6af449159f7040723719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &969718540
 GameObject:
   m_ObjectHideFlags: 0
@@ -10292,6 +10317,7 @@ GameObject:
   - component: {fileID: 1821868951}
   - component: {fileID: 1821868952}
   - component: {fileID: 1821868953}
+  - component: {fileID: 1821868954}
   m_Layer: 5
   m_Name: SFXToggle
   m_TagString: Untagged
@@ -10393,6 +10419,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1821868954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1821868950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b033f6c3b8b6af449159f7040723719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1826410487
 GameObject:
   m_ObjectHideFlags: 0

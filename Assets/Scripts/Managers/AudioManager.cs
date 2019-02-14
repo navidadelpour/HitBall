@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour {
 	}
 
     public void Play(string name) {
-        if(!SettingManager.self.has_sfx || !audio_clips.ContainsKey(name))
+        if(!audio_clips.ContainsKey(name))
             return;
         
         sfx_music.pitch = Random.Range(.9f, 1.1f);

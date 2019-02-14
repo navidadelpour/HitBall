@@ -352,6 +352,7 @@ public class ShopManager : MonoBehaviour {
 	}
 
 	public void EnableShopItem(GameObject shop_item_instance) {
+		AudioManager.self.Play("button");
 		GameObject top_parent_panel = shop_item_instance.transform.parent.parent.parent.parent.gameObject;
 		switch(top_parent_panel.name) {
 			case "SpecialAbilitiesPanel":

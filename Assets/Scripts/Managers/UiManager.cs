@@ -174,6 +174,7 @@ public class UiManager : MonoBehaviour {
 		gift_text.text = "+" + gift_coin;
 		gift_button.GetComponent<Animator>().SetTrigger("Out");
 		gift_text.GetComponent<Animator>().SetTrigger("In");
+		AudioManager.self.Play("coin_cool");
 	}
 
 	public void SetSpecialAbility(string name) {
@@ -276,7 +277,6 @@ public class UiManager : MonoBehaviour {
 		game_over_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("In");
 		game_over_panel.transform.Find("GameOverScoreText").GetComponent<Text>().text = "AFTER: " + GameManager.self.score;
 		game_over_panel.transform.Find("GameOverBestText").GetComponent<Text>().text = "BEST: " + GameManager.self.high_score;
-		
 	}
 
 	public void BringPanelsToCenter(GameObject[] panels, GameObject parent_panel = null) {
@@ -301,8 +301,6 @@ public class UiManager : MonoBehaviour {
 			item_buttons[2 - i].gameObject.SetActive(bools[i]);
 		}
 	}
-
-
 
 	// ================================== listeners ==================================
 
