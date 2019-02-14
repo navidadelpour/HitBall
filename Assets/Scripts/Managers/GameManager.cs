@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
 	public void SetGift() {
 		has_gift = false;
 		gift_time = 0;
-		max_gift_time = Random.Range(.1f, 1) * 10;
+		max_gift_time = Random.Range(.1f, 1) * 50;
 		PlayerPrefs.SetFloat("max_gift_time", max_gift_time);
 	}
 

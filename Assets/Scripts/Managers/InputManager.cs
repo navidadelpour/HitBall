@@ -48,6 +48,7 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public void OnResetButtonClick() {
+		GameManager.self.GameOver();
 		SceneManager.LoadScene("GameScene");
 		// SceneManager.LoadSceneAsync("LoadScene");
 	}

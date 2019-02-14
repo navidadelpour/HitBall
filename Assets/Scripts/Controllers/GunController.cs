@@ -91,7 +91,7 @@ public class GunController : MonoBehaviour {
 
     IEnumerator ShotFire() {
         gun_fire.SetActive(true);
-        yield return new WaitForSeconds(guns[active_gun].shot_time / 2);
+        yield return new WaitForSeconds(0.1f);
         gun_fire.SetActive(false);
     }
 

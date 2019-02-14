@@ -68,7 +68,7 @@ public class PlayerCollisionController : MonoBehaviour {
 					if(ItemManager.self.actives[Items.SHIELD])
 						ItemManager.self.actives[Items.SHIELD] = false;
 					else {
-						GameManager.self.GameOver();
+						GameManager.self.gameover = true;
 						UiManager.self.GameOver();
 					}
 				}
@@ -82,7 +82,7 @@ public class PlayerCollisionController : MonoBehaviour {
 
 			case "Hole":
 				AudioManager.self.Play("hole");
-				GameManager.self.GameOver();
+				\GameManager.self.gameover = true;
 				UiManager.self.GameOver();
 				break;
 
