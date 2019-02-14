@@ -12,7 +12,7 @@ public class ObstacleSweepMovement : MonoBehaviour {
 	private float parameter = 0;
 
 	void Awake() {
-		time_should_take = Random.Range(.5f, 2f);
+		time_should_take = Random.Range(1f, 2f);
 		parameter = Random.Range(0f, 1f);
 	}
 

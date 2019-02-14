@@ -70,11 +70,11 @@ public class GunController : MonoBehaviour {
             bool killed = false;
             if(target != null && !killed) {
                 Destroy(target.gameObject);
+                ParticleManager.self.Spawn("Block", target.transform.position);
                 if(target.tag == "Block") {
                     GameManager.self.HandleEnemyKill();
                     killed = true;
                     AudioManager.self.Play("block_destroy");
-					ParticleManager.self.Spawn("Block", target.transform.position);
                 }
             }
 
