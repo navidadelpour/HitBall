@@ -26,8 +26,8 @@ public class GunController : MonoBehaviour {
         self = this;
         guns = new Dictionary<Guns, Gun> {
             {Guns.PISTOL, new Gun(Guns.PISTOL, 7, .5f, 3)},
-            {Guns.RIFLE, new Gun(Guns.RIFLE, 30, .15f, 3)},
-            {Guns.SHOTGUN, new Gun(Guns.SHOTGUN, 10, 1f, 2)},
+            {Guns.RIFLE, new Gun(Guns.RIFLE, 30, .15f, 4)},
+            {Guns.SHOTGUN, new Gun(Guns.SHOTGUN, 10, .5f, 1)},
         };
         target_pos = Vector3.right * length;
         laser_renderer = GetComponent<LineRenderer>();

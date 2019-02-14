@@ -11,12 +11,10 @@ public class LevelManager : MonoBehaviour {
     public System.Enum[] levels;
     public int current_level;
     public int temp_current__level;
-    private int level_factor;
 
     void Awake() {
         self = this;
 
-        level_factor = 2;
         levels = new System.Enum[] {
             Items.NOTHING,                      // level 2
             SpecialAbilities.ENEMY_EARNER,
@@ -45,7 +43,7 @@ public class LevelManager : MonoBehaviour {
     public void CheckForLevelUp(string indexes = "") {
         int exp = GameManager.self.exp;
         if(current_level < levels.Length + 1) {
-            if(exp > Mathf.Pow(level_factor, current_level + 1)) {
+            if(exp > LevelFunction(current_level)) {
                 indexes += (current_level - 1) + "_";
                 if(levels[current_level - 1].ToString() == Items.NOTHING.ToString()) {
                     item_slots_unlocks ++;
@@ -65,7 +63,7 @@ public class LevelManager : MonoBehaviour {
     public void SetNextGoal(int exp) {
         int goal = 0;
         if(temp_current__level < levels.Length + 1) {
-            goal = (int) Mathf.Pow(level_factor, temp_current__level + 1);
+            goal = LevelFunction(temp_current__level);
             int left = goal - exp;
             if(left < 0) {
                 temp_current__level++;
@@ -78,6 +76,8 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    
+    public int LevelFunction(int level) {
+        return (int) Mathf.Pow(3, level + 1) + 100 * (level + 1);
+    }
 
 }
