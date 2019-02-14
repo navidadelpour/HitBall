@@ -6,13 +6,19 @@ public class ParticleManager : MonoBehaviour {
 
 	public static ParticleManager self;
 	private GameObject particles_parent;
+    private Dictionary<string, GameObject> particles;
 
-	public GameObject dust;
-	
 	void Awake() {
 		self = this;
 		particles_parent = new GameObject();
 		particles_parent.name = "Particles";
+
+		particles = new Dictionary<string, GameObject>();
+        GameObject[] particles_to_add = Resources.LoadAll<GameObject>("Particles");
+        foreach (GameObject particle in particles_to_add) {
+            particles.Add(particle.name, particle);
+        }
+
 	}
 
 	void Start () {
@@ -24,12 +30,6 @@ public class ParticleManager : MonoBehaviour {
 	}
 
 	public GameObject Spawn(string name, Vector3 position) {
-		GameObject particle_to_instantiate = null;
-		switch(name) {
-			case "dust":
-				particle_to_instantiate = dust;
-				break;
-		}
-		return Instantiate(particle_to_instantiate, position, Quaternion.identity, particles_parent.transform);
+		return Instantiate(particles[name], position, Quaternion.identity, particles_parent.transform);
 	}
 }

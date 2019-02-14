@@ -74,6 +74,7 @@ public class GunController : MonoBehaviour {
                     GameManager.self.HandleEnemyKill();
                     killed = true;
                     AudioManager.self.Play("block_destroy");
+					ParticleManager.self.Spawn("Block", target.transform.position);
                 }
             }
 
