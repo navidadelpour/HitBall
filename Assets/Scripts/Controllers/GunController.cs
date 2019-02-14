@@ -25,9 +25,9 @@ public class GunController : MonoBehaviour {
     private void Awake() {
         self = this;
         guns = new Dictionary<Guns, Gun> {
-            {Guns.PISTOL, new Gun(Guns.PISTOL, 7, .5f, 2)},
-            {Guns.RIFLE, new Gun(Guns.RIFLE, 30, .2f, 2)},
-            {Guns.SHOTGUN, new Gun(Guns.SHOTGUN, 10, 1, 3)},
+            {Guns.PISTOL, new Gun(Guns.PISTOL, 7, .5f, 3)},
+            {Guns.RIFLE, new Gun(Guns.RIFLE, 30, .15f, 3)},
+            {Guns.SHOTGUN, new Gun(Guns.SHOTGUN, 10, 1f, 2)},
         };
         target_pos = Vector3.right * length;
         laser_renderer = GetComponent<LineRenderer>();
@@ -74,8 +74,6 @@ public class GunController : MonoBehaviour {
                     GameManager.self.HandleEnemyKill();
                     killed = true;
                     AudioManager.self.Play("block_destroy");
-                } else {
-                    AudioManager.self.Play("item_destroy");
                 }
             }
 

@@ -252,6 +252,7 @@ public class UiManager : MonoBehaviour {
 			Text name_text = level_panel.transform.GetChild(0).Find("Name").GetComponent<Text>();
 
 			for(int j = 0; j < indexes.Length - 1; j++) {
+				AudioManager.self.Play("unlock");
 				level_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("In");
 				int i = int.Parse(indexes[j]);
 				Enum item = LevelManager.self.levels[i];

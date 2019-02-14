@@ -32,12 +32,12 @@ public class SpawnManager : MonoBehaviour {
 	private Dictionary<System.Enum, int> chances = new Dictionary<System.Enum, int>() {
 		{Things.COIL, 1},
 		{Things.COIN, 2},
-		{Things.BLOCK, 1},
+		{Things.BLOCK, 2},
 		{Things.OBSTACLE, 3},
 		{Things.HOLE, 3},
 		{Things.NOTHING, 1},
 	};
-	private int item_chance = 10;
+	private int item_chance = 5;
 	private int arrow_chance = 5;
 	private int[] coins_range = {1, 3};
 	private int[] obstacles_range = {1, 3};
@@ -95,7 +95,7 @@ public class SpawnManager : MonoBehaviour {
 		SetGroundLimit();
 		
 		// size - initial_size(5) + defautlsize(1)
-		chances[Things.NOTHING] = (int) Camera.main.orthographicSize - 5 + 1;
+		chances[Things.NOTHING] = (int) Camera.main.orthographicSize - 5 + 5;
 		chances[Things.HOLE] = GameManager.self.safe_mode ? 0 : 3;
 	}
 
@@ -142,7 +142,7 @@ public class SpawnManager : MonoBehaviour {
 				CreateNothing();
 				break;
 		}
-		if(Util.HasChance(item_chance * (SpecialAbilitiesManager.self.Has(SpecialAbilities.LUCKY) ? 2 : 1)))
+		if(Util.HasChance(item_chance * (SpecialAbilitiesManager.self.Has(SpecialAbilities.LUCKY) ? 5 : 1)))
 			CreateItem();
 		// if(Util.HasChance(arrow_chance))
 		// 	CreateArrow();

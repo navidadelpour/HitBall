@@ -146,7 +146,7 @@ Transform:
   - {fileID: 1586148033}
   - {fileID: 110447028}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &82797940
 GameObject:
@@ -950,7 +950,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &133496660
 MonoBehaviour:
@@ -1309,6 +1309,48 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 147379122}
   m_CullTransparentMesh: 0
+--- !u!1001 &165573180
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4641608525071276, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.9262037
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641608525071276, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.4359882
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641608525071276, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641608525071276, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641608525071276, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641608525071276, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641608525071276, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641608525071276, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5ecc6523838f2b6408fc03adaf8c71fe, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &184934573
 GameObject:
   m_ObjectHideFlags: 0
@@ -2867,7 +2909,6 @@ GameObject:
   - component: {fileID: 411612660}
   - component: {fileID: 411612661}
   - component: {fileID: 411612662}
-  - component: {fileID: 411612663}
   m_Layer: 5
   m_Name: NightModeToggle
   m_TagString: Untagged
@@ -2969,17 +3010,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &411612663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 411612659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b033f6c3b8b6af449159f7040723719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &421302465
 GameObject:
   m_ObjectHideFlags: 0
@@ -5611,7 +5641,6 @@ GameObject:
   - component: {fileID: 938063848}
   - component: {fileID: 938063849}
   - component: {fileID: 938063850}
-  - component: {fileID: 938063851}
   m_Layer: 5
   m_Name: MusicToggle
   m_TagString: Untagged
@@ -5713,17 +5742,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &938063851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 938063847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b033f6c3b8b6af449159f7040723719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &969718540
 GameObject:
   m_ObjectHideFlags: 0
@@ -8096,7 +8114,7 @@ Transform:
   m_Children:
   - {fileID: 288616741}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1483839422
 GameObject:
@@ -10317,7 +10335,6 @@ GameObject:
   - component: {fileID: 1821868951}
   - component: {fileID: 1821868952}
   - component: {fileID: 1821868953}
-  - component: {fileID: 1821868954}
   m_Layer: 5
   m_Name: SFXToggle
   m_TagString: Untagged
@@ -10419,17 +10436,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1821868954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1821868950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b033f6c3b8b6af449159f7040723719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1826410487
 GameObject:
   m_ObjectHideFlags: 0
