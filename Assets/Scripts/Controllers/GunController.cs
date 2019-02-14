@@ -73,6 +73,9 @@ public class GunController : MonoBehaviour {
                 if(target.tag == "Block") {
                     GameManager.self.HandleEnemyKill();
                     killed = true;
+                    AudioManager.self.Play("block_destroy");
+                } else {
+                    AudioManager.self.Play("item_destroy");
                 }
             }
 

@@ -61,7 +61,7 @@ public class PlayerCollisionController : MonoBehaviour {
 			// case "Arrow":
 			case "Obstacle":
 				if(!GameManager.self.gameover) {
-					AudioManager.self.Play("hurt");
+					AudioManager.self.Play("obsacle");
 					ScreenShake.self.Shake(.2f);
 				}
 				if(!GameManager.self.safe_mode) {
@@ -81,6 +81,7 @@ public class PlayerCollisionController : MonoBehaviour {
 				break;
 
 			case "Hole":
+				AudioManager.self.Play("hole");
 				GameManager.self.GameOver();
 				UiManager.self.GameOver();
 				break;

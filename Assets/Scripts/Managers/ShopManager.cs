@@ -386,8 +386,10 @@ public class ShopManager : MonoBehaviour {
 
 					if(!unlock && GameManager.self.coins >= cost) {
 						GameManager.self.coins -= cost;
+						UiManager.self.SetCoins();
                         unlock = true;
 						shop_item_instance.transform.Find("LockPanel").gameObject.SetActive(false);
+						AudioManager.self.Play("buy");
 					}
                     if(unlock) {
 						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 0);
@@ -396,7 +398,9 @@ public class ShopManager : MonoBehaviour {
 						actives["Themes"].transform.Find("Tick").gameObject.SetActive(true);
 						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
 						UiManager.self.SetTheme();
-                    }
+                    } else {
+						AudioManager.self.Play("hole");
+					}
 				}
 				break;
 				case "ColorsPanel":
@@ -410,6 +414,7 @@ public class ShopManager : MonoBehaviour {
 
 						if(!unlock && GameManager.self.coins >= cost) {
 							GameManager.self.coins -= cost;
+							UiManager.self.SetCoins();
 							unlock = true;
 							shop_item_instance.transform.Find("LockPanel").gameObject.SetActive(false);
 						}
@@ -420,6 +425,9 @@ public class ShopManager : MonoBehaviour {
 							actives["Colors"].transform.Find("Tick").gameObject.SetActive(true);
 							PlayerPrefs.SetInt(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
 							UiManager.self.SetColor(int.Parse(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0].Split(new String[] {"."}, StringSplitOptions.None)[0]));
+							AudioManager.self.Play("buy");
+						} else {
+							AudioManager.self.Play("hole");
 						}
 					}
 					break;
@@ -440,8 +448,10 @@ public class ShopManager : MonoBehaviour {
 					} else {
 						if(!unlock && GameManager.self.coins >= cost) {
 							GameManager.self.coins -= cost;
+							UiManager.self.SetCoins();
 							unlock = true;
 							shop_item_instance.transform.Find("LockPanel").gameObject.SetActive(false);
+							AudioManager.self.Play("buy");
 						}
 						if(unlock) {
 							if(actives.ContainsKey(key) && actives[key] != null) {
@@ -452,6 +462,8 @@ public class ShopManager : MonoBehaviour {
 							actives[key].transform.Find("Tick").gameObject.SetActive(true);
 							PlayerPrefs.SetInt(actives[key].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
 							UiManager.self.SetFace(key, actives[key].name);
+						} else {
+							AudioManager.self.Play("lock");
 						}
 					}
 				}
