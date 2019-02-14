@@ -399,7 +399,7 @@ public class ShopManager : MonoBehaviour {
 						PlayerPrefs.SetInt(actives["Themes"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0], 2);
 						UiManager.self.SetTheme();
                     } else {
-						AudioManager.self.Play("hole");
+						AudioManager.self.Play("lock");
 					}
 				}
 				break;
@@ -427,7 +427,7 @@ public class ShopManager : MonoBehaviour {
 							UiManager.self.SetColor(int.Parse(actives["Colors"].name.Split(new String[] {"_"}, StringSplitOptions.None)[0].Split(new String[] {"."}, StringSplitOptions.None)[0]));
 							AudioManager.self.Play("buy");
 						} else {
-							AudioManager.self.Play("hole");
+							AudioManager.self.Play("lock");
 						}
 					}
 					break;
