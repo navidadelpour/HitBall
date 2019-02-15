@@ -36,6 +36,8 @@ public class InputManager : MonoBehaviour {
 
 	public void OnPlayButtonClick() {
 		GameManager.self.started = true;
+		SpecialAbilitiesManager.self.StartAct();
+
 	}
 
 	public void OnPauseButtonClick() {
@@ -62,7 +64,7 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public void OnSpecialAbilitybuttonClick() {
-		SpecialAbilitiesManager.self.Active();
+		StartCoroutine(SpecialAbilitiesManager.self.Active());
 	}
 
 	public void OnJumpMaxButtonHold() {

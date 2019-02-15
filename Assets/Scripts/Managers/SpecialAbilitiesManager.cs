@@ -6,46 +6,54 @@ public class SpecialAbilitiesManager : MonoBehaviour {
 
 	public static SpecialAbilitiesManager self;
     public SpecialAbilities current_ability;
-    public float time = 10f;
-    public float range = .5f;
+    public float give_time = 10f;
+    public float active_time = 5f;
     public bool has = false;
     public bool active = false;
-    public bool set_active = false;
-    public float disable_time = 5f;
     private bool started;
 
 	void Awake() {
 		self = this;
-
-        current_ability = SpecialAbilities.GUNNER;
 	}
 
 	void Start () {
+        UiManager.self.DisableSpecialAbility();
 	}
 	
 	void Update () {
-        if(GameManager.self.started && !started) {
-            started = true;
-            StartCoroutine(Disable(0));
-        }
-	}
+    
+    }
+
+    public void StartAct() {
+        StartCoroutine(Give());
+    }
 
     IEnumerator Give() {
-        yield return new WaitForSeconds(Random.Range(-range, range) + time);
+        float time = 0;
+        
+        while(time < give_time) {
+            UiManager.self.SetSpecialAbilitySlider(time / give_time, true);
+            time += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        UiManager.self.SetSpecialAbilitySlider(time / give_time, true);
+
         has = true;
         UiManager.self.EnableSpecialAbility();
     }
 
-    public void Active() {
-        if(has) {
-            active = true;
-            StartCoroutine(Disable(disable_time));
-        }
-    }
-
-    IEnumerator Disable(float time) {
+    public IEnumerator Active() {
         UiManager.self.DisableSpecialAbility();
-        yield return new WaitForSeconds(time);
+        active = true;
+        float time = active_time;
+
+        while(time > 0) {
+            UiManager.self.SetSpecialAbilitySlider(time / active_time, false);
+            time -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        UiManager.self.SetSpecialAbilitySlider(time / active_time, false);
+
         active = false;
         has = false;
         StartCoroutine(Give());

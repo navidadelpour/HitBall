@@ -22,6 +22,7 @@ public class UiManager : MonoBehaviour {
 	public Button gift_button;
 
 	public Image gun_image;
+	public Image special_ability_slider;
 
 	public GameObject menu_panel;
 	public GameObject game_panel;
@@ -53,6 +54,7 @@ public class UiManager : MonoBehaviour {
 
 		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
 		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
+		special_ability_slider = GameObject.Find ("SpecialAbilitySlider").GetComponent<Image>();
 		gift_button = GameObject.Find ("GiftButton").GetComponent<Button>();
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
@@ -156,6 +158,11 @@ public class UiManager : MonoBehaviour {
 	public void SetSpecialAbility() {
 		special_ability_button.gameObject.GetComponent<Image>().sprite =
 			Resources.Load<Sprite>("textures/SpecialAbilities/" + SpecialAbilitiesManager.self.current_ability.ToString().ToLower());
+	}
+
+	public void SetSpecialAbilitySlider(float value, bool give) {
+		special_ability_slider.color = give ? Color.green : Color.red;
+		special_ability_slider.fillAmount = value;
 	}
 
 	public void EnableSpecialAbility() {

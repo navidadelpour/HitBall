@@ -115,8 +115,8 @@ public class ItemManager : MonoBehaviour {
         float time = max_time;
         while(time > 0) {
             UiManager.self.SetItemSlider(index, time / max_time);
-            time -= .05f;
-            yield return new WaitForSeconds(.05f);
+            time -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
         }
         UiManager.self.SetItemSlider(index, time / max_time);
 
