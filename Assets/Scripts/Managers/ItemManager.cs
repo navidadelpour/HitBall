@@ -11,7 +11,7 @@ public class ItemManager : MonoBehaviour {
     public int available_items_size;
 	
 	public Dictionary<Items, bool> actives = new Dictionary<Items, bool>();
-	private float max_time = 31f;
+	private float max_time = 5f;
     Items[] untimed_items = new Items[] {Items.DOUBLE_JUMP, Items.FORCE_FALL, Items.HIGH_JUMP, Items.TELEPORT, Items.GROUND_DIGGER, Items.WEB};
 
     void Awake() {
@@ -92,7 +92,6 @@ public class ItemManager : MonoBehaviour {
         AvailableItem[] sorted = (AvailableItem[]) available_items.Clone();
         Array.Sort(sorted, delegate(AvailableItem x, AvailableItem y) { return x.time_added.CompareTo(y.time_added); });
         for(int i = 0; i < sorted.Length; i++) {
-            Debug.Log(sorted[i].item + ", " + actives[sorted[i].item]);
             if(actives[sorted[i].item] == false) {
                 int real_index = Array.IndexOf(available_items, sorted[i]);
                 available_items[real_index] = new AvailableItem(item);
