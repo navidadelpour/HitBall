@@ -22,6 +22,7 @@ public class UiManager : MonoBehaviour {
 	public Button gift_button;
 
 	public Image gun_image;
+	public Image combo_slider;
 	public Image special_ability_slider;
 
 	public GameObject menu_panel;
@@ -54,10 +55,11 @@ public class UiManager : MonoBehaviour {
 
 		item_buttons = GameObject.Find ("ItemsPanel").transform.GetComponentsInChildren<Button>();
 		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
-		special_ability_slider = GameObject.Find ("SpecialAbilitySlider").GetComponent<Image>();
 		gift_button = GameObject.Find ("GiftButton").GetComponent<Button>();
 
 		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
+		special_ability_slider = GameObject.Find ("SpecialAbilitySlider").GetComponent<Image>();
+		combo_slider = GameObject.Find ("ComboSlider").GetComponent<Image>();
 
 		texture = GameObject.Find("Texture");
         fixed_background = GameObject.Find("FixedBackground");
@@ -113,6 +115,10 @@ public class UiManager : MonoBehaviour {
 	public void SetCombo() {
 		combo_text.text = "x" + GameManager.self.combo; 
 		combo_text.GetComponent<Animator>().SetTrigger("Wiggle");
+	}
+
+	public void SetComboSlider(float value) {
+		combo_slider.fillAmount = value;
 	}
 
 	public void SetNextGoal(int value, bool b = false) {

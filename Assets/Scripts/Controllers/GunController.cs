@@ -72,7 +72,7 @@ public class GunController : MonoBehaviour {
                 Destroy(target.gameObject);
                 ParticleManager.self.Spawn("Block", target.transform.position);
                 if(target.tag == "Block") {
-                    GameManager.self.HandleEnemyKill();
+                    GameManager.self.IncreamentCombo();
                     killed = true;
                     AudioManager.self.Play("block_destroy");
                 }

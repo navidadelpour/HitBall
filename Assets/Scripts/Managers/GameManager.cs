@@ -14,13 +14,15 @@ public class GameManager : MonoBehaviour {
 	public int combo = 1;
 	public int score;
 	public int exp;
-	public int enemies_killed_in_combo;
 	public int high_score;
 	public int coins;
 
 	public float gift_time;
 	public float max_gift_time;
+	public float combo_time = 2f;
+	private float combo_timer;
 	public bool has_gift;
+	private bool has_combo;
 
 	void Awake() {
 		self = this;
@@ -102,17 +104,29 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void ResetCombo() {
-		enemies_killed_in_combo = 0;
 		combo = 1;
 		UiManager.self.SetCombo();
 	}
 
-	public void HandleEnemyKill() {
-		enemies_killed_in_combo++;
-		if(((int) Mathf.Floor(Mathf.Log(enemies_killed_in_combo / 2 < 1 ? 1 : enemies_killed_in_combo / 2, 2))) + 1 > combo) {
-			combo += 1;
-			UiManager.self.SetCombo();
-		}
+	public void IncreamentCombo() {
+		combo += 1;
+		UiManager.self.SetCombo();
+		combo_timer = combo_time;
+		if(!has_combo)
+			StartCoroutine(ComboTimer());
+	}
+
+	IEnumerator ComboTimer() {
+		has_combo = true;
+        while(combo_timer > 0) {
+            UiManager.self.SetComboSlider(combo_timer / combo_time);
+            combo_timer -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        UiManager.self.SetComboSlider(combo_timer / combo_time);
+
+		has_combo = false;
+		ResetCombo();
 	}
 
 	private void OnApplicationQuit() {

@@ -27,9 +27,6 @@ public class OffCameraDestroyer : MonoBehaviour {
 				GameManager.self.IncreamentScore ();
 				SpawnManager.self.Spawn();
 				break;
-			case "Block":
-				GameManager.self.ResetCombo();
-				break;
 			}
 		}
 	}
