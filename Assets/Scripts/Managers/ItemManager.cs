@@ -13,7 +13,9 @@ public class ItemManager : MonoBehaviour {
 	public Dictionary<Items, bool> actives = new Dictionary<Items, bool>();
 	private float max_time = 5f;
     Items[] untimed_items = new Items[] {Items.DOUBLE_JUMP, Items.FORCE_FALL, Items.HIGH_JUMP, Items.TELEPORT, Items.GROUND_DIGGER, Items.WEB};
-
+    private Dictionary<string, bool> tutorials_shown = new Dictionary<string, bool>();
+    public Dictionary<Items, string> metas = new Dictionary<Items, string>();
+    
     void Awake() {
         self = this;
     }
@@ -24,8 +26,13 @@ public class ItemManager : MonoBehaviour {
         for(int i = 0; i < available_items_size; i++)
             available_items[i] = new AvailableItem(Items.NOTHING);
 
-		foreach (Items item in (Items[]) Enum.GetValues(typeof(Items)))
+        Items[] items = (Items[]) Enum.GetValues(typeof(Items));
+		foreach (Items item in items) {
 			actives.Add(item, false);
+            string key = item.ToString().ToLower() + "_tutorial_shown";
+            tutorials_shown[key] = PlayerPrefs.GetInt(key) == 1;
+            metas[item] = item.ToString();
+        }
 
     }
 
@@ -72,6 +79,12 @@ public class ItemManager : MonoBehaviour {
 	}
 
     public void AddItem(Items item) {
+        string key = item.ToString().ToLower() + "_tutorial_shown";
+        if(!tutorials_shown[key]) {
+            tutorials_shown[key] = true;
+            PlayerPrefs.SetInt(key, 1);
+            UiManager.self.ShowInGameTutorialPanel(item);
+        }
         // checking if the item exists already
         for(int i = 0; i < available_items_size; i++) {
             if(available_items[i].item == item){

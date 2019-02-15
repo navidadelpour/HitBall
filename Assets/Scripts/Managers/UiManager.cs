@@ -33,6 +33,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject pause_panel;
 	public GameObject transition_panel;
 	public GameObject tutorial_panel;
+	public GameObject in_game_tutorial_panel;
 
 	public GameObject texture;
 	public GameObject fixed_background;
@@ -79,6 +80,7 @@ public class UiManager : MonoBehaviour {
 			level_panel = GameObject.Find("LevelPanel"),
 			pause_panel = GameObject.Find("PausePanel"),
 			tutorial_panel = GameObject.Find("TutorialPanel"),
+			in_game_tutorial_panel = GameObject.Find("InGameTutorialPanel"),
 		});
 		menu_panel.SetActive(true);
 		transition_panel.GetComponent<Animator>().SetTrigger("Out");
@@ -132,6 +134,25 @@ public class UiManager : MonoBehaviour {
 
 	public void SetLevel(int value) {
 		level_text.text = "LEVEL " + value;
+	}
+
+	public void ShowInGameTutorialPanel(Items item) {
+		Time.timeScale = 0;
+		GameManager.self.paused = true;
+		in_game_tutorial_panel.SetActive(true);
+
+		Sprite sprite = Resources.Load<Sprite>("textures/Items/" + item.ToString().ToLower());
+		Sprite background_sprite = Resources.Load<Sprite>("textures/ItemBackgrounds/" + SpawnManager.self.item_backgrounds[item.ToString().ToLower()]);;
+		
+		in_game_tutorial_panel.transform.Find("Image").GetComponent<Image>().sprite = background_sprite;
+		in_game_tutorial_panel.transform.Find("Image").GetChild(0).GetComponent<Image>().sprite = sprite;
+		in_game_tutorial_panel.transform.Find("Description").GetComponent<Text>().text = ItemManager.self.metas[item];
+	}
+
+	public void HideInGameTutorialPanel() {
+		in_game_tutorial_panel.SetActive(false);
+		GameManager.self.paused = false;
+		Time.timeScale = 1;
 	}
 
 	public void SetItem(int i, Items item) {

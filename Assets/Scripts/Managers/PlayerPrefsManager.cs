@@ -62,6 +62,10 @@ public class PlayerPrefsManager : MonoBehaviour {
             PlayerPrefs.SetInt(type.ToString(), unlock);
         }
 
+        Items[] items = (Items[]) Enum.GetValues(typeof(Items));
+		foreach (Items item in items) {
+            PlayerPrefs.SetInt(item.ToString().ToLower() + "_tutorial_shown", 0);
+        }
 
         string[] pathes = {"ThemesIcons", "Faces/Beards", "Faces/Hats", "Faces/Mustaches"};
         foreach(string path in pathes) {

@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 
 	public float gift_time;
 	public float max_gift_time;
-	public float combo_time = 2f;
+	public float combo_time = 3f;
 	private float combo_timer;
 	public bool has_gift;
 	private bool has_combo;
