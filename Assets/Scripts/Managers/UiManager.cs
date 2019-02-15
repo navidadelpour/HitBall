@@ -140,7 +140,11 @@ public class UiManager : MonoBehaviour {
 		}
 		item_buttons[i].GetComponent<Image>().sprite = background_sprite;
 		item_buttons[i].GetComponent<Image>().color = color;
-		item_buttons[i].transform.GetChild(0).GetComponent<Image>().sprite = sprite;
+		item_buttons[i].transform.Find("Image").GetComponent<Image>().sprite = sprite;
+	}
+
+	public void SetItemSlider(int i, float value) {
+		item_buttons[0].transform.parent.GetChild(i).GetComponent<Image>().fillAmount = value;
 	}
 
 	public void SetGunText(int current_ammo, int ammo) {

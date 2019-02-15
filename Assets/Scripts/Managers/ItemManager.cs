@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ItemManager : MonoBehaviour {
     public static ItemManager self;
@@ -10,7 +11,8 @@ public class ItemManager : MonoBehaviour {
     public int available_items_size;
 	
 	public Dictionary<Items, bool> actives = new Dictionary<Items, bool>();
-	private float max_time = 5f;
+	private float max_time = 31f;
+    Items[] untimed_items = new Items[] {Items.DOUBLE_JUMP, Items.FORCE_FALL, Items.HIGH_JUMP, Items.TELEPORT, Items.GROUND_DIGGER, Items.WEB};
 
     void Awake() {
         self = this;
@@ -39,7 +41,9 @@ public class ItemManager : MonoBehaviour {
     }
 
 	public void ActiveItem(int index) {
-		StartCoroutine(SetActive(available_items[index].item));
+        if(actives[available_items[index].item])
+            return;
+		actives[available_items[index].item] = true;
 
 		if(actives[Items.MAGNET]) {
 			GameObject[] coins_in_scene = GameObject.FindGameObjectsWithTag("Coin");
@@ -61,18 +65,10 @@ public class ItemManager : MonoBehaviour {
 			}
 		}
 
-		RemoveItem(index);
-
-        if(SpecialAbilitiesManager.self.Has(SpecialAbilities.RANDOMER)) {
-            Array items = Enum.GetValues(typeof(Items));
-            AddItem((Items) items.GetValue(UnityEngine.Random.Range(0, items.Length - 1)));
-        }
-	}
-
-	IEnumerator SetActive(Items item) {
-		actives[item] = true;
-		yield return new WaitForSeconds(max_time);
-		actives[item] = false;
+        if(untimed_items.Contains(available_items[index].item))
+		    RemoveItem(index);
+        else
+            StartCoroutine(SetSliderValue(index));
 	}
 
     public void AddItem(Items item) {
@@ -93,21 +89,40 @@ public class ItemManager : MonoBehaviour {
             }
         }
 
-        // adding to the oldest slot
-        AvailableItem old_item = null;
-        for(int i = 0; i < available_items_size; i++) {
-            if(i == 0 || available_items[i].time_added < old_item.time_added)
-                old_item = available_items[i];
+        AvailableItem[] sorted = (AvailableItem[]) available_items.Clone();
+        Array.Sort(sorted, delegate(AvailableItem x, AvailableItem y) { return x.time_added.CompareTo(y.time_added); });
+        for(int i = 0; i < sorted.Length; i++) {
+            Debug.Log(sorted[i].item + ", " + actives[sorted[i].item]);
+            if(actives[sorted[i].item] == false) {
+                int real_index = Array.IndexOf(available_items, sorted[i]);
+                available_items[real_index] = new AvailableItem(item);
+		        UiManager.self.SetItem(real_index, item);
+                break;
+            }
         }
-        int j = Array.IndexOf(available_items, old_item);
-        available_items[j] = new AvailableItem(item);
-
-        UiManager.self.SetItem(j, item);
 	}
 
 	public void RemoveItem(int index) {
         available_items[index] = new AvailableItem(Items.NOTHING);
 		UiManager.self.SetItem(index, Items.NOTHING);
+
+        if(SpecialAbilitiesManager.self.Has(SpecialAbilities.RANDOMER)) {
+            Array items = Enum.GetValues(typeof(Items));
+            AddItem((Items) items.GetValue(UnityEngine.Random.Range(0, items.Length - 1)));
+        }
 	}
+
+    IEnumerator SetSliderValue(int index) {
+        float time = max_time;
+        while(time > 0) {
+            UiManager.self.SetItemSlider(index, time / max_time);
+            time -= .05f;
+            yield return new WaitForSeconds(.05f);
+        }
+        UiManager.self.SetItemSlider(index, time / max_time);
+
+		actives[available_items[index].item] = false;
+		RemoveItem(index);
+    }
 
 }

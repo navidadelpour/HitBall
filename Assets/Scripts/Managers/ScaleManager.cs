@@ -65,6 +65,7 @@ public class ScaleManager : MonoBehaviour {
             player.transform.position.z
         );
 
+        // FIXME: WHY I WROTE THIS?! (line below)
 		if(!ItemManager.self.actives[Items.WINGS]) {
             bool has_zoom = ItemManager.self.actives[Items.ZOOM];
             switch (SpeedManager.self.state) {
