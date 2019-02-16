@@ -24,6 +24,9 @@ public class ScaleManager : MonoBehaviour {
 
     private GameObject player;
 
+    [Range(0f, 1f)]
+    public float player_offset_precent;
+
 	void Awake() {
 		self = this;
 
@@ -60,7 +63,7 @@ public class ScaleManager : MonoBehaviour {
 
         // player position
         player.transform.position = new Vector3(
-            offset.x * 2 / 6,
+            offset.x * player_offset_precent,
             player.transform.position.y,
             player.transform.position.z
         );

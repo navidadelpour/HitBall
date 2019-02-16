@@ -58,7 +58,7 @@ public class UiManager : MonoBehaviour {
 		special_ability_button = GameObject.Find ("SpecialAbilityButton").GetComponent<Button>();
 		gift_button = GameObject.Find ("GiftButton").GetComponent<Button>();
 
-		gun_image = GameObject.Find ("GunButton").GetComponent<Image>();
+		gun_image = GameObject.Find ("GunIcon").GetComponent<Image>();
 		special_ability_slider = GameObject.Find ("SpecialAbilitySlider").GetComponent<Image>();
 		combo_slider = GameObject.Find ("ComboSlider").GetComponent<Image>();
 
@@ -349,9 +349,11 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void OnBackToMenuButtonClick() {
-		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
-		ShopManager.self.player_overview_panel.SetActive(false);
-		GameManager.self.on_player_views = true;
+		if(TutorialManager.self.can_exit) {
+			Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
+			ShopManager.self.player_overview_panel.SetActive(false);
+			GameManager.self.on_player_views = true;
+		}
 	}
 
 	public void OnBackToShopButtonClick() {
