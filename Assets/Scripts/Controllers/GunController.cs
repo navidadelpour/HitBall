@@ -122,6 +122,8 @@ public class GunController : MonoBehaviour {
         cartridge++;
         UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo * cartridge);
         AudioManager.self.Play("ammo_pickup");
+        if(current_ammo == 0 && !reloading)
+            StartCoroutine(Reload());
     }
 
 }
