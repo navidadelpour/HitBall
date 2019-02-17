@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	public static PlayerMovement self;
 	public bool jumping;
+	public bool should_fall;
 	private float jump_time;
 	private Rigidbody2D body;
 	private int rotate_angle = 15;
@@ -65,7 +66,7 @@ public class PlayerMovement : MonoBehaviour {
 			Rotate(rotate_angle);
 			Scale();
 
-			if (jumping)
+			if (jumping && !should_fall)
 				Jump ();
 			else
 				Fall ();

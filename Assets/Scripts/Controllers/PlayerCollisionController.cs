@@ -84,6 +84,8 @@ public class PlayerCollisionController : MonoBehaviour {
 				AudioManager.self.Play("hole");
 				GameManager.self.gameover = true;
 				UiManager.self.GameOver();
+				PlayerMovement.self.should_fall = true;
+				PlayerMovement.self.gameObject.GetComponent<Collider2D>().enabled = false;
 				break;
 
 			case "Coil":
