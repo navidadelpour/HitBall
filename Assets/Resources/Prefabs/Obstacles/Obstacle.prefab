@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4770973787322206}
   - component: {fileID: 212994434516026954}
-  - component: {fileID: 61709664096117542}
+  - component: {fileID: 60222425052380180}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Obstacle
@@ -35,14 +35,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1016308109458518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.96347237, y: 0.9577484, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61709664096117542
-BoxCollider2D:
+--- !u!60 &60222425052380180
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -63,9 +63,24 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.45, y: -0.29999998}
+      - {x: 0.37, y: -0.16}
+      - {x: 0.31, y: -0.049999997}
+      - {x: 0.04, y: 0.42999998}
+      - {x: 0.01, y: 0.48999998}
+      - {x: -0.04, y: 0.48999998}
+      - {x: -0.07, y: 0.48}
+      - {x: -0.28, y: 0.089999996}
+      - {x: -0.35999998, y: -0.049999997}
+      - {x: -0.5, y: -0.29999998}
+      - {x: -0.5, y: -0.37}
+      - {x: 0.08, y: -0.5}
+      - {x: 0.19, y: -0.5}
+      - {x: 0.25, y: -0.45999998}
+      - {x: 0.42999998, y: -0.37}
+      - {x: 0.45, y: -0.34}
 --- !u!212 &212994434516026954
 SpriteRenderer:
   m_ObjectHideFlags: 1

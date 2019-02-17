@@ -30,7 +30,7 @@ public class PlayerCollisionController : MonoBehaviour {
 					ParticleManager.self.Spawn("Dust", this.transform.position);
 					if(GameManager.self.on_player_views)
 						AudioManager.self.Play("ground");
-					ScreenShake.self.Shake(.15f);
+					ScreenShake.self.Shake(.125f);
 				}
 				if(ItemManager.self.actives[Items.HIGH_JUMP]) {
 					HeightManager.self.has_coil = true;
