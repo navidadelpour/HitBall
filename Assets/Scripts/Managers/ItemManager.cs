@@ -31,9 +31,9 @@ public class ItemManager : MonoBehaviour {
 			actives.Add(item, false);
             string key = item.ToString().ToLower() + "_tutorial_shown";
             tutorials_shown[key] = PlayerPrefs.GetInt(key) == 1;
-            metas[item] = item.ToString();
         }
 
+        AddMeta();
     }
 
     void Update() {
@@ -135,6 +135,22 @@ public class ItemManager : MonoBehaviour {
 
 		actives[available_items[index].item] = false;
 		RemoveItem(index);
+    }
+
+    private void AddMeta() {
+        metas[Items.HIGH_JUMP] = "when activated, next jump will be a high jump.".ToUpper();
+        metas[Items.DOUBLE_JUMP] = "when you are falling, active this to jump in the air.".ToUpper();
+        metas[Items.FORCE_FALL] = "when you are jumping, active this to start falling in the air.".ToUpper();
+        metas[Items.SHIELD] = "active to block obstacles damages.".ToUpper();
+        metas[Items.MAGNET] = "active to absorb coins.".ToUpper();
+        metas[Items.SLOW_MOTION] = "active to slow the time.".ToUpper();
+        metas[Items.ZOOM] = "active to increase your view.".ToUpper();
+        metas[Items.TELEPORT] = "get disappeared when activated, and comming out of a portal in ground".ToUpper();
+        metas[Items.JUMP_POWER] = "active to fast high and low jumps".ToUpper();
+        metas[Items.DISABLER] = "active to disable moving obstacles".ToUpper();
+        metas[Items.SCALER] = "active to get small".ToUpper();
+        metas[Items.WINGS] = "active to fly".ToUpper();
+        metas[Items.WEB] = "active to swing".ToUpper();
     }
 
 }
