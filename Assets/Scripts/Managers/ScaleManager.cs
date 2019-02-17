@@ -9,7 +9,8 @@ public class ScaleManager : MonoBehaviour {
     private float camera_size;
     private float camera_max_size = 10f;
     private float camera_normal_size;
-    private float camera_range_size = 1f;
+    public float camera_range_size = 1.25f;
+    public float speed = .75f;
     private float size_increase_amount = .0001f;
     private float zoom_scale = 2;
 
@@ -73,43 +74,36 @@ public class ScaleManager : MonoBehaviour {
             bool has_zoom = ItemManager.self.actives[Items.ZOOM];
             switch (SpeedManager.self.state) {
                 case SpeedStates.INCREASE:
-                    if(main_camera.orthographicSize < (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f)) {
-                        Util.Ease(
-                            ref camera_size,
-                            (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f),
-                            .5f
-                        );
-                        main_camera.orthographicSize = camera_size;
-                    }
+                    Util.Ease(
+                        ref camera_size,
+                        (camera_normal_size + camera_range_size) * (has_zoom ? zoom_scale : 1f),
+                        speed
+                    );
                     break;
                 case SpeedStates.NORMALIZE:
                     if(main_camera.orthographicSize < camera_normal_size * (has_zoom ? zoom_scale : 1f)){ 
                         Util.Ease(
                             ref camera_size,
                             camera_normal_size * (has_zoom ? zoom_scale : 1f),
-                            .5f
+                            speed
                         );
-                        main_camera.orthographicSize = camera_size;
                     } else if (main_camera.orthographicSize > camera_normal_size * (has_zoom ? zoom_scale : 1f)){
                         Util.Ease(
                             ref camera_size,
                             camera_normal_size * (has_zoom ? zoom_scale : 1f),
-                            .5f
+                            speed
                         );
-                        main_camera.orthographicSize = camera_size;
                     }
                     break;
                 case SpeedStates.DECREASE:
-                    if(main_camera.orthographicSize > (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f)){
-                        Util.Ease(
-                            ref camera_size,
-                            (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f),
-                            .5f
-                        );
-                        main_camera.orthographicSize = camera_size;
-                    }
+                    Util.Ease(
+                        ref camera_size,
+                        (camera_normal_size - camera_range_size) * (has_zoom ? zoom_scale : 1f),
+                        speed
+                    );
                     break;
             }
+            main_camera.orthographicSize = camera_size;
         }
     }
 

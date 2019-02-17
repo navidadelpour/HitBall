@@ -1228,7 +1228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09cc5be846ca2054da2cff26eda73b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_offset_precent: 0.3
+  camera_range_size: 1.25
+  speed: 0.75
+  player_offset_precent: 0.32
 --- !u!114 &133496667
 MonoBehaviour:
   m_ObjectHideFlags: 0
