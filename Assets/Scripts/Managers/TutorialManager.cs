@@ -20,7 +20,7 @@ public class TutorialManager : MonoBehaviour {
     }
 
     void Start() {
-        // Invoke("CheckForTutorialShown", 2f);
+        CheckForTutorialShown();
     }
 
     void Update() {
