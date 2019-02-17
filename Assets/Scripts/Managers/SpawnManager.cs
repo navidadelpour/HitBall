@@ -262,10 +262,10 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void CreateCoil() {
-		float offset_y = coil_prefab.GetComponent<BoxCollider2D> ().size.y * coil_prefab.transform.lossyScale.y;
+		float offset_y = coil_prefab.GetComponent<BoxCollider2D> ().size.y * coil_prefab.transform.lossyScale.y - .4f;
 		Instantiate(
 			coil_prefab,
-			last_ground.transform.position + Vector3.up * (ground_size_y / 2 + offset_y / 2),
+			Vector3.back + last_ground.transform.position + Vector3.up * (ground_size_y / 2 + offset_y / 2),
 			Quaternion.identity,
 			last_ground.transform
 		);
