@@ -44,11 +44,10 @@ public class HeightManager : MonoBehaviour {
 
 
 	void MakeHard() {
-		player_coil_jump_height = (int) Camera.main.orthographicSize - 5 + 12;
-		player_max_jump_height = (int) Camera.main.orthographicSize - 5 + 12;
-		player_normal_jump_height = (int) Camera.main.orthographicSize - 5 + 8;
-		player_min_jump_height = (int) Camera.main.orthographicSize - 5 + 4;
-
+		player_coil_jump_height = (int) (Camera.main.orthographicSize - 5) * 2 + 12;
+		player_max_jump_height = (int) (Camera.main.orthographicSize - 5) * 2 + 12;
+		player_normal_jump_height = (int) (Camera.main.orthographicSize - 5) * 2 + 8;
+		player_min_jump_height = (int) (Camera.main.orthographicSize - 5) * 2 + 4;
 	}
 
 	public void SetHeight() {
@@ -68,14 +67,7 @@ public class HeightManager : MonoBehaviour {
 				}
 				break;
 			case SpeedStates.NORMALIZE:
-				if(ItemManager.self.actives[Items.JUMP_POWER])
 					player_jump_height = player_normal_jump_height;
-				else {
-					if(player_jump_height > player_normal_jump_height)
-						player_jump_height -= jump_increase_amount;
-					else if (player_jump_height < player_normal_jump_height)
-						player_jump_height += jump_increase_amount;
-				}
 				break;
 			case SpeedStates.DECREASE:
 				if(ItemManager.self.actives[Items.JUMP_POWER])
