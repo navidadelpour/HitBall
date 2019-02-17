@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour {
     public int item_slots_unlocks;
     public System.Enum[] levels;
     public int current_level;
-    public int temp_current__level;
+    public int temp_current_level;
 
     void Awake() {
         self = this;
@@ -28,11 +28,11 @@ public class LevelManager : MonoBehaviour {
 
         current_level = PlayerPrefs.GetInt("current_level");
         item_slots_unlocks = PlayerPrefs.GetInt("item_slots_unlocks");
-        temp_current__level = current_level;
+        temp_current_level = current_level;
     }
 
     void Start() {
-        UiManager.self.SetLevel(temp_current__level);
+        UiManager.self.SetLevel(temp_current_level);
         SetNextGoal(GameManager.self.exp);
     }
 
@@ -62,12 +62,12 @@ public class LevelManager : MonoBehaviour {
 
     public void SetNextGoal(int exp) {
         int goal = 0;
-        if(temp_current__level < levels.Length + 1) {
-            goal = LevelFunction(temp_current__level);
+        if(temp_current_level < levels.Length + 1) {
+            goal = LevelFunction(temp_current_level);
             int left = goal - exp;
             if(left < 0) {
-                temp_current__level++;
-                UiManager.self.SetLevel(temp_current__level);
+                temp_current_level++;
+                UiManager.self.SetLevel(temp_current_level);
             } else {
                 UiManager.self.SetNextGoal(left);
             }

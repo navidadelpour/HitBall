@@ -9,18 +9,18 @@ public class TutorialManager : MonoBehaviour {
     private int current;
     private Sprite[] tutorial_sprites;
     private Image tutorial_image;
-    public bool can_exit;
+    private Button tutorial_back_button;
 
     void Awake() {
         self = this;
 
         tutorial_sprites = Resources.LoadAll<Sprite>("Textures/Tutorials");
         tutorial_image = GameObject.Find("TutorialPanel").transform.Find("Image").GetComponent<Image>();
-        can_exit = true;
+        tutorial_back_button = GameObject.Find("TutorialPanel").transform.Find("BackButton").GetComponent<Button>();
     }
 
     void Start() {
-        Invoke("CheckForTutorialShown", 1f);
+        // Invoke("CheckForTutorialShown", 2f);
     }
 
     void Update() {
@@ -30,8 +30,9 @@ public class TutorialManager : MonoBehaviour {
     void CheckForTutorialShown() {
         if(PlayerPrefs.GetInt("tutorial_shown") != 1) {
             OnTutorialButtonClick();
+            // TODO: uncomment line below
             // PlayerPrefs.SetInt("tutorial_shown", 1);
-            can_exit = false;
+            tutorial_back_button.gameObject.SetActive(false);
         }
     }
 
@@ -46,7 +47,7 @@ public class TutorialManager : MonoBehaviour {
         if(current < tutorial_sprites.Length - 1)
             current++;
         if(current == tutorial_sprites.Length - 1)
-            can_exit = true;
+            tutorial_back_button.gameObject.SetActive(true);
         tutorial_image.sprite = tutorial_sprites[current];
 	}
 

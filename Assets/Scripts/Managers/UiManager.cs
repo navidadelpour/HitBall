@@ -34,6 +34,7 @@ public class UiManager : MonoBehaviour {
 	public GameObject transition_panel;
 	public GameObject tutorial_panel;
 	public GameObject in_game_tutorial_panel;
+	public GameObject next_goal;
 
 	public GameObject texture;
 	public GameObject fixed_background;
@@ -66,6 +67,7 @@ public class UiManager : MonoBehaviour {
         fixed_background = GameObject.Find("FixedBackground");
         player_overview_panel = GameObject.Find("PlayerOverviewPanel");
         transition_panel = GameObject.Find("TransitionPanel");
+        next_goal = GameObject.Find("NextGoal");
 
         obstacle_prefab = Resources.Load<GameObject>("Prefabs/Obstacles/Obstacle").GetComponent<SpriteRenderer>();
         obstacle_sweep_prefab = Resources.Load<GameObject>("Prefabs/Obstacles/ObstacleSweep").GetComponent<SpriteRenderer>();
@@ -124,12 +126,17 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void SetNextGoal(int value, bool b = false) {
+		if(b) {
+			next_goal.SetActive(false);
+			return;
+		}
 		string goal = value + "";
 		if(value <= 0) {
 			next_goal_text.GetComponent<Animator>().SetTrigger("Wiggle");
 			goal = "REACHED!";
+			SpawnManager.self.should_create_goal = true;
 		}
-		next_goal_text.text = b ? "" : "NEXT GOAL: " + goal;
+		next_goal_text.text = goal;
 	}
 
 	public void SetLevel(int value) {
@@ -349,11 +356,9 @@ public class UiManager : MonoBehaviour {
 	}
 
 	public void OnBackToMenuButtonClick() {
-		if(TutorialManager.self.can_exit) {
-			Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
-			ShopManager.self.player_overview_panel.SetActive(false);
-			GameManager.self.on_player_views = true;
-		}
+		Util.GoToPanel(EventSystem.current.currentSelectedGameObject.transform.parent.gameObject, menu_panel);
+		ShopManager.self.player_overview_panel.SetActive(false);
+		GameManager.self.on_player_views = true;
 	}
 
 	public void OnBackToShopButtonClick() {
