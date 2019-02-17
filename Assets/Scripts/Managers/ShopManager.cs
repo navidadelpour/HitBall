@@ -31,7 +31,7 @@ public class ShopManager : MonoBehaviour {
 	private int colors_cost = 10;
 
 	public Dictionary<string, GameObject> actives = new Dictionary<string, GameObject>();
-	private Dictionary<System.Enum, string[]> metas;
+	private Dictionary<System.Enum, string[]> metas = new Dictionary<Enum, string[]>();
 	float width_scale;
 	float height_scale;
 
@@ -40,16 +40,7 @@ public class ShopManager : MonoBehaviour {
 		width_scale = (float) Screen.width / 854;
 		height_scale = (float) Screen.height / 480;
 
-		metas = new Dictionary<Enum, string[]>() {
-			{SpecialAbilities.BOUNCY, new string[]{SpecialAbilities.BOUNCY.ToString(), SpecialAbilities.BOUNCY.ToString() + "description"}},
-			{SpecialAbilities.ENEMY_EARNER, new string[]{SpecialAbilities.ENEMY_EARNER.ToString(), SpecialAbilities.ENEMY_EARNER.ToString() + "description"}},
-			{SpecialAbilities.GUNNER, new string[]{SpecialAbilities.GUNNER.ToString(), SpecialAbilities.GUNNER.ToString() + "description"}},
-			{SpecialAbilities.LUCKY, new string[]{SpecialAbilities.LUCKY.ToString(), SpecialAbilities.LUCKY.ToString() + "description"}},
-			{SpecialAbilities.RANDOMER, new string[]{SpecialAbilities.RANDOMER.ToString(), SpecialAbilities.RANDOMER.ToString() + "description"}},
-			{Guns.PISTOL, new string[]{Guns.PISTOL.ToString(), Guns.PISTOL.ToString() + "description"}},
-			{Guns.SHOTGUN, new string[]{Guns.SHOTGUN.ToString(), Guns.SHOTGUN.ToString() + "description"}},
-			{Guns.RIFLE, new string[]{Guns.RIFLE.ToString(), Guns.RIFLE.ToString() + "description"}},
-		};
+		AddMeta();
 
 		tick_sprite = Resources.Load<Sprite>("Textures/UI/Shop/tick");
 		lock_sprite = Resources.Load<Sprite>("Textures/UI/Shop/lock");
@@ -516,6 +507,18 @@ public class ShopManager : MonoBehaviour {
 		yield return new WaitForSeconds(1f);
 		
 		panel.SetActive(false);
+	}
+
+	private void AddMeta() {
+		metas[Guns.PISTOL] = new string[]{"revolver".ToUpper(), "a deadly weapon\n\n" + GunController.self.guns[Guns.PISTOL].ToString().ToUpper()};
+		metas[Guns.RIFLE] = new string[]{"m4a".ToUpper(), "a dead soldier's gun\n\n" + GunController.self.guns[Guns.RIFLE].ToString().ToUpper()};
+		metas[Guns.SHOTGUN] = new string[]{"shotgun".ToUpper(), "a native gun\n\n" + GunController.self.guns[Guns.SHOTGUN].ToString().ToUpper()};
+
+		metas[SpecialAbilities.BOUNCY] = new string[]{"fast devil".ToUpper(), "bounce like a devil".ToUpper()};
+		metas[SpecialAbilities.ENEMY_EARNER] = new string[]{"giant".ToUpper(), "eat any blue enemy you see".ToUpper()};
+		metas[SpecialAbilities.GUNNER] = new string[]{"gunner".ToUpper(), "fast shoting and reloading".ToUpper()};
+		metas[SpecialAbilities.LUCKY] = new string[]{"lucky".ToUpper(), "more chance to find items".ToUpper()};
+		metas[SpecialAbilities.RANDOMER] = new string[]{"randomer".ToUpper(), "fill your item slots randomly".ToUpper()};
 	}
 
 }

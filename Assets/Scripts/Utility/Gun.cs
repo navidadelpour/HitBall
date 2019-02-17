@@ -14,4 +14,9 @@ public class Gun {
         this.shot_time = shot_time;
         this.reload_time = reload_time;
     }
+
+    override
+    public string ToString() {
+        return string.Format("ammo: {0}\nshot time: {1}s\nreload_time: {2}s", ammo, shot_time, reload_time);
+    }
 }
