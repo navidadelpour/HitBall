@@ -133,6 +133,7 @@ public class UiManager : MonoBehaviour {
 		string goal = value + "";
 		if(value <= 0) {
 			next_goal_text.GetComponent<Animator>().SetTrigger("Wiggle");
+			AudioManager.self.Play("goal_reached");
 			goal = "REACHED!";
 			SpawnManager.self.should_create_goal = true;
 		}

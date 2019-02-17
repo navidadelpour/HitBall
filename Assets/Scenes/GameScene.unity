@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212a48664d515bb40ad2c2f73013d62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  safe_mode: 0
+  safe_mode: 1
   gameover: 0
   paused: 0
   started: 0
@@ -4778,7 +4778,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CHARACTER
+  m_Text: ABILITY
 --- !u!222 &753728792
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11860,7 +11860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.39636728, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12338,7 +12338,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 000000
+  m_Text: 
 --- !u!222 &1953319305
 CanvasRenderer:
   m_ObjectHideFlags: 0

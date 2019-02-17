@@ -13,6 +13,7 @@ TagManager:
   - Portal
   - Item
   - Arrow
+  - Ammo
   layers:
   - Default
   - TransparentFX

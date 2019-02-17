@@ -99,6 +99,11 @@ public class PlayerCollisionController : MonoBehaviour {
 				ItemManager.self.AddItem(item);
         		AudioManager.self.Play("item_get");
 				break;
+			case "Ammo":
+				Destroy(other.gameObject);
+				GunController.self.AddCartridge();
+				break;
+
 		}
 	}
 

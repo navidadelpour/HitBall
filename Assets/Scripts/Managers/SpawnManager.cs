@@ -14,6 +14,7 @@ public class SpawnManager : MonoBehaviour {
 	private GameObject arrow_prefab;
 	private GameObject item_prefab;
 	private GameObject goal_prefab;
+	private GameObject ammo_prefab;
 	private Sprite[] item_textures;
 	private Sprite[] item_background_textures;
 	private GameObject[] obstacles_prefabs;
@@ -41,6 +42,7 @@ public class SpawnManager : MonoBehaviour {
 		{Things.NOTHING, 1},
 	};
 	private int item_chance = 5;
+	private int ammo_chance = 2;
 	private int arrow_chance = 5;
 	private int[] coins_range = {1, 3};
 	private int[] obstacles_range = {1, 3};
@@ -76,6 +78,7 @@ public class SpawnManager : MonoBehaviour {
 		item_prefab =  Resources.Load<GameObject>("prefabs/Item");
 		arrow_prefab =  Resources.Load<GameObject>("prefabs/Arrow");
 		goal_prefab =  Resources.Load<GameObject>("prefabs/Goal");
+		ammo_prefab =  Resources.Load<GameObject>("prefabs/Ammo");
 		obstacles_prefabs = Resources.LoadAll <GameObject>("prefabs/Obstacles");
 		item_textures = Resources.LoadAll <Sprite>("textures/Items");
 		item_background_textures = Resources.LoadAll <Sprite>("textures/ItemBackgrounds");
@@ -153,6 +156,8 @@ public class SpawnManager : MonoBehaviour {
 		}
 		if(Util.HasChance(item_chance * (SpecialAbilitiesManager.self.Has(SpecialAbilities.LUCKY) ? 5 : 1)))
 			CreateItem();
+		if(Util.HasChance(ammo_chance * (SpecialAbilitiesManager.self.Has(SpecialAbilities.GUNNER) ? 2 : 1)))
+			CreateAmmo();
 		// if(Util.HasChance(arrow_chance))
 		// 	CreateArrow();
 
@@ -320,5 +325,14 @@ public class SpawnManager : MonoBehaviour {
 		);
 		last_item_spawned = Things.NOTHING;
 
+	}
+
+	private void CreateAmmo() {
+		Instantiate(
+			ammo_prefab,
+			last_ground.transform.position + Vector3.up * ground_size_y / 2 + Vector3.up * Random.Range(3f, 5f),
+			Quaternion.identity,
+			last_ground.transform
+		);
 	}
 }

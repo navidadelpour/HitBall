@@ -12,6 +12,7 @@ public class GunController : MonoBehaviour {
     private float start_shoting;
     private bool reloading;
     private int current_ammo;
+    public int cartridge;
     private Animator gun_animator;
     private Animator face_animator;
     private GameObject gun_fire;
@@ -43,6 +44,7 @@ public class GunController : MonoBehaviour {
     public void SetGun(Guns gun) {
         active_gun = gun;
         current_ammo = guns[active_gun].ammo;
+        cartridge = 1;
     }
 
     void Update() {
@@ -64,28 +66,34 @@ public class GunController : MonoBehaviour {
 
     public void Shot() {
         float time = guns[active_gun].shot_time * (SpecialAbilitiesManager.self.Has(SpecialAbilities.GUNNER) ? .5f : 1);
-        if(Time.time - start_shoting > time && current_ammo > 0) {
+        if(Time.time - start_shoting > time) {
             start_shoting = Time.time;
-
-            bool killed = false;
-            if(target != null && !killed) {
-                Destroy(target.gameObject);
-                ParticleManager.self.Spawn("Block", target.transform.position);
-                if(target.tag == "Block") {
-                    GameManager.self.IncreamentCombo();
-                    killed = true;
-                    AudioManager.self.Play("block_destroy");
+            if(current_ammo > 0) {
+                bool killed = false;
+                if(target != null && !killed) {
+                    Destroy(target.gameObject);
+                    ParticleManager.self.Spawn("Block", target.transform.position);
+                    if(target.tag == "Block") {
+                        GameManager.self.IncreamentCombo();
+                        killed = true;
+                        AudioManager.self.Play("block_destroy");
+                    }
                 }
-            }
 
-            current_ammo--;
-            UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
-            gun_animator.SetTrigger("Shot");
-            face_animator.SetTrigger("Shot");
-            AudioManager.self.Play(active_gun.ToString().ToLower() + "_shot");
-            StartCoroutine(ShotFire());
-            if(current_ammo == 0 && !reloading) {
-                StartCoroutine(Reload());
+                current_ammo--;
+                UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo * cartridge);
+                gun_animator.SetTrigger("Shot");
+                face_animator.SetTrigger("Shot");
+                AudioManager.self.Play(active_gun.ToString().ToLower() + "_shot");
+                StartCoroutine(ShotFire());
+                if(current_ammo == 0 && !reloading) {
+                    if(cartridge != 0)
+                        StartCoroutine(Reload());
+                }
+            } else if(cartridge == 0) {
+
+                AudioManager.self.Play("no_ammo");
+
             }
         }
     }
@@ -104,9 +112,16 @@ public class GunController : MonoBehaviour {
         AudioManager.self.Play(active_gun.ToString().ToLower() + "_reload");
         yield return new WaitForSeconds(time);
         current_ammo = guns[active_gun].ammo;
+        cartridge--;
         reloading = false;
-        UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo);
+        UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo * cartridge);
         laser_renderer.enabled = true;
+    }
+
+    public void AddCartridge() {
+        cartridge++;
+        UiManager.self.SetGunText(current_ammo, guns[active_gun].ammo * cartridge);
+        AudioManager.self.Play("ammo_pickup");
     }
 
 }
