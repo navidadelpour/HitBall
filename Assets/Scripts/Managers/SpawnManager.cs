@@ -205,7 +205,6 @@ public class SpawnManager : MonoBehaviour {
 	}
 
 	private void CreateObstacle() {
-		return;
 		GameObject obstacles_prefab = obstacles_prefabs[Random.Range(0, obstacles_prefabs.Length)];
 		int max_i = 1;
 		float starting_point = 0;
