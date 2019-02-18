@@ -150,12 +150,12 @@ public class ItemManager : MonoBehaviour {
         metas[Items.MAGNET] = "active to absorb coins.".ToUpper();
         metas[Items.SLOW_MOTION] = "active to slow the time.".ToUpper();
         metas[Items.ZOOM] = "active to increase your view.".ToUpper();
-        metas[Items.TELEPORT] = "get disappeared when activated, and comming out of a portal in ground".ToUpper();
-        metas[Items.JUMP_POWER] = "active to fast high and low jumps".ToUpper();
-        metas[Items.DISABLER] = "active to disable moving obstacles".ToUpper();
-        metas[Items.SCALER] = "active to get small".ToUpper();
-        metas[Items.WINGS] = "active to fly".ToUpper();
-        metas[Items.WEB] = "active to swing".ToUpper();
+        metas[Items.TELEPORT] = "get disappeared when activated, and comming out of a portal in ground.".ToUpper();
+        metas[Items.JUMP_POWER] = "active to fast high and low jumps.".ToUpper();
+        metas[Items.DISABLER] = "active to disable moving obstacles.".ToUpper();
+        metas[Items.SCALER] = "active to get small.".ToUpper();
+        metas[Items.WINGS] = "active to fly.".ToUpper();
+        metas[Items.WEB] = "active to swing.".ToUpper();
     }
 
 }

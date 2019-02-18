@@ -1065,7 +1065,6 @@ GameObject:
   - component: {fileID: 133496659}
   - component: {fileID: 133496669}
   - component: {fileID: 133496665}
-  - component: {fileID: 133496668}
   - component: {fileID: 133496664}
   - component: {fileID: 133496663}
   - component: {fileID: 133496662}
@@ -1079,6 +1078,7 @@ GameObject:
   - component: {fileID: 133496673}
   - component: {fileID: 133496674}
   - component: {fileID: 133496675}
+  - component: {fileID: 133496668}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212a48664d515bb40ad2c2f73013d62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  safe_mode: 0
+  safe_mode: 1
   gameover: 0
   paused: 0
   started: 0
@@ -1256,8 +1256,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   current_ability: 0
-  give_time: 2
-  active_time: 1
+  give_time: 5
+  active_time: 20
   has: 0
   active: 0
 --- !u!114 &133496669

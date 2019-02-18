@@ -29,7 +29,7 @@ public class ShopManager : MonoBehaviour {
 	private Vector3 shop_item_size;
 	private Vector3 shop_faces_item_size;
 	private float shop_margin = 0f;
-	private int colors_cost = 10;
+	private int colors_cost = 100;
 
 	public Dictionary<string, GameObject> actives = new Dictionary<string, GameObject>();
 	private Dictionary<System.Enum, string[]> metas = new Dictionary<Enum, string[]>();
@@ -517,11 +517,11 @@ public class ShopManager : MonoBehaviour {
 		metas[Guns.RIFLE] = new string[]{"m4a".ToUpper(), "a dead soldier's gun\n\n" + GunController.self.guns[Guns.RIFLE].ToString().ToUpper()};
 		metas[Guns.SHOTGUN] = new string[]{"shotgun".ToUpper(), "a native gun\n\n" + GunController.self.guns[Guns.SHOTGUN].ToString().ToUpper()};
 
-		metas[SpecialAbilities.BOUNCY] = new string[]{"fast devil".ToUpper(), "bounce like a devil".ToUpper()};
-		metas[SpecialAbilities.ENEMY_EARNER] = new string[]{"giant".ToUpper(), "eat any blue enemy you see".ToUpper()};
-		metas[SpecialAbilities.GUNNER] = new string[]{"gunner".ToUpper(), "fast shoting and reloading".ToUpper()};
-		metas[SpecialAbilities.LUCKY] = new string[]{"lucky".ToUpper(), "more chance to find items".ToUpper()};
-		metas[SpecialAbilities.RANDOMER] = new string[]{"randomer".ToUpper(), "fill your item slots randomly".ToUpper()};
+		metas[SpecialAbilities.BOUNCY] = new string[]{"fast devil".ToUpper(), "bounce like a devil.".ToUpper()};
+		metas[SpecialAbilities.ENEMY_EARNER] = new string[]{"giant".ToUpper(), "punch any blue enemy you seee.".ToUpper()};
+		metas[SpecialAbilities.GUNNER] = new string[]{"gunner".ToUpper(), "fast shoting and reloading.".ToUpper()};
+		metas[SpecialAbilities.LUCKY] = new string[]{"lucky".ToUpper(), "more chance to find items.".ToUpper()};
+		metas[SpecialAbilities.RANDOMER] = new string[]{"randomer".ToUpper(), "fill your item slots randomly.".ToUpper()};
 	}
 
 }
