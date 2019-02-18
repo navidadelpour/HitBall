@@ -6,8 +6,8 @@ public class SpecialAbilitiesManager : MonoBehaviour {
 
 	public static SpecialAbilitiesManager self;
     public SpecialAbilities current_ability;
-    public float give_time = 10f;
-    public float active_time = 5f;
+    public float give_time = 5f;
+    public float active_time = 10f;
     public bool has = false;
     public bool active = false;
     private bool started;

@@ -275,7 +275,7 @@ public class SpawnManager : MonoBehaviour {
 	private void CreatePortal() {
 		GameObject portal_created = Instantiate(
 			portal_prefab,
-			last_ground.transform.position + Vector3.up * ground_size_y / 2,
+			Vector3.back + last_ground.transform.position + Vector3.up * ground_size_y / 2,
 			Quaternion.identity,
 			last_ground.transform
 		);

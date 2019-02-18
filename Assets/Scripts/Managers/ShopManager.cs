@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour {
     public static ShopManager self;
 	private Sprite tick_sprite;
 	private Sprite lock_sprite;
+	private Texture colors_image;
 
 	public GameObject shop_panel;
 	private GameObject shop_general_panel;
@@ -44,6 +45,7 @@ public class ShopManager : MonoBehaviour {
 
 		tick_sprite = Resources.Load<Sprite>("Textures/UI/Shop/tick");
 		lock_sprite = Resources.Load<Sprite>("Textures/UI/Shop/lock");
+		colors_image = Resources.Load<Texture>("Textures/UI/Shop/colors_image");
 
         faces_header = Resources.Load<GameObject>("Prefabs/Ui/FacesHeader");
         faces_panel = Resources.Load<GameObject>("Prefabs/Ui/Panel");
@@ -258,6 +260,7 @@ public class ShopManager : MonoBehaviour {
 						break;
 				}
 				shop_item_created.name = name + "_" + (cost == "" ? "0" : cost);
+				shop_item_created.transform.Find("Image").gameObject.GetComponent<RawImage>().texture = colors_image;
 				shop_item_created.transform.Find("Image").gameObject.GetComponent<RawImage>().color = color_array[index];
 			}
 		}
