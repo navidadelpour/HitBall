@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver() {
 		gameover = true;
-		SetHighScore();
 
 		if(!PlayerPrefsManager.self.reseted) {
 			PlayerPrefs.SetInt("coins", coins);

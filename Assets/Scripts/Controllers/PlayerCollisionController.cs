@@ -69,6 +69,7 @@ public class PlayerCollisionController : MonoBehaviour {
 						ItemManager.self.actives[Items.SHIELD] = false;
 					else {
 						GameManager.self.gameover = true;
+						GameManager.self.SetHighScore();
 						UiManager.self.GameOver();
 					}
 				}
@@ -83,6 +84,7 @@ public class PlayerCollisionController : MonoBehaviour {
 			case "Hole":
 				AudioManager.self.Play("hole");
 				GameManager.self.gameover = true;
+				GameManager.self.SetHighScore();
 				UiManager.self.GameOver();
 				PlayerMovement.self.should_fall = true;
 				PlayerMovement.self.gameObject.GetComponent<Collider2D>().enabled = false;

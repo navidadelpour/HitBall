@@ -320,10 +320,13 @@ public class UiManager : MonoBehaviour {
 
 	public void GameOver() {
 		Util.GoToPanel(game_panel, game_over_panel);
-		game_over_panel.GetComponent<Animator>().SetTrigger("In");
-		game_over_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("In");
+		game_over_panel.transform.Find("NewHighScoreLabel").gameObject.SetActive(GameManager.self.score == GameManager.self.high_score);
 		game_over_panel.transform.Find("GameOverScoreText").GetComponent<Text>().text = "AFTER: " + GameManager.self.score;
 		game_over_panel.transform.Find("GameOverBestText").GetComponent<Text>().text = "BEST: " + GameManager.self.high_score;
+
+		game_over_panel.GetComponent<Animator>().SetTrigger("In");
+		game_over_panel.transform.GetChild(0).GetComponent<Animator>().SetTrigger("In");
+
 		AudioManager.self.Play("gameover");
 	}
 
