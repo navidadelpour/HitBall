@@ -15,6 +15,7 @@ public class ItemManager : MonoBehaviour {
     Items[] untimed_items = new Items[] {Items.DOUBLE_JUMP, Items.FORCE_FALL, Items.HIGH_JUMP, Items.TELEPORT, Items.GROUND_DIGGER, Items.WEB};
     private Dictionary<string, bool> tutorials_shown = new Dictionary<string, bool>();
     public Dictionary<Items, string> metas = new Dictionary<Items, string>();
+    private Dictionary<Items, Coroutine> coroutines = new Dictionary<Items, Coroutine>();
     
     void Awake() {
         self = this;
@@ -71,11 +72,10 @@ public class ItemManager : MonoBehaviour {
 				return;
 			}
 		}
-
         if(untimed_items.Contains(available_items[index].item))
 		    RemoveItem(index);
         else
-            StartCoroutine(SetSliderValue(index));
+            coroutines.Add(available_items[index].item, StartCoroutine(SetSliderValue(index)));
 	}
 
     public void AddItem(Items item) {
@@ -89,6 +89,10 @@ public class ItemManager : MonoBehaviour {
         for(int i = 0; i < available_items_size; i++) {
             if(available_items[i].item == item){
                 available_items[i] = new AvailableItem(item);
+                if(actives[available_items[i].item]) {
+                    StopCoroutine(coroutines[available_items[i].item]);
+                    coroutines[available_items[i].item] = StartCoroutine(SetSliderValue(i));
+                }
                 return;
             }
         }
@@ -134,6 +138,7 @@ public class ItemManager : MonoBehaviour {
         UiManager.self.SetItemSlider(index, time / max_time);
 
 		actives[available_items[index].item] = false;
+        coroutines.Remove(available_items[index].item);
 		RemoveItem(index);
     }
 
