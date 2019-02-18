@@ -6,7 +6,7 @@ public class AboutPanel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Invoke("StartGame", 3f);
+		Invoke("StartGame", 1f);
 	}
 	
 	// Update is called once per frame
