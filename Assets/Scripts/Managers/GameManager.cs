@@ -94,8 +94,10 @@ public class GameManager : MonoBehaviour {
 		LevelManager.self.SetNextGoal(exp);
 	}
 
-	public void EnemyEarn() {
-		score += 10;
+	public void EnemyEarn(Vector3 position) {
+		IncreamentCombo();
+		AudioManager.self.Play("block_destroy");
+		ParticleManager.self.Spawn("Block", position);
 	}
 
 	public void IncreamentCoins() {

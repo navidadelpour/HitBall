@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +45,7 @@ public class PlayerCollisionController : MonoBehaviour {
 			} else if(other.gameObject.tag == "Block") {
 				if(SpecialAbilitiesManager.self.Has(SpecialAbilities.ENEMY_EARNER)) {
 					Destroy(other.gameObject);
-					GameManager.self.EnemyEarn();
+					GameManager.self.EnemyEarn(other.transform.position);
 				}
 			}
 	}
