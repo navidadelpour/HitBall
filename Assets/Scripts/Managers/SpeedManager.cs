@@ -16,8 +16,8 @@ public class SpeedManager : MonoBehaviour {
 
 	public float player_speed;
 	private float player_normal_speed;
-	private Dictionary<string, float> player_min_speed = new Dictionary<string, float>() {{"min", 6f}};
-	private Dictionary<string, float> player_max_speed = new Dictionary<string, float>() {{"min", 12f}};
+	private Dictionary<string, float> player_min_speed = new Dictionary<string, float>() {{"min", 8f}};
+	private Dictionary<string, float> player_max_speed = new Dictionary<string, float>() {{"min", 14f}};
 	private float player_speed_difference_amount = .1f;
 
 	private float game_bound_increase_amount = 0.002f; 
