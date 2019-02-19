@@ -13,6 +13,8 @@ public class InputManager : MonoBehaviour {
 	private bool jump_max_button_pressed;
 	private bool jump_min_button_pressed;
 
+	public SpeedStates state;
+
 	void Awake() {
 		self = this;
 	}
@@ -26,11 +28,11 @@ public class InputManager : MonoBehaviour {
 			GunController.self.Shot();
 
 		if(jump_max_button_pressed)
-			SpeedManager.self.state = SpeedStates.INCREASE;
+			state = SpeedStates.INCREASE;
 		else if(jump_min_button_pressed)
-			SpeedManager.self.state = SpeedStates.DECREASE;
+			state = SpeedStates.DECREASE;
 		else
-			SpeedManager.self.state = SpeedStates.NORMALIZE;
+			state = SpeedStates.NORMALIZE;
 
 	}
 

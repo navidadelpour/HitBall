@@ -24,6 +24,8 @@ public class UiManager : MonoBehaviour {
 	public Image gun_image;
 	public Image combo_slider;
 	public Image special_ability_slider;
+	public Image high_jump_slider;
+	public Image low_jump_slider;
 
 	public GameObject menu_panel;
 	public GameObject game_panel;
@@ -62,6 +64,8 @@ public class UiManager : MonoBehaviour {
 		gun_image = GameObject.Find ("GunIcon").GetComponent<Image>();
 		special_ability_slider = GameObject.Find ("SpecialAbilitySlider").GetComponent<Image>();
 		combo_slider = GameObject.Find ("ComboSlider").GetComponent<Image>();
+		high_jump_slider = GameObject.Find ("HighJumpSlider").GetComponent<Image>();
+		low_jump_slider = GameObject.Find ("LowJumpSlider").GetComponent<Image>();
 
 		texture = GameObject.Find("Texture");
         fixed_background = GameObject.Find("FixedBackground");
@@ -182,6 +186,11 @@ public class UiManager : MonoBehaviour {
 
 	public void SetItemSlider(int i, float value) {
 		item_buttons[0].transform.parent.GetChild(i).GetComponent<Image>().fillAmount = value;
+	}
+
+	public void SetJumpButtonSlidersValue(float high_time, float low_time) {
+		high_jump_slider.fillAmount = high_time;
+		low_jump_slider.fillAmount = low_time;
 	}
 
 	public void SetGunText(int current_ammo, int ammo) {
