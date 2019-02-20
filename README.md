@@ -1,5 +1,4 @@
 # HitBall
-# HitBall
 
 Hitball is an Indie Hyper Casual game made in [Unity](https://unity3d.com/)
 
