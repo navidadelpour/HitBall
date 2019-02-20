@@ -41,9 +41,8 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void CheckForLevelUp(string indexes = "") {
-        int exp = GameManager.self.exp;
         if(current_level < levels.Length + 1) {
-            if(exp > LevelFunction(current_level)) {
+            if(temp_current_level > current_level) {
                 indexes += (current_level - 1) + "_";
                 if(levels[current_level - 1].ToString() == Items.NOTHING.ToString()) {
                     item_slots_unlocks ++;
