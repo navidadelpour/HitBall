@@ -242,7 +242,7 @@ public class UiManager : MonoBehaviour {
 		Dictionary<Enum, Vector3[]> transforms = new Dictionary<Enum, Vector3[]>() {
 			{Guns.PISTOL, new Vector3[] {new Vector3(3.5f, -.5f, 0), new Vector3(0, 0, -20f), new Vector3(1f, 1f, 1f)}},
 			{Guns.RIFLE, new Vector3[] {new Vector3(3.5f, 0, 0), new Vector3(0, 0, -45f), new Vector3(1.6f, 1.6f, 1.6f)}},
-			{Guns.SHOTGUN, new Vector3[] {new Vector3(4f, 0, 0), new Vector3(0, 0, -45f), new Vector3(1.6f, 1.6f, 1.6f)}},
+			{Guns.SHOTGUN, new Vector3[] {new Vector3(3.5f, 0, 0), new Vector3(0, 0, -45f), new Vector3(1.6f, 1.6f, 1.6f)}},
 		};
 
 		Guns gun = (Guns) System.Enum.Parse(typeof(Guns), name.ToUpper());
