@@ -91,6 +91,7 @@ public class PlayerPrefsManager : MonoBehaviour {
         PlayerPrefs.SetInt("has_music", 1);
         PlayerPrefs.SetInt("has_sfx", 1);
         PlayerPrefs.SetInt("has_night_mode", 0);
+        PlayerPrefs.SetInt("tutorial_shown", 0);
     }
 
 }

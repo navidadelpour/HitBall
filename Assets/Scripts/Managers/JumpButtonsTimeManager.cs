@@ -7,7 +7,7 @@ public class JumpButtonsTimeManager : MonoBehaviour {
     public static JumpButtonsTimeManager self;
     
     public float get_full_time = 10f;
-    public float get_empty_time = 3f;
+    public float get_empty_time = 1f;
     private float high_time = 1;
     private float low_time = 1;
     private SpeedStates state;
