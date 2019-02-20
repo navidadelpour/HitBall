@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class PlayerPrefsManager : MonoBehaviour {
     public static PlayerPrefsManager self;
-    public int locked = 0;
-    public int unlock = 1;
-    public int active = 2;
 
     public bool should_reset;
     public bool reseted;
@@ -35,14 +32,14 @@ public class PlayerPrefsManager : MonoBehaviour {
         if(PlayerPrefs.GetInt("Initialized") == 0) {
             ResetPrefs();
 
-            PlayerPrefs.SetInt(SpecialAbilities.LUCKY.ToString(), active);
-            PlayerPrefs.SetInt(Guns.PISTOL.ToString(), active);
+            PlayerPrefs.SetInt(SpecialAbilities.LUCKY.ToString(), 2);
+            PlayerPrefs.SetInt(Guns.PISTOL.ToString(), 2);
 
-            PlayerPrefs.SetInt("default", active);
-            PlayerPrefs.SetInt("0.Color", active);
-            PlayerPrefs.SetInt("mustache01", active);
-            PlayerPrefs.SetInt("beard01", active);
-            PlayerPrefs.SetInt("hat01", active);
+            PlayerPrefs.SetInt("default", 2);
+            PlayerPrefs.SetInt("0.Color", 2);
+            PlayerPrefs.SetInt("mustache01", 2);
+            PlayerPrefs.SetInt("beard01", 2);
+            PlayerPrefs.SetInt("hat01", 2);
 
             PlayerPrefs.SetInt("Initialized", 1);
 
@@ -59,7 +56,7 @@ public class PlayerPrefsManager : MonoBehaviour {
         types.AddRange((Guns[]) Enum.GetValues(typeof(Guns)));
         types.AddRange((SpecialAbilities[]) Enum.GetValues(typeof(SpecialAbilities)));
         foreach(System.Enum type in types) {
-            PlayerPrefs.SetInt(type.ToString(), unlock);
+            PlayerPrefs.SetInt(type.ToString(), 1);
         }
 
         Items[] items = (Items[]) Enum.GetValues(typeof(Items));
@@ -73,12 +70,12 @@ public class PlayerPrefsManager : MonoBehaviour {
             string name;
             foreach(Sprite sprite in sprite_array) {
                 name = sprite.name.Split(new String[] {"_"}, StringSplitOptions.None)[0];
-                PlayerPrefs.SetInt(name, unlock);
+                PlayerPrefs.SetInt(name, 1);
             }
         }
 
         for(int i = 0; i < colors.Length; i++) {
-            PlayerPrefs.SetInt(i + ".Color", unlock);
+            PlayerPrefs.SetInt(i + ".Color", 1);
         }
 
 		PlayerPrefs.SetString("indexes", "");
