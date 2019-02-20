@@ -68,6 +68,7 @@ public class LevelManager : MonoBehaviour {
             if(left < 0) {
                 temp_current_level++;
                 UiManager.self.SetLevel(temp_current_level);
+                GameManager.self.exp = 0;
             } else {
                 UiManager.self.SetNextGoal(left);
             }
