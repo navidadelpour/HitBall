@@ -4,11 +4,24 @@ Hitball is an Indie Hyper Casual game made in [Unity](https://unity3d.com/)
 
 ## Description
 
-A ball is jumping all along and you must control it's jump to avoid hitting obstacles or falling in holes.
+<strong>You are a Ball who can't stop your jumping!</strong> 
 
-use your gun to destroy blueballs and get more score.
+How far you can reach?! :) 
 
-there are a lot of items and special abilities you can use to achieve your goals.
+Adjust your jump to pass obstacles and holes and try to reach your goal. 
+
+
+There are blueballs in the way and they try to stop you! 
+
+Use your different guns to destroy them. 
+
+Use multiple items and abilities in your way to achieving more score... 
+
+<ul>
+<li>Different themes</li>
+<li>Night Mode</li> 
+<li>changing your player appearance</li>
+</ul>
 
 
 ## Download
