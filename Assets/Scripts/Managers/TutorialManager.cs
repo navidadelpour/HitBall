@@ -30,7 +30,6 @@ public class TutorialManager : MonoBehaviour {
     void CheckForTutorialShown() {
         if(PlayerPrefs.GetInt("tutorial_shown") != 1) {
             OnTutorialButtonClick();
-            // TODO: uncomment line below
             PlayerPrefs.SetInt("tutorial_shown", 1);
             tutorial_back_button.gameObject.SetActive(false);
         }

@@ -366,6 +366,7 @@ public class UiManager : MonoBehaviour {
 
 	public void OnPlayButtonClick() {
 		Util.GoToPanel(menu_panel, game_panel);
+		GameObject.Find("WorldSpaceCanvas").SetActive(false);
 	}
 
 	public void OnBackToMenuButtonClick() {

@@ -11,7 +11,7 @@ public class ScaleManager : MonoBehaviour {
     private float camera_normal_size;
     public float camera_range_size = 1.25f;
     public float speed = .75f;
-    private float size_increase_amount = .0001f;
+    private float size_increase_amount = .0002f;
     private float zoom_scale = 2;
 
     private Camera main_camera;
@@ -69,7 +69,6 @@ public class ScaleManager : MonoBehaviour {
             player.transform.position.z
         );
 
-        // FIXME: WHY I WROTE THIS?! (line below)
 		if(!ItemManager.self.actives[Items.WINGS]) {
             bool has_zoom = ItemManager.self.actives[Items.ZOOM];
             switch (SpeedManager.self.state) {

@@ -54,11 +54,10 @@ public class InputManager : MonoBehaviour {
 	public void OnResetButtonClick() {
 		GameManager.self.GameOver();
 		SceneManager.LoadScene("GameScene");
-		// SceneManager.LoadSceneAsync("LoadScene");
 	}
 
 	public void OnRateButtonClick() {
-		// TODO : rate buttion functionality
+
 	}
 
 	public void OnGunbuttonHold() {
