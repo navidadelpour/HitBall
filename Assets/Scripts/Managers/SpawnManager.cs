@@ -125,6 +125,7 @@ public class SpawnManager : MonoBehaviour {
 		if(should_create_goal) {
 			should_create_goal = false;
 			CreateGoal();
+			return;
 		}
 
 		switch(
