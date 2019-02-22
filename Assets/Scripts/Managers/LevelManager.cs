@@ -77,7 +77,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     public int LevelFunction(int level) {
-        return (int) Mathf.Pow(3, level + 1) + 500 * (level + 1);
+        return (int) Mathf.Pow(3, level + 1) + 1000 * (level + 1);
     }
 
 }
