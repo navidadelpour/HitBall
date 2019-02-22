@@ -65,9 +65,7 @@ public class PlayerCollisionController : MonoBehaviour {
 					ScreenShake.self.Shake(.2f);
 				}
 				if(!GameManager.self.safe_mode) {
-					if(ItemManager.self.actives[Items.SHIELD])
-						ItemManager.self.actives[Items.SHIELD] = false;
-					else {
+					if(!ItemManager.self.actives[Items.SHIELD]) {
 						GameManager.self.gameover = true;
 						GameManager.self.SetHighScore();
 						UiManager.self.GameOver();
