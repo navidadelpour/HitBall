@@ -35,6 +35,19 @@ This game is presented in [cafebazar](https://cafebazaar.ir) for free!
 <p align="center">
   <img src="https://raw.githubusercontent.com/navidadelpour/HitBall/master/Assets/Resources/Textures/ScreenShots/1.jpg" />
 </p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/navidadelpour/HitBall/master/Assets/Resources/Textures/ScreenShots/2.jpg" />
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/navidadelpour/HitBall/master/Assets/Resources/Textures/ScreenShots/3.jpg" />
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/navidadelpour/HitBall/master/Assets/Resources/Textures/ScreenShots/4.jpg" />
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/navidadelpour/HitBall/master/Assets/Resources/Textures/ScreenShots/5.jpg" />
+</p>
+
 
 ## Credits
 
