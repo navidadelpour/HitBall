@@ -41,7 +41,7 @@ public class SpawnManager : MonoBehaviour {
 		{Things.HOLE, 3},
 		{Things.NOTHING, 1},
 	};
-	private int item_chance = 5;
+	private int item_chance = 25;
 	private int ammo_chance = 2;
 	private int arrow_chance = 5;
 	private int[] coins_range = {1, 3};

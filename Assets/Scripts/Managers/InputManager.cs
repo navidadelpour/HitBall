@@ -57,7 +57,7 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public void OnRateButtonClick() {
-
+		Application.OpenURL("https://cafebazaar.ir/app/com.navidadelpour.hitball");
 	}
 
 	public void OnGunbuttonHold() {
