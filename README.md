@@ -58,11 +58,3 @@ This game is presented in [cafebazar](https://cafebazaar.ir) for free!
 
 
 Made with :heart: by [navidadelpour](https://navidadelpour.ir)
-
-## Links
-
-[navidadelpour.ir](http://www.navidadelpour.ir)
-
-[linkedin](https://www.linkedin.com/in/navid-adelpour-369447172/) - [instagram](https://www.instagram.com/navidadelpour/) - [twitter](https://twitter.com/navidadelpour)
-
-Checkout my other game [Clouds&Bombs](https://cafebazaar.ir/app/com.NavidAdelpour.CloudsAndBombs/)
